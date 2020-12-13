@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="hour">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+        <item>"3"</item>
+        <item>"4"</item>
+    </array>
+    <array name="minute">
+        <item>"0"</item>
+        <item>"5"</item>
+        <item>"10"</item>
+        <item>"15"</item>
+        <item>"20"</item>
+        <item>"25"</item>
+        <item>"30"</item>
+        <item>"35"</item>
+        <item>"40"</item>
+        <item>"45"</item>
+        <item>"50"</item>
+        <item>"55"</item>
+    </array>
+    <string-array name="storyName">
+        <item>李白</item>
+        <item>杜甫</item>
+        <item>苏轼</item>
+        <item>花木兰</item>
+    </string-array>
+    <string-array name="petName">
+        <item>太白/青莲居士</item>
+        <item>子美/少陵野老</item>
+        <item>子瞻/东坡居士</item>
+        <item>追封为“孝烈将军”</item>
+    </string-array>
+
+    <string-array name="dynasty">
+        <item>唐朝</item>
+        <item>唐朝</item>
+        <item>唐朝</item>
+        <item>南北朝</item>
+    </string-array>
+
+    <string-array name="briefIntroduction">
+        <item>一位嗜酒大叔，他潇洒又豪气，浪漫又话痨，是经由杜甫之口初步了解你。希望在这个新时代可以出现一个挑战他的人，你，便是他看中的人。</item>
+        <item>一位口不对心的傲娇先生，是一个隐藏的李白大粉在现世和李白是好友。他深沉可靠有强烈的家国责任感，对中国现在的富强的感到欣慰。但认为在人文普及方面可以做到更好，现在在培养你。</item>
+        <item>一个无可救药的乐天派、一个大文豪、大书法家、创新的画家、造酒试验家、一个工程师、酒仙、厚道的法官、一个月夜徘徊者、一个诗人、一个想要培养你的老师。</item>
+        <item>她是一位巾帼英雄，忠孝节义，代父从军击败入侵民族而流传千古。却也是有着少女心，在现世沉迷于二次元的可靠大姐姐。</item>
+    </string-array>
+    <string-array name="blinkContent">
+        <item>来到现世，新入了一个wacom数位板。老夫要做的一件事当然是画个现世的好酒！啊！好酒！</item>
+        <item>未曾想过现世的吾国竟如此昌盛，也未曾料到化为疆土的吾辈可以齐聚一堂。甚好，甚好。</item>
+        <item>转眼就是与你们共行的秋。（快叫我大摄影师！！ )</item>
+        <item>也总！！好帅！！没想到中国有如此精妙的动漫！</item>
+        <item>为何我，老杜，子瞻三人饮酒醉，老杜却在旁边用非常狂热的眼神盯着我？？？？</item>
+        <item>与最好的你们相遇。是我的荣幸。</item>
+        <item>提笔</item>
+        <item>老夫也来！</item>
+        <item>我和木兰看着两位大仙暗中较量，真是妙哉~妙哉~</item>
+        <item>最近的年轻人都喜欢哭穷，老夫也来跟风了——因为布置完屋舍后的我就是穷鬼。。。。。。</item>
+    </string-array>
+    <string-array name="blinkWhose">
+        <item>李白</item>
+        <item>杜甫</item>
+        <item>苏轼</item>
+        <item>花木兰</item>
+        <item>李白</item>
+        <item>花木兰</item>
+        <item>杜甫</item>
+        <item>李白</item>
+        <item>苏轼</item>
+        <item>李白</item>
+    </string-array>
+    <array name="array_plot">
+        <item>0</item>
+        <item>33</item>
+        <item>62</item>
+        <item>84</item>
+        <item>100</item>
+    </array>
+
+</resources>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="日期："
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/record_data1_lv"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="2020"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="年"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/record_data2_lv"
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="月"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/record_data3_lv"
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="10"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="日"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="时长："
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_len"
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="25"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:maxLines="1"
+        android:paddingTop="22dp"
+        android:text="分钟"
+        android:textSize="18sp" />
+</LinearLayout>

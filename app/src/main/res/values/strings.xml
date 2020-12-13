@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">学他</string>
+    <string name="img_description">主页背景图片</string>
+    <string name="check_in">签到</string>
+    <string name="go_to_study">开始学习</string>
+    <string name="sum">统计</string>
+    <string name="recall">回忆</string>
+    <string name="userName">用户名</string>
+    <string name="password">密码</string>
+    <string name="img_login">登录按钮</string>
+    <string name="hour">小时</string>
+    <string name="minute">分钟</string>
+    <string name="theRestTime">剩余时间:</string>
+    <string name="complete">完成学习</string>
+    <string name="send_message">发送</string>
+    <string name="send_your_message">请输入要发送的内容</string>
+    <string name="tongji">统计</string>
+
+    <string name="back_btn">back_btn</string>
+    <string name="head">大头</string>
+    <string name="more">更多</string>
+    <string name="name">姓名：</string>
+    <string name="zihao">字号：</string>
+    <string name="dynasty">朝代：</string>
+    <string name="personintro">人物简介</string>
+    <string name="title">人物详情</string>
+    <string name="dot1">dot1</string>
+    <string name="dot2">dot2</string>
+    <string name="dot3">dot3</string>
+    <string name="guide1">guide1</string>
+    <string name="guide2">guide2</string>
+    <string name="body">body</string>
+
+    <string name="chatwithAI">聊天室</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="img_closer">关闭名言fragment</string>
+    <string name="back">返回</string>
+    <string name="chatting_notes">通讯录</string>
+    <string name="circle_friends">朋友圈</string>
+    <string name="register">用户注册</string>
+
+
+</resources>

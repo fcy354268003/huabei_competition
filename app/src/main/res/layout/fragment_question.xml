@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="380dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="20dp"
+        android:background="#FAF2F0">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="90dp"
+                    android:layout_marginStart="15dp"
+                    android:text="使用帮助"
+                    android:textScaleX="1.1"
+                    android:textSize="20sp"
+                    android:textColor="#867676"/>
+
+                <ImageView
+                    android:id="@+id/iv_close"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="150dp"
+                    android:src="@drawable/not"
+                    android:onClick="@{() -> mContext.onCancel()}"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_help"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="15dp"
+                android:lineSpacingExtra="6dp"
+                android:text="本应用为古风学习APP，采用RPG游戏模式与名人志士齐聚一堂进行互动。完成一项计时任务即可解锁一个剧情与之交流，每个剧情都设有分歧选项加深体验感激发学习动力。更有朋友圈功能可以深入了解他们的日常点滴，也可进入人物详情页解锁深层设定，伴有统计功能直观对比每次学习时长，累计学习次数，增加成就感。赶紧点击“开启任务”按钮开始学习吧！"
+                android:textSize="17sp"
+                android:textColor="#A39D9D"
+                android:textStyle="normal"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

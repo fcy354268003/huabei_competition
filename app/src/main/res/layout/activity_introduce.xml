@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.IntroduceActivity"
+    android:orientation="vertical"
+    android:background="@drawable/start">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+    <ImageView
+        android:onClick="back"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:contentDescription="@string/back_btn"
+        android:src="@drawable/ic_baseline_arrow_back_ios_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/title"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        tools:ignore="RelativeOverlap" />
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/more"
+            android:src="@drawable/ic_baseline_more_horiz_24" />
+    </RelativeLayout>
+
+
+<ScrollView
+    android:id="@+id/all"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
+           <include
+           android:id="@+id/detail1"
+           layout="@layout/intro1" />
+           <include
+               android:id="@+id/detail2"
+               layout="@layout/intro2" />
+           <include
+               android:id="@+id/detail3"
+               layout="@layout/intro3" />
+
+       </LinearLayout>
+
+</ScrollView>
+
+
+
+
+</LinearLayout>
