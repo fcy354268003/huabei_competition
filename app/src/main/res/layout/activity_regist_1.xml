@@ -18,40 +18,10 @@
         android:background="@drawable/check"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/load_all"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/check"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="请稍等..."
-                android:textColor="#BF12A4"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="@+id/kwi_load"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <scut.carson_ho.kawaii_loadingview.Kawaii_LoadingView
-                android:id="@+id/kwi_load"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center"
-                app:blockColor="#FFCCFF"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lineNumber="4"
-                app:moveSpeed="500" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/loading"
+            layout="@layout/loading"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textView6"

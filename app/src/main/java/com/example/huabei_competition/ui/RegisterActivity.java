@@ -1,21 +1,17 @@
 package com.example.huabei_competition.ui;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.ActivityRegist1Binding;
-import com.example.huabei_competition.fcyUtil.MyApplication;
-import com.example.huabei_competition.fcyUtil.MyToast;
+import com.example.huabei_competition.util.BaseActivity;
+import com.example.huabei_competition.util.MyApplication;
+import com.example.huabei_competition.widget.MyToast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +27,7 @@ import okhttp3.Response;
 /**
  * Create by FanChenYang
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
     private Handler handler = new Handler();
     private ActivityRegist1Binding mBinding;
     private String URL = MyApplication.URL + "/app/regist";
@@ -44,21 +40,20 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onCancel() {
-        MyToast.showMessage("取消注册成功", this);
+        MyToast.showMessage("取消注册成功");
         finish();
     }
 
     public void onConfirm() {
         if (TextUtils.isEmpty(mBinding.etUserName.getText().toString()) || TextUtils.isEmpty(mBinding.etPassword.getText().toString())) {
-            MyToast.showMessage("请填写符合规范的账户名与密码", this);
+            MyToast.showMessage("请填写符合规范的账户名与密码");
             return;
         }
         findViewById(R.id.userName).setVisibility(View.GONE);
         findViewById(R.id.password).setVisibility(View.GONE);
         mBinding.etPassword.setVisibility(View.GONE);
         mBinding.etUserName.setVisibility(View.GONE);
-        mBinding.loadAll.setVisibility(View.VISIBLE);
-        mBinding.kwiLoad.startMoving();
+        startLoading();
         mBinding.btnCancel.setVisibility(View.GONE);
         mBinding.btnConfirm.setVisibility(View.GONE);
         OkHttpClient client = new OkHttpClient();
@@ -75,9 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        MyToast.showMessage("注册失败", getApplicationContext());
-                        mBinding.loadAll.setVisibility(View.GONE);
-                        mBinding.kwiLoad.stopMoving();
+                        MyToast.showMessage("注册失败");
+                        stopLoading();
                     }
                 });
             }
@@ -88,7 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            MyToast.showMessage("注册成功", getApplicationContext());
+                            MyToast.showMessage("注册成功");
                             finish();
                         }
                     });

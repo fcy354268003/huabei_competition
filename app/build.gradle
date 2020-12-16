@@ -34,6 +34,10 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 
 }
 
@@ -51,10 +55,15 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    // okhttp3依赖
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    // Litepal数据库依赖
     implementation 'org.litepal.guolindev:core:3.2.2'
-
+    // 加载占位图依赖
     implementation 'com.carson_ho:Kawaii_LoadingView:1.0.0'
-
+    // retrofit依赖
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
 }

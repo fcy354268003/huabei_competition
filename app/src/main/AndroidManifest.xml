@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.huabei_competition">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
 
     <application
-        android:name=".fcyUtil.MyApplication"
+        android:name=".util.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/head3"
         android:label="@string/app_name"
@@ -18,17 +19,17 @@
         <activity android:name=".ui.StatisticsActivity" />
         <activity android:name=".ui.TalkActivity" />
         <activity android:name=".ui.StoryChoiceActivity" />
-        <activity android:name=".ui.RegisterActivity" >
+        <activity android:name=".ui.RegisterActivity" />
+        <activity
+            android:name=".ui.CountDownActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".ui.CheckInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.CountDownActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".ui.CheckIn_Activity" />
         <activity android:name=".ui.IntroduceActivity" />
         <activity android:name=".ui.GuideActivity" />
         <activity android:name=".ui.StartActivity">

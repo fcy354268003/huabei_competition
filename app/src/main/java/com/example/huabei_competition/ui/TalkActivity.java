@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.PlotCache;
-import com.example.huabei_competition.fcyUtil.MyApplication;
-import com.example.huabei_competition.fcyUtil.MyRecyclerAdapter;
+import com.example.huabei_competition.util.MyApplication;
+import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 

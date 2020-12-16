@@ -24,9 +24,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.fcyUtil.MyApplication;
-import com.example.huabei_competition.fcyUtil.MyReceiver;
-import com.example.huabei_competition.fcyUtil.MyToast;
+import com.example.huabei_competition.util.MyApplication;
+import com.example.huabei_competition.util.MyReceiver;
+import com.example.huabei_competition.widget.MyToast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -123,7 +123,7 @@ public class CountDownActivity extends AppCompatActivity {
         super.onStart();
         if (isStudy && userLeave == 1) {
             userLeave = 0;
-            MyToast.showMessage("继续学习", CountDownActivity.this);
+            MyToast.showMessage("继续学习");
             countDownTimer = new MyCountDownTimer((hour * 60 + minute) * 60 * 1000, 1000 * 60);
             countDownTimer.start();
             mMinute.setText(minute + "分");
@@ -236,7 +236,7 @@ public class CountDownActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            MyToast.showMessage("数据上传失败", CountDownActivity.this);
+                            MyToast.showMessage("数据上传失败");
                         }
                     });
                 }

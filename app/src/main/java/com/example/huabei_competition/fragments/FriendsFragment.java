@@ -18,7 +18,7 @@ import com.example.huabei_competition.R;
 import com.example.huabei_competition.ui.StoryChoiceActivity;
 import com.example.huabei_competition.databinding.FragmentFriendsBinding;
 import com.example.huabei_competition.db.Item;
-import com.example.huabei_competition.fcyUtil.MyRecyclerAdapter;
+import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.example.huabei_competition.ui.TalkActivity;
 
 import java.util.ArrayList;

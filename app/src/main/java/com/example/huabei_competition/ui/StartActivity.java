@@ -8,7 +8,7 @@ import android.os.Message;
 import androidx.annotation.NonNull;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.fcyUtil.BaseActivity;
+import com.example.huabei_competition.util.BaseActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -43,7 +43,7 @@ public class StartActivity extends BaseActivity {
 
     //进入登录页
     private void StartCheckActivity() {
-        Intent intent = new Intent(StartActivity.this, CheckIn_Activity.class);
+        Intent intent = new Intent(StartActivity.this, CheckInActivity.class);
         startActivity(intent);
         finish();
     }

@@ -39,6 +39,7 @@
     <string name="chatting_notes">通讯录</string>
     <string name="circle_friends">朋友圈</string>
     <string name="register">用户注册</string>
+    <string name="registerImmediately">立即注册</string>
 
 
 </resources>

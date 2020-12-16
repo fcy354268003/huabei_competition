@@ -1,4 +1,4 @@
-package com.example.huabei_competition.fcyUtil;
+package com.example.huabei_competition.util;
 
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -6,6 +6,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.huabei_competition.R;
+
+import scut.carson_ho.kawaii_loadingview.Kawaii_LoadingView;
 
 /**
  * Create by FanChenYang
@@ -36,5 +40,30 @@ public abstract class BaseActivity extends AppCompatActivity {
         getResources().updateConfiguration(configuration, metrics);
     }
 
+
+    private View loadingView = null;
+    private Kawaii_LoadingView loading = null;
+
+    /**
+     * 开始播放 等候 动画
+     */
+    protected void startLoading() {
+        if (loadingView == null)
+            loadingView = findViewById(R.id.loading);
+        if (loadingView == null)
+            throw new Error("未找到加载view");
+        loadingView.setVisibility(View.VISIBLE);
+        if (loading == null)
+            loading = loadingView.findViewById(R.id.kawaii);
+        loading.startMoving();
+    }
+
+    /**
+     * 停止播放 等候 动画
+     */
+    protected void stopLoading() {
+        loading.stopMoving();
+        loadingView.setVisibility(View.GONE);
+    }
 
 }

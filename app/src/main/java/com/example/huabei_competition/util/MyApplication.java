@@ -1,10 +1,15 @@
-package com.example.huabei_competition.fcyUtil;
+package com.example.huabei_competition.util;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.Blink;
+import com.example.huabei_competition.db.User;
 import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +18,7 @@ import org.litepal.LitePal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +56,7 @@ public class MyApplication extends Application {
             })
             .build();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
         super.onCreate();
@@ -138,68 +145,6 @@ public class MyApplication extends Application {
         return user;
     }
 
-    // "data"{
-//                "id":"1"
-//                "name":"陈青云",
-//                "password":"123456",
-//                "status":"0",
-//                "favor":"0",
-//                "time":"0"
-//    }
-    public static class User {
-        @SerializedName("name")
-        private String userName;
-        @SerializedName("password")
-        private String passWord;
-        // 学习时长 单位 分钟
-        @SerializedName("time")
-        private int studyTime;
-        @SerializedName("favor")
-        private int likingValue;
-
-        public String getUserName() {
-            return userName;
-        }
-
-        public void setUserName(String userName) {
-            this.userName = userName;
-        }
-
-        public String getPassWord() {
-            return passWord;
-        }
-
-        public void setPassWord(String passWord) {
-            this.passWord = passWord;
-        }
-
-        public int getStudyTime() {
-            return studyTime;
-        }
-
-        public void setStudyTime(int studyTime) {
-            this.studyTime = studyTime;
-        }
-
-        public int getLikingValue() {
-            return likingValue;
-        }
-
-        public void setLikingValue(int likingValue) {
-            this.likingValue = likingValue;
-        }
-
-        @NotNull
-        @Override
-        public String toString() {
-            return "User{" +
-                    "userName='" + userName + '\'' +
-                    ", passWord='" + passWord + '\'' +
-                    ", studyTime='" + studyTime + '\'' +
-                    ", likingValue=" + likingValue +
-                    '}';
-        }
-    }
 
     public void setUser(User user) {
         this.user = user;
@@ -209,11 +154,28 @@ public class MyApplication extends Application {
         return mQuote;
     }
 
-    public void setmQuote(String mQuote) {
-        this.mQuote = mQuote;
-    }
 
     public static String getTAG() {
         return TAG;
+    }
+
+    /**
+     * 通过反射拿到当前app的application
+     * @return 返回application
+     */
+    public static Application getApplicationByReflect() {
+        try {
+            @SuppressLint("PrivateApi")
+            Class<?> activityThread = Class.forName("android.app.ActivityThread");
+            Object thread = activityThread.getMethod("currentActivityThread").invoke(null);
+            Object app = activityThread.getMethod("getApplication").invoke(thread);
+            if (app == null) {
+                throw new NullPointerException("u should init first");
+            }
+            return (Application) app;
+        } catch (NoSuchMethodException | IllegalAccessException | ClassNotFoundException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        throw new NullPointerException("u should init first");
     }
 }

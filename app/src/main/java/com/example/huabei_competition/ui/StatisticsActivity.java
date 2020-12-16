@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.StatisticsData;
 import com.example.huabei_competition.db.StatisticsLike;
-import com.example.huabei_competition.fcyUtil.MyApplication;
-import com.example.huabei_competition.fcyUtil.MyRecyclerAdapter;
-import com.example.huabei_competition.fcyUtil.MyToast;
+import com.example.huabei_competition.util.MyApplication;
+import com.example.huabei_competition.widget.MyRecyclerAdapter;
+import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.fragments.QuestionFragment;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -74,7 +74,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        MyToast.showMessage("获取信息失败", StatisticsActivity.this);
+                        MyToast.showMessage("获取信息失败");
                     }
                 });
             }

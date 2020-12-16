@@ -17,7 +17,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.fcyUtil.BaseActivity;
+import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.fragments.FamousQuotesFragment;
 
 import java.util.ArrayList;

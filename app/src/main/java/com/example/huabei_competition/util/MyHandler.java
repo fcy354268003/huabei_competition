@@ -1,4 +1,4 @@
-package com.example.huabei_competition.fcyUtil;
+package com.example.huabei_competition.util;
 
 import android.content.Context;
 import android.os.Handler;
@@ -13,10 +13,11 @@ import java.util.HashMap;
  * Create by FanChenYang at 2020/12/13
  * <p>
  * 主要目的：
- * 减少因为Handler类的内存泄漏而导致的代码冗余
+ * 防止Handler类的内存泄漏
+ * 降低代码冗余
  */
 public class MyHandler extends Handler {
-    private WeakReference<Context> weakContext;
+    private final WeakReference<Context> weakContext;
     // String : context的toString()
     private static HashMap<String, MyHandler> handlerHashMap = null;
 
@@ -59,6 +60,8 @@ public class MyHandler extends Handler {
      *
      * @param context 上下文
      * @return 删除成功返回true
+     *
+     * 在Activity的destroy()中调用，如果在该Activity中使用了obtain()方法
      */
 
     public static boolean removeByKey(Context context) {

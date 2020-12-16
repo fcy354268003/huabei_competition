@@ -16,7 +16,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.fcyUtil.BaseActivity;
+import com.example.huabei_competition.util.BaseActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -112,7 +112,7 @@ public class GuideActivity extends BaseActivity {
         }
     };
     public void StartCheckActivity(View view) {
-        Intent intent=new Intent(GuideActivity.this,CheckIn_Activity.class);
+        Intent intent=new Intent(GuideActivity.this, CheckInActivity.class);
         startActivity(intent);
         finish();
     }
