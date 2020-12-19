@@ -11,6 +11,8 @@ import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.ActivityRegist1Binding;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
+import com.example.huabei_competition.util.MyHandler;
+import com.example.huabei_competition.util.UserUtil;
 import com.example.huabei_competition.widget.MyToast;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,10 +29,10 @@ import okhttp3.Response;
 /**
  * Create by FanChenYang
  */
-public class RegisterActivity extends BaseActivity {
-    private Handler handler = new Handler();
+public class RegisterActivity extends BaseActivity implements Callback {
     private ActivityRegist1Binding mBinding;
-    private String URL = MyApplication.URL + "/app/regist";
+    private static final String URL = MyApplication.URL + "/app/regist";
+    private final MyHandler myHandler = MyHandler.obtain(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,49 +47,37 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public void onConfirm() {
-        if (TextUtils.isEmpty(mBinding.etUserName.getText().toString()) || TextUtils.isEmpty(mBinding.etPassword.getText().toString())) {
-            MyToast.showMessage("请填写符合规范的账户名与密码");
-            return;
-        }
-        findViewById(R.id.userName).setVisibility(View.GONE);
-        findViewById(R.id.password).setVisibility(View.GONE);
-        mBinding.etPassword.setVisibility(View.GONE);
-        mBinding.etUserName.setVisibility(View.GONE);
+        UserUtil.register(this, mBinding.etUserName.getText().toString(), mBinding.etPassword.getText().toString(), this);
+        mBinding.userName.setVisibility(View.GONE);
+        mBinding.password.setVisibility(View.GONE);
         startLoading();
         mBinding.btnCancel.setVisibility(View.GONE);
         mBinding.btnConfirm.setVisibility(View.GONE);
-        OkHttpClient client = new OkHttpClient();
-        FormBody body = new FormBody.Builder()
-                .add("username", mBinding.etUserName.getText().toString())
-                .add("password", mBinding.etPassword.getText().toString())
-                .build();
-        Request request = new Request.Builder().url(URL).post(body).build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
-                finish();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        MyToast.showMessage("注册失败");
-                        stopLoading();
-                    }
-                });
-            }
+    }
 
+    @Override
+    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        e.printStackTrace();
+        finish();
+        myHandler.post(new Runnable() {
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful())
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            MyToast.showMessage("注册成功");
-                            finish();
-                        }
-                    });
+            public void run() {
+                MyToast.showMessage("注册失败");
+                stopLoading();
             }
         });
+    }
+
+    @Override
+    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        if (response.isSuccessful())
+            myHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    MyToast.showMessage("注册成功");
+                    finish();
+                }
+            });
     }
 
     private static final String TAG = "RegisterActivity";

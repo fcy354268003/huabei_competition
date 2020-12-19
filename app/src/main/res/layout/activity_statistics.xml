@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/check"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="40dp">
 
     <FrameLayout
         android:id="@+id/question"
@@ -137,7 +138,7 @@
                             android:paddingStart="40dp"
                             android:text="0"
                             android:textSize="30sp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/total_tv"
@@ -146,8 +147,8 @@
                             android:layout_gravity="center"
                             android:paddingStart="30dp"
                             android:text="0"
-                            android:textStyle="bold"
                             android:textSize="30sp"
+                            android:textStyle="bold"
                             tools:ignore="RtlSymmetry" />
 
                         <TextView

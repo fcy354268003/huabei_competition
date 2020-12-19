@@ -1,6 +1,6 @@
 package com.example.huabei_competition.network;
 
-import android.app.usage.NetworkStatsManager;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -16,8 +16,7 @@ import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -50,8 +49,9 @@ public class Network {
      */
     public static boolean checkNetWorkState(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        // 当网络没有链接的时候的时候 activeNetworkInfo 为空，当其不为空的也存在网络不可用的情况
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo.isConnected();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     private static final String TAG = "Network";

@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.ActivityStroyChoiceBinding;
 import com.example.huabei_competition.db.Blink;
+import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -41,7 +42,7 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class StoryChoiceActivity extends AppCompatActivity {
+public class StoryChoiceActivity extends BaseActivity {
     private Handler handler = new Handler();
     public Intent intent = new Intent();
     public int type;

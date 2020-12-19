@@ -24,6 +24,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.huabei_competition.R;
+import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.util.MyReceiver;
 import com.example.huabei_competition.widget.MyToast;
@@ -42,7 +43,7 @@ import okhttp3.Response;
 /**
  * @author fcy
  */
-public class CountDownActivity extends AppCompatActivity {
+public class CountDownActivity extends BaseActivity {
     private CountDownTimer countDownTimer;
     private TextView mHour, mMinute;
     private int hour, minute;
@@ -51,6 +52,8 @@ public class CountDownActivity extends AppCompatActivity {
     private int userLeave;
     private int final_hour, final_minute;
     private String URL = MyApplication.URL + "/app/updateTime";
+    private Spinner sp_hour;
+    private Spinner sp_minute;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -72,38 +75,15 @@ public class CountDownActivity extends AppCompatActivity {
         final String[] minutes = getResources().getStringArray(R.array.minute);
         ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, hours);
         ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, minutes);
-        final Spinner sp_hour = findViewById(R.id.sp_hour), sp_minute = findViewById(R.id.sp_minute);
+        sp_hour = findViewById(R.id.sp_hour);
+        sp_minute = findViewById(R.id.sp_minute);
         sp_hour.setAdapter(arrayAdapter1);
         sp_minute.setAdapter(arrayAdapter2);
         ImageView imageView = findViewById(R.id.iv_start);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: " + sp_hour.getSelectedItemPosition() + sp_minute.getSelectedItemPosition());
-                hour = sp_hour.getSelectedItemPosition();
-                minute = sp_minute.getSelectedItemPosition() * 5;
-                if (hour == 0 && minute == 0) {
-                    Toast.makeText(CountDownActivity.this, "请正确设置学习时间", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                isStudy = true;
-                setContentView(R.layout.activity_count_down);
-                mHour = findViewById(R.id.tv_hour);
-                mMinute = findViewById(R.id.tv_minute);
-                final_hour = hour;
-                final_minute = minute;
-                mHour.setText(hour + " 时 ");
-                mMinute.setText(minute + " 分 ");
-                findViewById(R.id.wrapper3).setVisibility(View.VISIBLE);
-                findViewById(R.id.wrapper1).setVisibility(View.GONE);
-                findViewById(R.id.wrapper2).setVisibility(View.GONE);
-                View view2 = findViewById(R.id.wrapper2);
-                view2.setVisibility(View.GONE);
-                final LinearLayout linearLayout = findViewById(R.id.ll_all);
-                linearLayout.setBackgroundResource(R.drawable.study_background);
-                minute = 1;
-                countDownTimer = new MyCountDownTimer((hour * 60 + minute) * 60 * 1000, 1000 * 60);
-                countDownTimer.start();
+
             }
         });
     }
@@ -126,8 +106,10 @@ public class CountDownActivity extends AppCompatActivity {
             MyToast.showMessage("继续学习");
             countDownTimer = new MyCountDownTimer((hour * 60 + minute) * 60 * 1000, 1000 * 60);
             countDownTimer.start();
-            mMinute.setText(minute + "分");
-            mHour.setText(hour + "时");
+            String minute = this.minute + "分";
+            mMinute.setText(minute);
+            String hour = this.hour + "时";
+            mHour.setText(hour);
 
         }
     }
@@ -165,7 +147,38 @@ public class CountDownActivity extends AppCompatActivity {
         finish();
     }
 
-    private class MyCountDownTimer extends CountDownTimer {
+    /**
+     * @param view 开始学习按钮
+     */
+    public void startStudy(View view) {
+        Log.d(TAG, "onClick: " + sp_hour.getSelectedItemPosition() + sp_minute.getSelectedItemPosition());
+        hour = sp_hour.getSelectedItemPosition();
+        minute = sp_minute.getSelectedItemPosition() * 5;
+        if (hour == 0 && minute == 0) {
+            Toast.makeText(CountDownActivity.this, "请正确设置学习时间", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        isStudy = true;
+        setContentView(R.layout.activity_count_down);
+        mHour = findViewById(R.id.tv_hour);
+        mMinute = findViewById(R.id.tv_minute);
+        final_hour = hour;
+        final_minute = minute;
+        mHour.setText(hour + " 时 ");
+        mMinute.setText(minute + " 分 ");
+        findViewById(R.id.wrapper3).setVisibility(View.VISIBLE);
+        findViewById(R.id.wrapper1).setVisibility(View.GONE);
+        findViewById(R.id.wrapper2).setVisibility(View.GONE);
+        View view2 = findViewById(R.id.wrapper2);
+        view2.setVisibility(View.GONE);
+        final LinearLayout linearLayout = findViewById(R.id.ll_all);
+        linearLayout.setBackgroundResource(R.drawable.study_background);
+        minute = 1;
+        countDownTimer = new MyCountDownTimer((hour * 60 + minute) * 60 * 1000, 1000 * 60);
+        countDownTimer.start();
+    }
+
+    private class MyCountDownTimer extends CountDownTimer implements Callback {
 
         /**
          * @param millisInFuture    The number of millis in the future from the call
@@ -223,32 +236,30 @@ public class CountDownActivity extends AppCompatActivity {
                     finish();
                 }
             });
-//            final LinearLayout linearLayout = findViewById(R.id.ll_all);
-//            linearLayout.setBackgroundResource(R.drawable.);
+
             isStudy = false;
-//            OkHttpClient client = new OkHttpClient();
             OkHttpClient client = ((MyApplication) getApplication()).okHttpClient;
             FormBody formBody = new FormBody.Builder().add("time", final_hour * 60 + final_minute + "").build();
             Request request = new Request.Builder().put(formBody).url(URL).build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            MyToast.showMessage("数据上传失败");
-                        }
-                    });
-                }
+            client.newCall(request).enqueue(this);
+        }
 
+        @Override
+        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            runOnUiThread(new Runnable() {
                 @Override
-                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                    if (response.isSuccessful()) {
-                        MyApplication application = (MyApplication) getApplication();
-                        application.getUser().setStudyTime(application.getUser().getStudyTime() + final_hour * 60 + final_minute);
-                    }
+                public void run() {
+                    MyToast.showMessage("数据上传失败");
                 }
             });
+        }
+
+        @Override
+        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            if (response.isSuccessful()) {
+                MyApplication application = (MyApplication) getApplication();
+                application.getUser().setStudyTime(application.getUser().getStudyTime() + final_hour * 60 + final_minute);
+            }
         }
     }
 

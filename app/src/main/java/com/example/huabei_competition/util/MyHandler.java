@@ -29,7 +29,7 @@ public class MyHandler extends Handler {
      * @param context 上下文
      * @return MyHandler 对象
      */
-    public MyHandler obtain(Context context) {
+    public static MyHandler obtain(Context context) {
         if (handlerHashMap == null)
             handlerHashMap = new HashMap<>();
         if (!handlerHashMap.containsKey(context.toString())) {
@@ -40,7 +40,7 @@ public class MyHandler extends Handler {
     }
 
     public Context getWeakContext() {
-        if (weakContext != null && weakContext.get() != null)
+        if (weakContext.get() != null)
             return weakContext.get();
         return null;
     }

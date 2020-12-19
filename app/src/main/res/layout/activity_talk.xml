@@ -7,9 +7,10 @@
     tools:context=".ui.TalkActivity">
 
     <RelativeLayout
+        android:paddingTop="40dp"
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="90dp"
         android:background="@drawable/check1"
         android:orientation="horizontal"
         android:paddingLeft="10dp"

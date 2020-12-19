@@ -163,7 +163,7 @@ public class MyApplication extends Application {
      * 通过反射拿到当前app的application
      * @return 返回application
      */
-    public static Application getApplicationByReflect() {
+    public static MyApplication getApplicationByReflect() {
         try {
             @SuppressLint("PrivateApi")
             Class<?> activityThread = Class.forName("android.app.ActivityThread");
@@ -172,7 +172,7 @@ public class MyApplication extends Application {
             if (app == null) {
                 throw new NullPointerException("u should init first");
             }
-            return (Application) app;
+            return (MyApplication) app;
         } catch (NoSuchMethodException | IllegalAccessException | ClassNotFoundException | InvocationTargetException e) {
             e.printStackTrace();
         }

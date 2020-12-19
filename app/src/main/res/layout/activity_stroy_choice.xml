@@ -57,39 +57,16 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.04" />
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="409dp"-->
-        <!--            android:layout_height="35dp"-->
-        <!--            android:orientation="horizontal"-->
-        <!--            app:layout_constraintBottom_toTopOf="@+id/guideline9"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent">-->
 
-        <!--            <ImageButton-->
-        <!--                android:id="@+id/iv_back"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:contentDescription="@string/back"-->
-        <!--                android:onClick="@{() -> mContext.finish()}"-->
-        <!--                android:src="@drawable/ic_baseline_arrow_back_ios_24" />-->
-
-        <!--            <TextView-->
-        <!--                android:id="@+id/tv_title"-->
-        <!--                android:layout_gravity="center_vertical"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:gravity="center"-->
-        <!--                android:text="通讯录"-->
-        <!--                android:textColor="#000" />-->
-        <!--        </LinearLayout>-->
         <RelativeLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:background="@drawable/check1"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
+            android:paddingTop="30dp"
             android:paddingRight="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,8 +82,9 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:height="50dp"
                 android:gravity="center"
                 android:text="微聊"
                 android:textColor="#fff"

@@ -11,10 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.PersonDetail;
+import com.example.huabei_competition.util.BaseActivity;
 
 import java.util.List;
 
-public class IntroduceActivity extends AppCompatActivity {
+public class IntroduceActivity extends BaseActivity {
     private static final String TAG = "IntroduceActivity";
     List<PersonDetail> detailList;
     private String Id;

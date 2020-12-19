@@ -45,6 +45,7 @@
         android:id="@+id/ib_chat"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/wechat"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -57,6 +58,7 @@
         android:id="@+id/tongji"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/tongji"
         android:contentDescription="@string/tongji"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
@@ -164,6 +166,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:drawableTop=""
+            android:id="@+id/change_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:onClick="changeUser"
+            android:text="切换用户"
+            android:textColor="#fff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </FrameLayout>
 
 

@@ -149,4 +149,8 @@ public class MainActivity extends BaseActivity {
     public boolean onTouchEvent(MotionEvent event) {
         return super.onTouchEvent(event);
     }
+
+    public void changeUser(View view) {
+        logOut();
+    }
 }

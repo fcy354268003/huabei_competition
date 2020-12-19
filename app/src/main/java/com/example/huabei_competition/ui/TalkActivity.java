@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.PlotCache;
+import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.google.gson.Gson;
@@ -52,7 +53,7 @@ import okhttp3.Response;
 /**
  * Create by FanChenYang
  */
-public class TalkActivity extends AppCompatActivity implements View.OnClickListener {
+public class TalkActivity extends BaseActivity implements View.OnClickListener {
     public static final int TYPE_CALLBACK = 0;
     public static final int TYPE_TALK = 1;
     public static final String URL_GET_PLOTS = MyApplication.URL + "/app/getPlots?";
@@ -256,23 +257,6 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
         userData.apply();
     }
 
-    private static class Parser {
-        @SerializedName("id")
-        public int id;
-        @SerializedName("status")
-        public int status;
-        @SerializedName("plot_list")
-        public List<Plot> plots = new ArrayList<>();
-
-        private static class Plot {
-            @SerializedName("plot_id")
-            public String plotId;
-            @SerializedName("name")
-            public String whose;
-            @SerializedName("string")
-            public String content;
-        }
-    }
 
     private void initComponents() {
         TextView tvName = findViewById(R.id.tv_name);
@@ -370,6 +354,23 @@ public class TalkActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = "TalkActivity";
 
+    private static class Parser {
+        @SerializedName("id")
+        public int id;
+        @SerializedName("status")
+        public int status;
+        @SerializedName("plot_list")
+        public List<Plot> plots = new ArrayList<>();
+
+        private static class Plot {
+            @SerializedName("plot_id")
+            public String plotId;
+            @SerializedName("name")
+            public String whose;
+            @SerializedName("string")
+            public String content;
+        }
+    }
 
     private static class MyHandler extends Handler {
         private WeakReference<TalkActivity> contextWeakReference;
