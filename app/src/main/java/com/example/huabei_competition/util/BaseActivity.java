@@ -66,7 +66,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void logOut() {
-        activities.clear();
+        for (Activity activity : activities) {
+            activity.finish();
+        }
         startActivity(new Intent(this,CheckInActivity.class));
     }
 
