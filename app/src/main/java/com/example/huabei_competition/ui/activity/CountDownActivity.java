@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui;
+package com.example.huabei_competition.ui.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.util.BaseActivity;

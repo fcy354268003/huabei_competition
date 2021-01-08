@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.List;
 
@@ -83,5 +83,18 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
             TextView textView = getView(id);
             textView.setText(text);
         }
+    }
+
+    /**
+     * @param adapter 需要刷新的adapter
+     * @param oldList 旧的列表内容
+     * @param newList 新的列表内容
+     * @param <P>     实现了可比较接口的泛型
+     */
+    public static <P extends DiffDataCallback.Differ<P>> void diff(MyRecyclerAdapter<P> adapter, List<P> oldList, List<P> newList) {
+        DiffDataCallback<P> callback = new DiffDataCallback<>(oldList, newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+        adapter.setResources(newList);
+        result.dispatchUpdatesTo(adapter);
     }
 }

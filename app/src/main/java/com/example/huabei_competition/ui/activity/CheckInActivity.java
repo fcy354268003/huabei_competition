@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui;
+package com.example.huabei_competition.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -41,7 +41,6 @@ public class CheckInActivity extends BaseActivity implements Callback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
-
     }
 
     private static final String TAG = "CheckInActivity";
@@ -51,14 +50,12 @@ public class CheckInActivity extends BaseActivity implements Callback {
         super.onContentChanged();
         mPassword = findViewById(R.id.et_password);
         mUserName = findViewById(R.id.et_userName);
-
         Drawable drawable1 = getResources().getDrawable(R.drawable.user2);
         drawable1.setBounds(0, 0, 30, 0);
         mPassword.setCompoundDrawables(drawable1, null, null, null);
         Drawable drawable2 = getResources().getDrawable(R.drawable.password);
         drawable2.setBounds(0, 0, 30, 0);
         mUserName.setCompoundDrawables(drawable2, null, null, null);
-        animation();
     }
 
     /**
@@ -71,7 +68,6 @@ public class CheckInActivity extends BaseActivity implements Callback {
         findViewById(R.id.l2).startAnimation(animation);
         findViewById(R.id.btn_register).startAnimation(animation);
     }
-
 
 
     /**

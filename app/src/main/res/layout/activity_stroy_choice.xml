@@ -8,7 +8,7 @@
 
         <variable
             name="mContext"
-            type="com.example.huabei_competition.ui.StoryChoiceActivity" />
+            type="com.example.huabei_competition.ui.activity.StoryChoiceActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

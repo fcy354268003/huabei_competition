@@ -7,7 +7,7 @@
     android:background="@drawable/start"
     android:paddingTop="40dp"
     android:orientation="vertical"
-    tools:context=".ui.IntroduceActivity">
+    tools:context=".ui.activity.IntroduceActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

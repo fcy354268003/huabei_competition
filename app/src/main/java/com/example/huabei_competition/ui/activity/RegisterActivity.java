@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui;
+package com.example.huabei_competition.ui.activity;
 
 import android.os.Bundle;
 import android.os.Handler;

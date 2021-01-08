@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.ui.CheckInActivity;
+import com.example.huabei_competition.ui.activity.CheckInActivity;
 
 import java.util.ArrayList;
 import java.util.List;

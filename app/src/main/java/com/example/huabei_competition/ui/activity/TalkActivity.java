@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui;
+package com.example.huabei_competition.ui.activity;
 
 
 import android.content.Intent;
@@ -17,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 

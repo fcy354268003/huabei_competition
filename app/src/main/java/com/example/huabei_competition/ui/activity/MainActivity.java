@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui;
+package com.example.huabei_competition.ui.activity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -18,14 +18,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.util.BaseActivity;
-import com.example.huabei_competition.fragments.FamousQuotesFragment;
+import com.example.huabei_competition.ui.fragments.FamousQuotesFragment;
+import com.example.huabei_competition.util.UserUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *      Create by FanChenYang
- *
+ * Create by FanChenYang
  */
 public class MainActivity extends BaseActivity {
     private MediaPlayer mMediaPlayer;
@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
     private FrameLayout frameLayout;
     private Fragment[] fragments = new Fragment[]{new FamousQuotesFragment()};
     private static final String TAG = "MainActivity";
+    private int isShowing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,9 @@ public class MainActivity extends BaseActivity {
         ImageView imageView = findViewById(R.id.imageView);
         TextView textView = findViewById(R.id.textView);
         ImageButton imageButton = findViewById(R.id.study_study);
+        getSupportFragmentManager().beginTransaction().add(R.id.container, fragments[0]).commit();
+
+        frameLayout = findViewById(R.id.container);
         alpha_views.add(imageView);
         alpha_views.add(textView);
         alpha_views.add(imageButton);
@@ -87,7 +91,8 @@ public class MainActivity extends BaseActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().add(R.id.container, fragments[0]).commit();
+                isShowing = frameLayout.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+                frameLayout.setVisibility(isShowing);
             }
         });
         findViewById(R.id.tongji).setOnClickListener(new View.OnClickListener() {
@@ -151,6 +156,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void changeUser(View view) {
-        logOut();
+        UserUtil.logOut(this);
     }
 }

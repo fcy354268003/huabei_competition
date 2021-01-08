@@ -80,6 +80,7 @@
         app:srcCompat="@drawable/img_alarm" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="微聊"
@@ -161,24 +162,27 @@
         android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/change_user"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:onClick="changeUser"
-            android:text="切换用户"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/change_user"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:onClick="changeUser"
+        android:text="切换用户"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

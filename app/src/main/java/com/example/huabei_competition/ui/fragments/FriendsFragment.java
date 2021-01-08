@@ -1,4 +1,4 @@
-package com.example.huabei_competition.fragments;
+package com.example.huabei_competition.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.ui.StoryChoiceActivity;
+import com.example.huabei_competition.ui.activity.StoryChoiceActivity;
 import com.example.huabei_competition.databinding.FragmentFriendsBinding;
 import com.example.huabei_competition.db.Item;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
-import com.example.huabei_competition.ui.TalkActivity;
+import com.example.huabei_competition.ui.activity.TalkActivity;
 
 import java.util.ArrayList;
 import java.util.List;

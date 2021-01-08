@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.TalkActivity">
+    tools:context=".ui.activity.TalkActivity">
 
     <RelativeLayout
         android:paddingTop="40dp"

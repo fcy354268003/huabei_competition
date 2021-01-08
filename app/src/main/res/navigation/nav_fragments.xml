@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/commentFragment"
-        android:name="com.example.huabei_competition.fragments.CommentFragment"
+        android:name="com.example.huabei_competition.ui.fragments.CommentFragment"
         android:label="fragment_comment"
         tools:layout="@layout/fragment_comment" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/friendsFragment"
-        android:name="com.example.huabei_competition.fragments.FriendsFragment"
+        android:name="com.example.huabei_competition.ui.fragments.FriendsFragment"
         android:label="fragment_friends"
         tools:layout="@layout/fragment_friends" >
         <action

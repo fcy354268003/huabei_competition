@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui;
+package com.example.huabei_competition.ui.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +16,7 @@ import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.example.huabei_competition.widget.MyToast;
-import com.example.huabei_competition.fragments.QuestionFragment;
+import com.example.huabei_competition.ui.fragments.QuestionFragment;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 

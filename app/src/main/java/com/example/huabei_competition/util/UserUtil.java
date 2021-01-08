@@ -1,13 +1,12 @@
 package com.example.huabei_competition.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
 
 import com.example.huabei_competition.network.Network;
-import com.example.huabei_competition.ui.CheckInActivity;
+import com.example.huabei_competition.ui.activity.CheckInActivity;
 import com.example.huabei_competition.widget.MyToast;
 
 

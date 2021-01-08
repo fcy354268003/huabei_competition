@@ -16,27 +16,27 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.StatisticsActivity" />
-        <activity android:name=".ui.TalkActivity" />
-        <activity android:name=".ui.StoryChoiceActivity" />
-        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.activity.StatisticsActivity" />
+        <activity android:name=".ui.activity.TalkActivity" />
+        <activity android:name=".ui.activity.StoryChoiceActivity" />
+        <activity android:name=".ui.activity.RegisterActivity" />
         <activity
-            android:name=".ui.CountDownActivity"
+            android:name=".ui.activity.CountDownActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.CheckInActivity">
+        <activity android:name=".ui.activity.CheckInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.IntroduceActivity" />
-        <activity android:name=".ui.GuideActivity" />
-        <activity android:name=".ui.StartActivity">
+        <activity android:name=".ui.activity.IntroduceActivity" />
+        <activity android:name=".ui.activity.GuideActivity" />
+        <activity android:name=".ui.activity.StartActivity">
 
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask" />
     </application>
 

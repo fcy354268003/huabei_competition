@@ -17,6 +17,7 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -57,8 +58,7 @@ public class Network {
     private static final String TAG = "Network";
 
     /**
-     *
-     * @return
+     * @return client
      */
     public static OkHttpClient getClient() {
         if (mClient == null) {
@@ -67,14 +67,13 @@ public class Network {
                         @Override
                         public void saveFromResponse(@NotNull HttpUrl httpUrl, @NotNull List<Cookie> list) {
                             cookieStore.put(httpUrl.host(), list);
-                            Log.d(TAG, "saveFromResponse: " + httpUrl + " " + list.get(0));
                         }
 
                         @NotNull
                         @Override
                         public List<Cookie> loadForRequest(@NotNull HttpUrl httpUrl) {
                             List<Cookie> cookies = cookieStore.get(httpUrl.host());
-                            return cookies != null ? cookies : new ArrayList<Cookie>();
+                            return cookies != null ? cookies : new ArrayList<>();
                         }
                     })
                     .build();

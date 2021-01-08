@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.huabei_competition.ui.CountDownActivity;
+import com.example.huabei_competition.ui.activity.CountDownActivity;
 import com.example.huabei_competition.widget.MyToast;
 
 /**
