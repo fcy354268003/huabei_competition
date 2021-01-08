@@ -187,7 +187,6 @@ public class CakeShapeView extends View {
         }
     }
 
-
     final float density = getResources().getDisplayMetrics().density;
 
     /**
