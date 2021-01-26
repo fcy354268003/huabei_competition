@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="registerVM"
+            type="com.example.huabei_competition.RegisterVM" />
+
+        <variable
             name="mContext"
             type="com.example.huabei_competition.ui.activity.RegisterActivity" />
     </data>
@@ -31,7 +35,7 @@
             android:gravity="center"
             android:text="@string/register"
             android:textColor="#FBF2EE"
-            android:textSize="35sp"
+            android:textSize="45sp"
             android:textStyle="bold" />
 
 
@@ -67,6 +71,7 @@
                     android:drawablePadding="5dp"
                     android:hint="@string/userName"
                     android:inputType="text"
+                    android:text="@={registerVM.userName}"
                     android:textColor="#867676"
                     android:textColorHint="#867676"
                     android:textSize="15sp" />
@@ -106,12 +111,130 @@
                     android:drawablePadding="5dp"
                     android:hint="@string/password"
                     android:inputType="textPassword"
+                    android:text="@={registerVM.password}"
                     android:textColor="#867676"
                     android:textColorHint="#867676"
                     android:textSize="15sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/passwordSec"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FBF2EE"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:paddingStart="15dp"
+                    android:src="@drawable/password" />
+
+
+                <EditText
+                    android:id="@+id/et_passwordSec"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:autofillHints=""
+                    android:drawablePadding="5dp"
+                    android:hint="@string/passwordSec"
+                    android:inputType="textPassword"
+                    android:text="@={registerVM.passSec}"
+                    android:textColor="#867676"
+                    android:textColorHint="#867676"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/phone"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="?attr/selectableItemBackground"
+            app:cardBackgroundColor="#FBF2EE"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:paddingStart="15dp"
+                    android:src="@drawable/password" />
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/bindPhone"
+                    android:inputType="phone"
+                    android:text="@={registerVM.phoneNumber}"
+                    android:textColor="#867676"
+                    android:textColorHint="#867676"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="30dp">
+
+                <EditText
+                    android:id="@+id/et_verification"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:hint="@string/verification"
+                    android:inputType="number"
+                    android:text="@={registerVM.verification}" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                app:cardCornerRadius="30dp">
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:background="@color/orange"
+                    android:onClick="sendVerification"
+                    android:text="@string/verificationCode"
+                    android:textColor="@color/white" />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

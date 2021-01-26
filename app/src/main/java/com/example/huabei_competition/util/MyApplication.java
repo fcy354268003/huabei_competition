@@ -43,9 +43,10 @@ public class MyApplication extends Application {
                 @Override
                 public void saveFromResponse(@NotNull HttpUrl httpUrl, @NotNull List<Cookie> list) {
                     cookieStore.put(httpUrl.host(), list);
-                    Log.d(TAG, "saveFromResponse: " + "asdddddddddddddddddddddddd" );
+                    Log.d(TAG, "saveFromResponse: " + "asdddddddddddddddddddddddd");
                     Log.d(TAG, "saveFromResponse: " + httpUrl + " " + list.get(0));
                 }
+
                 @NotNull
                 @Override
                 public List<Cookie> loadForRequest(@NotNull HttpUrl httpUrl) {
@@ -64,7 +65,7 @@ public class MyApplication extends Application {
         LitePal.initialize(this);
         loadOneQuote();
         LocalDateTime localDateTime = LocalDateTime.now();
-        Log.d(TAG, "onCreate: "+localDateTime);
+        Log.d(TAG, "onCreate: " + localDateTime);
         List<Blink> all = LitePal.findAll(Blink.class);
         for (Blink blink : all) {
             Log.d(TAG, "onCreate: " + blink.toString());
@@ -161,6 +162,7 @@ public class MyApplication extends Application {
 
     /**
      * 通过反射拿到当前app的application
+     *
      * @return 返回application
      */
     public static MyApplication getApplicationByReflect() {

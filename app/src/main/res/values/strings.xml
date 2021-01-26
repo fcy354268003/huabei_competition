@@ -5,8 +5,12 @@
     <string name="go_to_study">开始学习</string>
     <string name="sum">统计</string>
     <string name="recall">回忆</string>
-    <string name="userName">用户名</string>
-    <string name="password">密码</string>
+    <string name="userName">请输入用户名</string>
+    <string name="password">设置密码</string>
+    <string name="bindPhone">绑定手机号</string>
+    <string name="verificationCode">发送验证码</string>
+    <string name="verification">请输入验证码</string>
+    <string name="passwordSec">再次输入密码</string>
     <string name="img_login">登录按钮</string>
     <string name="hour">小时</string>
     <string name="minute">分钟</string>
@@ -38,7 +42,7 @@
     <string name="back">返回</string>
     <string name="chatting_notes">通讯录</string>
     <string name="circle_friends">朋友圈</string>
-    <string name="register">用户注册</string>
+    <string name="register">新用户注册</string>
     <string name="registerImmediately">立即注册</string>
 
 

@@ -3,4 +3,11 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="tabSelected">#958787</color>
+    <color name="tabPrimary">#fff</color>
+    <color name="warmColor">#f4dccb</color>
+    <color name="lightWarmColor">#fbf2ed</color>
+    <color name="orange">#fb5f07</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
 </resources>

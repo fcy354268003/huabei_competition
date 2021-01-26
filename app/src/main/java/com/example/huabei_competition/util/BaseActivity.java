@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import com.example.huabei_competition.R;
 import com.example.huabei_competition.ui.activity.CheckInActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import scut.carson_ho.kawaii_loadingview.Kawaii_LoadingView;
@@ -69,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         for (Activity activity : activities) {
             activity.finish();
         }
-        startActivity(new Intent(this,CheckInActivity.class));
+        startActivity(new Intent(this, CheckInActivity.class));
     }
 
     private View loadingView = null;
@@ -104,7 +107,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (event.getAction() == KeyEvent.ACTION_DOWN && getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
             methodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-
         return super.onTouchEvent(event);
     }
 

@@ -16,6 +16,7 @@ import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.util.UserUtil;
 import com.example.huabei_competition.widget.MyToast;
+import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,6 +42,7 @@ public class CheckInActivity extends BaseActivity implements Callback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
+        WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
     }
 
     private static final String TAG = "CheckInActivity";

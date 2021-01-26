@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:name=".util.MyApplication"
         android:allowBackup="true"
@@ -16,6 +15,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".ui.activity.ShopActivity">
+
+        </activity>
         <activity android:name=".ui.activity.StatisticsActivity" />
         <activity android:name=".ui.activity.TalkActivity" />
         <activity android:name=".ui.activity.StoryChoiceActivity" />

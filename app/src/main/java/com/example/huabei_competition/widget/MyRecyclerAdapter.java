@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.huabei_competition.databinding.ItemProductBinding;
 
 import java.util.List;
 
@@ -59,16 +63,28 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
         // 缓存view
         protected SparseArray<View> views;
         protected View mView;
+        private ViewDataBinding binding;
+
+        public MyHolder(@NonNull ViewDataBinding binding) {
+            super(binding.getRoot());
+            mView = itemView;
+            views = new SparseArray<>();
+            this.binding = binding;
+        }
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            mView = itemView;
+            this.mView = mView;
             views = new SparseArray<>();
         }
 
+        public ViewDataBinding getBinding() {
+            return binding;
+        }
+
         public static MyHolder getInstance(ViewGroup parent, int layoutId) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
-            return new MyHolder(view);
+            ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), layoutId, parent, false);
+            return new MyHolder(binding);
         }
 
         public <T extends View> T getView(int viewId) {

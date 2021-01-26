@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.example.huabei_competition.db.Product" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_marginVertical="20dp"
+        android:background="@color/lightWarmColor"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:layout_weight="2"
+            android:background="#fff"
+            app:cardCornerRadius="20dp">
+
+            <ImageView
+                android:id="@+id/iv_picture"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:paddingHorizontal="20dp"
+                android:src="@drawable/head3" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:gravity="bottom"
+                android:text='@{data.price + "铜钱"}'
+                android:textColor="#fb5f07"
+                android:textSize="25sp" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text='@{data.name}'
+            android:textColor="#8D000000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text='@{data.des}'
+            android:textSize="20sp" />
+    </LinearLayout>
+</layout>

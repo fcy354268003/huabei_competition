@@ -3,9 +3,9 @@ package com.example.huabei_competition.widget;
 import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.List;
+
 /**
- *      Create by FanChenYang at 2020/12/29
- *
+ * Create by FanChenYang at 2020/12/29
  */
 public class DiffDataCallback<T extends DiffDataCallback.Differ<T>> extends DiffUtil.Callback {
     private final List<T> oldData;

@@ -1,2 +1,3 @@
+include ':jiguang'
 include ':app'
 rootProject.name = "huabei_competition"

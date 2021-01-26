@@ -4,7 +4,7 @@ package com.example.huabei_competition.network;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -17,14 +17,14 @@ import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 
-import okhttp3.Request;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Create by FanChenYang at 2020/12/15
  * 目的：
- * 对Retrofit进行简单封装
+ *
  */
 public class Network {
     private static OkHttpClient mClient;
