@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.Blink;
 import com.example.huabei_competition.db.User;
+import com.example.huabei_competition.event.EventReceiver;
 import com.google.gson.annotations.SerializedName;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import cn.jpush.im.android.api.JMessageClient;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -61,6 +63,12 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // 极光IM
+        JMessageClient.init(this);
+        // 通知栏
+        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_DISABLE);
+        JMessageClient.registerEventReceiver(EventReceiver.getInstance());
+//        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND);
 
         LitePal.initialize(this);
         loadOneQuote();
@@ -124,6 +132,12 @@ public class MyApplication extends Application {
 
     private static final String TAG = "MyApplication";
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        EventReceiver.unRegisterEventReceiver();
+    }
+
     private void loadOneQuote() {
         try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(getResources().openRawResource(R.raw.quote)))) {
             Random random = new Random();
@@ -160,6 +174,7 @@ public class MyApplication extends Application {
         return TAG;
     }
 
+
     /**
      * 通过反射拿到当前app的application
      *
@@ -180,4 +195,5 @@ public class MyApplication extends Application {
         }
         throw new NullPointerException("u should init first");
     }
+
 }

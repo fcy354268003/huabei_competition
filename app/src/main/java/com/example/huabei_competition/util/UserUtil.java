@@ -13,6 +13,7 @@ import com.example.huabei_competition.widget.MyToast;
 
 import java.util.List;
 
+import cn.jpush.im.android.api.JMessageClient;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -84,6 +85,7 @@ public class UserUtil {
     }
 
     public static void logOut(BaseActivity baseActivity) {
+        JMessageClient.logout();
         //初始化Application中user的信息
         MyApplication myApplication = MyApplication.getApplicationByReflect();
         myApplication.setUser(null);

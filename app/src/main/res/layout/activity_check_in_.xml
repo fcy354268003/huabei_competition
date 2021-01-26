@@ -139,6 +139,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline13">
 
         <TextView
+            android:id="@+id/findPassword"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

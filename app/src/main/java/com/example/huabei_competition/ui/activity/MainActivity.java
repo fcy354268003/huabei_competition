@@ -3,6 +3,7 @@ package com.example.huabei_competition.ui.activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -14,12 +15,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.ui.fragments.FamousQuotesFragment;
 import com.example.huabei_competition.util.UserUtil;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,30 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bnv_guide);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    // 主页
+                    case R.id.main:
+
+                        break;
+                    case R.id.chat:
+                        Intent intent = new Intent(MainActivity.this, StoryChoiceActivity.class);
+                        intent.putExtra("type", 0);
+                        startActivity(intent);
+                        break;
+                    // 自习室
+                    case R.id.selfStudyRoom:
+                        break;
+                    // 个人信息主页
+                    case R.id.mine:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override

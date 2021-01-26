@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main"
+        android:title="主页" />
+    <item
+        android:id="@+id/chat"
+        android:title="微聊" />
+    <item
+        android:id="@+id/study"
+        android:title="计时" />
+    <item
+        android:id="@+id/selfStudyRoom"
+        android:title="自习室" />
+    <item
+        android:id="@+id/mine"
+        android:title="我的" />
+</menu>

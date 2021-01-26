@@ -1,6 +1,7 @@
 package com.example.huabei_competition.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.User;
+import com.example.huabei_competition.event.EventReceiver;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.util.UserUtil;
@@ -25,6 +27,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -43,6 +47,9 @@ public class CheckInActivity extends BaseActivity implements Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
+        findViewById(R.id.findPassword).setOnClickListener(veiw -> {
+            EventReceiver.getInstance().test();
+        });
     }
 
     private static final String TAG = "CheckInActivity";
@@ -125,9 +132,55 @@ public class CheckInActivity extends BaseActivity implements Callback {
                         finish();
                     }
                 });
+                // 极光相关登录
+                SharedPreferences jgim = getSharedPreferences(JG_SHARED_NAME, MODE_PRIVATE);
+                boolean isRegisted = jgim.getBoolean(IS_REGISTED, false);
+                //没有注册
+                if (!isRegisted) {
+                    // 先注册
+                    JGRegister(jgim);
+                }
+                JGLogin();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
+
+    public static final String JG_SHARED_NAME = "JGIM";
+    public static final String IS_REGISTED = "isRegistered";
+
+    /**
+     * 极光注册
+     */
+    private void JGRegister(SharedPreferences sharedPreferences) {
+        String password = mPassword.getText().toString();
+        String userName = mUserName.getText().toString();
+        JMessageClient.register(userName, password, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                Log.d(TAG, "gotResult: " + s);
+            }
+        });
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putBoolean(IS_REGISTED, true);
+        edit.apply();
+    }
+
+    /**
+     * 极光登录
+     */
+    private void JGLogin() {
+        String password = mPassword.getText().toString();
+        String userName = mUserName.getText().toString();
+        JMessageClient.login(userName, password, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                Log.d(TAG, "gotResult: " + s);
+            }
+        });
+
+    }
+
 }
