@@ -82,7 +82,6 @@ public class StoryChoiceActivity extends BaseActivity {
                         if (currentFragment == 2) {
                             currentFragment = 1;
                             controller.navigate(R.id.action_commentFragment_to_friendsFragment);
-
                         }
                         break;
                     case R.id.circle:
@@ -139,6 +138,7 @@ public class StoryChoiceActivity extends BaseActivity {
                         }
                     }
                     runOnUiThread(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void run() {
                             initAdapter();
@@ -152,9 +152,9 @@ public class StoryChoiceActivity extends BaseActivity {
     private static class Info {
         @SerializedName("data")
         public List<Blink> comments = new ArrayList<>();
-
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void initAdapter() {
         LocalDateTime localDateTime = LocalDateTime.now();
 //        int monthValue = localDateTime.getMonthValue();

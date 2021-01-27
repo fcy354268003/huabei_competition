@@ -69,7 +69,6 @@ public class MyApplication extends Application {
         JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_DISABLE);
         JMessageClient.registerEventReceiver(EventReceiver.getInstance());
 //        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND);
-
         LitePal.initialize(this);
         loadOneQuote();
         LocalDateTime localDateTime = LocalDateTime.now();

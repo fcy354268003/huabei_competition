@@ -1,15 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff"
+        android:backgroundTint="@color/white"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_newFriend"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/lightWarmColor"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:text="@string/newFriends"
+            android:textSize="@dimen/textSize_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_friends"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/lightWarmColor"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:text="@string/friends"
+            android:textSize="@dimen/textSize_18"
+            app:layout_constraintTop_toBottomOf="@+id/tv_newFriend"
+            tools:layout_editor_absoluteX="0dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_friends"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_friends" />
+
+        <TextView
+            android:id="@+id/tv_group"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/lightWarmColor"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:text="@string/group"
+            android:textSize="@dimen/textSize_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_friends" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_groups"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_group" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

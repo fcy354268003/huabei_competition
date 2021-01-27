@@ -3,6 +3,12 @@ package com.example.huabei_competition.event;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.example.huabei_competition.db.FriendApply;
+import com.example.huabei_competition.ui.fragments.ApplyFragment;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +20,7 @@ import cn.jpush.im.android.api.content.EventNotificationContent;
 import cn.jpush.im.android.api.content.MessageContent;
 import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.event.CommandNotificationEvent;
+import cn.jpush.im.android.api.event.ContactNotifyEvent;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.DeviceInfo;
@@ -32,8 +39,8 @@ public class EventReceiver {
     private volatile static EventReceiver eventReceiver;
 
     private EventReceiver() {
+        friendApply = LiveDataManager.getInstance().with(ApplyFragment.class.getSimpleName());
     }
-
 
     public static EventReceiver getInstance() {
         if (eventReceiver == null) {
@@ -109,28 +116,36 @@ public class EventReceiver {
     }
 
     private static final String TAG = "EventReceiver";
-    private int x = 1;
+    private MutableLiveData<FriendApply> friendApply;
 
-    public void test() {
+    /**
+     * @param event 好友相关通知时事件
+     */
+    public void onEvent(ContactNotifyEvent event) {
+        String reason = event.getReason();
+        String fromUsername = event.getFromUsername();
+        String appkey = event.getfromUserAppKey();
 
-        if (x++ == 1) {
-            JMessageClient.login("java", "a1575047842A", new RequestCallback<List<DeviceInfo>>() {
-                @Override
-                public void gotResult(int i, String s, List<DeviceInfo> deviceInfos) {
-                    for (DeviceInfo deviceInfo : deviceInfos) {
-                        Log.d(TAG, "gotResult: " + deviceInfo.getDeviceID());
-                    }
-                }
-            });
-            return;
+        switch (event.getType()) {
+            case invite_received://收到好友邀请
+                // 有理由
+                friendApply.setValue(new FriendApply(appkey, fromUsername, reason));
+                //...
+                break;
+            case invite_accepted://对方接收了你的好友邀请
+                //...
+                break;
+            case invite_declined://对方拒绝了你的好友邀请
+                //有理由
+                //...
+                break;
+            case contact_deleted://对方将你从好友中删除
+                //...
+                break;
+            default:
+                break;
         }
-
-
-        Conversation conversation = Conversation.createSingleConversation("java");
-        Message message = conversation.createSendMessage(new TextContent("你好"));
-        JMessageClient.sendMessage(message);
-        Log.d(TAG, "test: 发送消息");
-
     }
+
 
 }

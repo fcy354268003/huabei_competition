@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.huabei_competition.R;
@@ -88,6 +91,7 @@ public class FriendsFragment extends Fragment {
     public String[] names = new String[]{"李白", "杜甫", "苏轼", "花木兰"};
     public String[] briefIntroduce;
     private int currentPro;
+    private MyRecyclerAdapter<Item> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,10 +100,31 @@ public class FriendsFragment extends Fragment {
         userData = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
         briefIntroduce = getActivity().getResources().getStringArray(R.array.briefIntroduction);
         FragmentFriendsBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false);
+
         binding.setLifecycleOwner(getActivity());
-//        MyApplication application = (MyApplication) getActivity().getApplication();
-//        MyApplication.User user = application.getUser();
-//        int studyTime = user.getStudyTime();
+        binding.tvNewFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "------ ");
+                getActivity().getSupportFragmentManager().beginTransaction().add(R.id.container, new ApplyFragment()).commit();
+            }
+        });
+        binding.tvFriends.setOnClickListener(view -> {
+            adapter.changeState();
+        });
+
+        binding.rvFriends.setAdapter(getFriendsAdapter(binding));
+
+        return binding.getRoot();
+    }
+
+    private static final String TAG = "FriendsFragment";
+
+    /**
+     * @param binding binding
+     * @return 构造好的friends adapter
+     */
+    private MyRecyclerAdapter<Item> getFriendsAdapter(FragmentFriendsBinding binding) {
         List<Item> items = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
             Item item = new Item();
@@ -109,40 +134,32 @@ public class FriendsFragment extends Fragment {
         }
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.rvFriends.setLayoutManager(manager);
-        binding.rvFriends.setAdapter(new MyRecyclerAdapter<Item>(items) {
+        adapter = new MyRecyclerAdapter<Item>(items) {
             @Override
             public int getLayoutId(int viewType) {
-                return R.layout.item_friend;
+                return R.layout.item_circle_friend;
             }
 
             @Override
             public void bindView(MyHolder holder, final int position, Item item) {
                 ImageView imageView = holder.getView(R.id.iv_thumb);
                 imageView.setImageResource(icons[position]);
-                holder.setText(item.getName(), R.id.tv_state);
+                holder.getView(R.id.tv_sendTime).setVisibility(View.GONE);
+                holder.setText(item.getName(), R.id.petName);
+                holder.setText(briefIntroduce[position], R.id.content);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         intent.setClass(getContext(), TalkActivity.class);
-                            intent.putExtra("position", position);
-                            startActivity(intent);
-//                        if (userData.getInt("" + position, 0) > getActivity().getResources().getIntArray(R.array.array_plot)[position]) {
-//                            intent.setClass(getContext(), TalkActivity.class);
-//                            intent.putExtra("position", position);
-//                            startActivity(intent);
-//                        } else
-//                            Toast.makeText(getContext(), "好感度未达到要求不可解锁", Toast.LENGTH_LONG).show();
+                        intent.putExtra("position", position);
+                        startActivity(intent);
                     }
                 });
             }
-            @Override
-            public void addResource(Item data) {
 
-            }
-
-
-        });
-
-        return binding.getRoot();
+        };
+        return adapter;
     }
+
+
 }

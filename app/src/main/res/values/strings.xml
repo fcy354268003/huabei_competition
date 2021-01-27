@@ -44,6 +44,9 @@
     <string name="circle_friends">朋友圈</string>
     <string name="register">新用户注册</string>
     <string name="registerImmediately">立即注册</string>
+    <string name="newFriends">新朋友</string>
+    <string name="friends">联系人</string>
+    <string name="group">群聊</string>
 
 
 </resources>

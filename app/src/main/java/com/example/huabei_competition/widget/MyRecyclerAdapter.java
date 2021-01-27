@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huabei_competition.databinding.ItemProductBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,28 @@ import java.util.List;
 public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecyclerAdapter.MyHolder> {
     private List<T> resources;
     private static final String TAG = "MyRecyclerAdapter";
+    // 用于控制收起列表时的替换
+    private List<T> storage;
+    // 当前的状态
+    private boolean isOpen = true;
+
+    /**
+     * 控制是否展开状态的改变
+     */
+    public void changeState() {
+        if (isOpen) {
+            // 折叠
+            storage = resources;
+            resources = new ArrayList<>();
+            notifyItemRangeRemoved(0, storage.size());
+        } else {
+            //  打开
+            resources = storage;
+            storage = null;
+            notifyItemRangeInserted(0, resources.size());
+        }
+        isOpen = !isOpen;
+    }
 
     public List<T> getResources() {
         return resources;
@@ -57,7 +80,9 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
     }
 
 
-    public abstract void addResource(T data);
+    public void addResource(T data) {
+
+    }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
         // 缓存view

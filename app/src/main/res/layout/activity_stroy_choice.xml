@@ -12,6 +12,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -41,7 +42,7 @@
             android:id="@+id/bnv_choice"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="#16FAF2F0"
+            android:background="@color/gray"
             app:itemIconTint="@drawable/bottom_item_tint"
             app:itemTextColor="@drawable/bottom_item_tint"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -93,6 +94,7 @@
 
 
         </RelativeLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

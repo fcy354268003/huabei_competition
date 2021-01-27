@@ -47,9 +47,7 @@ public class CheckInActivity extends BaseActivity implements Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
-        findViewById(R.id.findPassword).setOnClickListener(veiw -> {
-            EventReceiver.getInstance().test();
-        });
+
     }
 
     private static final String TAG = "CheckInActivity";
