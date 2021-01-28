@@ -126,6 +126,7 @@ public class ApplyFragment extends Fragment {
                                 }
                             }
                         });
+                        customerDialog.dismiss();
                     }
                 });
                 rootView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
@@ -140,7 +141,7 @@ public class ApplyFragment extends Fragment {
     }
 
     public void back() {
-
+        getActivity().getSupportFragmentManager().beginTransaction().hide(this).commit();
     }
 
 }

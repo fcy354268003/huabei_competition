@@ -1,24 +1,31 @@
 package com.example.huabei_competition.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.ui.activity.StoryChoiceActivity;
-import com.example.huabei_competition.databinding.FragmentCommentBinding;
+import com.example.huabei_competition.databinding.FragmentWeChatBinding;
+import com.example.huabei_competition.widget.MyFragmentAdapter;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CommentFragment#newInstance} factory method to
+ * Use the {@link WeChatFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CommentFragment extends Fragment {
+public class WeChatFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +36,7 @@ public class CommentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CommentFragment() {
+    public WeChatFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +46,11 @@ public class CommentFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CommentFragment.
+     * @return A new instance of fragment WeChatFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CommentFragment newInstance(String param1, String param2) {
-        CommentFragment fragment = new CommentFragment();
+    public static WeChatFragment newInstance(String param1, String param2) {
+        WeChatFragment fragment = new WeChatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,11 +68,25 @@ public class CommentFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        fragments.add(new FriendsFragment());
+        fragments.add(new CommentFragment());
+    }
+
+    private FragmentWeChatBinding binding;
+    private List<Fragment> fragments = new ArrayList<>();
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentCommentBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment, container, false);
-        binding.setLifecycleOwner(getActivity());
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_we_chat, container, false);
+        binding.vpChat.setAdapter(new MyFragmentAdapter(getActivity().getSupportFragmentManager()
+                , FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, fragments));
+        binding.tabs.addTab(binding.tabs.newTab().setText("好友"));
+        binding.tabs.addTab(binding.tabs.newTab().setText("动态"));
+        binding.tabs.setupWithViewPager(binding.vpChat);
         return binding.getRoot();
     }
 }

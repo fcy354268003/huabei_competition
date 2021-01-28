@@ -54,9 +54,9 @@ public class FriendsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        StoryChoiceActivity choiceActivity = (StoryChoiceActivity) context;
-        type = choiceActivity.type;
-        intent = choiceActivity.intent;
+//        StoryChoiceActivity choiceActivity = (StoryChoiceActivity) context;
+//        type = choiceActivity.type;
+//        intent = choiceActivity.intent;
     }
 
     /**

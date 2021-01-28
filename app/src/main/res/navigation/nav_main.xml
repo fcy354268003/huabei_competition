@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mainFragment"
+    android:id="@+id/chat">
+
+    <fragment
+        android:id="@+id/applyFragment"
+        android:name="com.example.huabei_competition.ui.fragments.ApplyFragment"
+        android:label="ApplyFragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.huabei_competition.ui.fragments.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.huabei_competition.ui.fragments.MainFragment"
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_applyFragment"
+            app:destination="@id/applyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_shopFragment"
+            app:destination="@id/shopFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_dataShowFragment"
+            app:destination="@id/dataShowFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopFragment"
+        android:name="com.example.huabei_competition.ui.fragments.ShopFragment"
+        android:label="fragment_shop"
+        tools:layout="@layout/fragment_shop" />
+    <fragment
+        android:id="@+id/dataShowFragment"
+        android:name="com.example.huabei_competition.ui.fragments.DataShowFragment"
+        android:label="fragment_data_show"
+        tools:layout="@layout/fragment_data_show" />
+</navigation>

@@ -110,7 +110,6 @@ public class StoryChoiceActivity extends BaseActivity {
 
     private void updateInfo() {
 
-//        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(URL_GET_COMMENTS + "?year=" + year + "&month=" + monthValue + "&day=" + dayOfMonth).build();
         ((MyApplication) getApplication()).okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -157,12 +156,6 @@ public class StoryChoiceActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void initAdapter() {
         LocalDateTime localDateTime = LocalDateTime.now();
-//        int monthValue = localDateTime.getMonthValue();
-//        int dayOfMonth = localDateTime.getDayOfMonth();
-//        String v = null;
-//        if (dayOfMonth < 10) {
-//            v = monthValue + "/0" + dayOfMonth;
-//        } else v = monthValue + "/" + dayOfMonth;
         final List<Blink> blinks = LitePal.where("time <= ?", localDateTime.toString()).find(Blink.class);
         if (blinks.size() == 0 || (!blinks.get(0).getTime().substring(0, 10).equals(localDateTime.toString().substring(0, 10)))) {
             updateInfo();

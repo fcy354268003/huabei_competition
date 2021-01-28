@@ -20,13 +20,8 @@
         </activity>
         <activity android:name=".ui.activity.StatisticsActivity" />
         <activity android:name=".ui.activity.TalkActivity" />
-        <activity android:name=".ui.activity.StoryChoiceActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ui.activity.StoryChoiceActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity
             android:name=".ui.activity.CountDownActivity"
@@ -41,7 +36,13 @@
         </activity>
         <activity
             android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- Since JCore2.0.0 Required SDK核心功能-->
         <!-- 这个Service要继承JCommonService -->

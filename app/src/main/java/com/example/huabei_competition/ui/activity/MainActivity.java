@@ -45,105 +45,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bnv_guide);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    // 主页
-                    case R.id.main:
-
-                        break;
-                    case R.id.chat:
-                        Intent intent = new Intent(MainActivity.this, StoryChoiceActivity.class);
-                        intent.putExtra("type", 0);
-                        startActivity(intent);
-                        break;
-                    // 自习室
-                    case R.id.selfStudyRoom:
-                        break;
-                    // 个人信息主页
-                    case R.id.mine:
-                        break;
-                }
-                return true;
-            }
-        });
+        setContentView(R.layout.activity_main_new);
     }
 
     @Override
     public void onContentChanged() {
         super.onContentChanged();
-        init();
+//        init();
     }
 
-    private void init() {
-        ImageView imageView = findViewById(R.id.imageView);
-        TextView textView = findViewById(R.id.textView);
-        ImageButton imageButton = findViewById(R.id.study_study);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, fragments[0]).commit();
-
-        frameLayout = findViewById(R.id.container);
-        alpha_views.add(imageView);
-        alpha_views.add(textView);
-        alpha_views.add(imageButton);
-
-        mAnimationSet = new AnimationSet(true);
-        mAnimationSet.setDuration(3000);
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
-        mAnimationSet.addAnimation(alphaAnimation);
-
-
-        mAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_shake);
-        mAnimation.setRepeatMode(Animation.REVERSE);
-
-        // 设置点击事件
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CountDownActivity.class);
-                startActivity(intent);
-            }
-        });
-        findViewById(R.id.ib_chat).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, StoryChoiceActivity.class);
-                intent.putExtra("type", 0);
-                startActivity(intent);
-            }
-        });
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isShowing = frameLayout.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
-                frameLayout.setVisibility(isShowing);
-            }
-        });
-        findViewById(R.id.tongji).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setShake() {
-        for (View view : views) {
-            view.startAnimation(mAnimation);
-        }
-        for (View alpha_view : alpha_views) {
-            alpha_view.startAnimation(mAnimationSet);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setShake();
-    }
 
     @Override
     protected void onStart() {
