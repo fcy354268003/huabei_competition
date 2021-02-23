@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="mContext"
+            type="com.example.huabei_competition.ui.fragments.SearchFragment" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lightWarmColor"
+        android:orientation="horizontal"
+        tools:context=".ui.fragments.SearchFragment">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="@{() -> mContext.onBackPress()}"
+            android:src="@drawable/ic_baseline_arrow_back_ios_24_black" />
+
+        <EditText
+            android:id="@+id/et_groupId"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/radius_back"
+            android:backgroundTint="@color/white"
+            android:hint="请输入自习室id"
+            android:minLines="1"
+            android:paddingStart="10dp"
+            android:textColorHint="@color/tabSelected" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:onClick="@{() -> mContext.onSearchPress()}"
+            android:src="@drawable/ic_baseline_search_24" />
+    </LinearLayout>
+</layout>

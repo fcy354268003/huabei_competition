@@ -3,64 +3,164 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="callback"
+            type="com.example.huabei_competition.callback.FriendsCallback" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:backgroundTint="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_newFriend"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/lightWarmColor"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:text="@string/newFriends"
-            android:textSize="@dimen/textSize_18"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_friends"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/lightWarmColor"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:text="@string/friends"
-            android:textSize="@dimen/textSize_18"
-            app:layout_constraintTop_toBottomOf="@+id/tv_newFriend"
-            tools:layout_editor_absoluteX="0dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_friends"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_friends" />
+            <TextView
+                android:id="@+id/tv_newFriend"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/lightWarmColor"
+                android:gravity="center_vertical"
+                android:onClick="@{ () -> callback.onNewFriendClick()}"
+                android:paddingStart="20dp"
+                android:text="@string/newFriends"
+                android:textSize="@dimen/textSize_18"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_group"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/lightWarmColor"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:text="@string/group"
-            android:textSize="@dimen/textSize_18"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_friends" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_unResolveNew"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:backgroundTint="@color/red"
+                android:elevation="10dp"
+                android:visibility="gone"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_newFriend"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline32"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_groups"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_group" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_unResolveNew"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_npcs"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/lightWarmColor"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="5dp"
+                android:paddingStart="20dp"
+                android:text="@string/npcs"
+                android:textSize="@dimen/textSize_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_newFriend" />
+
+            <ImageView
+                android:id="@+id/iv_npc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="5dp"
+                android:onClick="@{ () -> callback.onAddNPCClick()}"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toTopOf="@+id/rv_npcs"
+                app:layout_constraintEnd_toEndOf="@+id/tv_npcs"
+                app:layout_constraintTop_toTopOf="@+id/tv_npcs" />
+
+            <ImageView
+                android:id="@+id/iv_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="5dp"
+                android:onClick="@{ () -> callback.onAddFriendClick()}"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toTopOf="@+id/rv_friends"
+                app:layout_constraintEnd_toEndOf="@+id/tv_friends"
+                app:layout_constraintTop_toTopOf="@+id/tv_friends" />
+
+            <ImageView
+                android:id="@+id/iv_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="5dp"
+                android:onClick="@{ () -> callback.onAddGroupClick()}"
+                android:src="@drawable/ic_baseline_add_24"
+                app:layout_constraintBottom_toTopOf="@+id/rv_groups"
+                app:layout_constraintEnd_toEndOf="@+id/tv_group"
+                app:layout_constraintTop_toTopOf="@+id/tv_group" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_npcs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_npcs" />
+
+            <TextView
+                android:id="@+id/tv_friends"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/lightWarmColor"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:text="@string/friends"
+                android:textSize="@dimen/textSize_18"
+                app:layout_constraintTop_toBottomOf="@+id/rv_npcs"
+                tools:layout_editor_absoluteX="-16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_friends"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_friends" />
+
+            <TextView
+                android:id="@+id/tv_group"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/lightWarmColor"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:text="@string/group"
+                android:textSize="@dimen/textSize_18"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_friends" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_groups"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_group" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.85" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

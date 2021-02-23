@@ -8,116 +8,125 @@
 
         <variable
             name="callBack"
-            type="com.example.huabei_competition.ui.fragments.ApplyFragment" />
+            type="com.example.huabei_competition.callback.NewFriendsCallback" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/lightWarmColor">
+        android:layout_height="match_parent">
 
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.93" />
-
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.04" />
-
-
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/warmColor"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingTop="30dp"
-            android:paddingRight="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints">
+            android:layout_height="match_parent"
+            android:background="@color/lightWarmColor">
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="30dp"
-                android:layout_height="50dp"
-                android:contentDescription="@string/back_btn"
-                android:src="@drawable/ic_baseline_arrow_back_ios_24_black" />
 
-            <TextView
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:height="50dp"
-                android:gravity="center"
-                android:text="新朋友"
-                android:textColor="@color/black"
-                android:textSize="22sp"
-                tools:ignore="RelativeOverlap" />
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.93" />
 
-        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_friends"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/lightWarmColor"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:text="联系人通知"
-            android:textSize="@dimen/textSize_18"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout2"
-            tools:layout_editor_absoluteX="29dp" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.04" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_friends"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_friends" />
 
-        <TextView
-            android:id="@+id/tv_group"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/lightWarmColor"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:text="群聊通知"
-            android:textSize="@dimen/textSize_18"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_friends" />
+            <RelativeLayout
+                android:id="@+id/relativeLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/warmColor"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingTop="30dp"
+                android:paddingRight="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_groups"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_group" />
+                <ImageView
+                    android:id="@+id/iv_back"
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/back_btn"
+                    android:onClick="@{() -> callBack.onBackClick()}"
+                    android:src="@drawable/ic_baseline_arrow_back_ios_24_black" />
 
-        <TextView
-            android:id="@+id/tv_applyFriend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> callBack.onClickApplyFriend()}"
-            android:text="添加好友"
-            android:textColor="#000"
-            app:layout_constraintBottom_toBottomOf="@+id/relativeLayout2"
-            app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
-            app:layout_constraintTop_toTopOf="@+id/guideline9" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:height="50dp"
+                    android:gravity="center"
+                    android:text="新朋友"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    tools:ignore="RelativeOverlap" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_friendsNew"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/lightWarmColor"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:text="联系人通知"
+                android:textSize="@dimen/textSize_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_friendsNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_friendsNew" />
+
+            <TextView
+                android:id="@+id/tv_groupNew"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/lightWarmColor"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:text="群聊通知"
+                android:textSize="@dimen/textSize_18"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_friendsNew" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_groupsNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_groupNew" />
+
+            <TextView
+                android:id="@+id/tv_applyFriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> callBack.onApplyClick()}"
+                android:text="添加好友"
+                android:textColor="#000"
+                app:layout_constraintBottom_toBottomOf="@+id/relativeLayout2"
+                app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
+                app:layout_constraintTop_toTopOf="@+id/guideline9" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="500dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     tools:context=".ui.fragments.FamousQuotesFragment">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#E1D3CF"
         app:cardCornerRadius="20dp"
-        app:cardElevation="20dp"
-        android:background="#E1D3CF">
+        app:cardElevation="20dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/fengjing3"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/fengjing3" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -28,9 +30,8 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:text="每日名言"
-                android:textSize="28sp"
                 android:textColor="#fff"
-                />
+                android:textSize="28sp" />
 
             <ImageView
                 android:id="@+id/btn_close"
@@ -49,11 +50,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="200dp"
             android:gravity="center"
+            android:lineSpacingExtra="6dp"
             android:paddingHorizontal="50dp"
             android:text="像诗一样"
-            android:lineSpacingExtra="6dp"
             android:textColor="#fff"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
     </androidx.cardview.widget.CardView>
 </FrameLayout>

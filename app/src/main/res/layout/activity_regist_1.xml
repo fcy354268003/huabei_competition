@@ -206,7 +206,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="30dp">
+                app:cardCornerRadius="20dp">
 
                 <EditText
                     android:id="@+id/et_verification"
@@ -223,7 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                app:cardCornerRadius="30dp">
+                app:cardCornerRadius="20dp">
 
                 <Button
                     android:layout_width="100dp"

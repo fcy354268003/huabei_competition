@@ -1,5 +1,7 @@
 package com.example.huabei_competition.event;
 
+import java.util.List;
+
 import cn.jpush.im.android.api.ContactManager;
 
 import cn.jpush.im.android.api.callback.GetUserInfoListCallback;
@@ -64,4 +66,5 @@ public class FriendManager {
     public static void removeFromFriendList(UserInfo userInfo, BasicCallback callback) {
         userInfo.removeFromFriendList(callback);
     }
+
 }

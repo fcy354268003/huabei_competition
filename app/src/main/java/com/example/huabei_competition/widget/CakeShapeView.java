@@ -1,5 +1,8 @@
 package com.example.huabei_competition.widget;
 
+import android.animation.ObjectAnimator;
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 
@@ -50,7 +53,6 @@ public class CakeShapeView extends View {
     // 开始绘制的角度
     private static final float START_DEGREE = 0;
     private RectF rectF;
-    private Animation mAnimation;
 
     public CakeShapeView(Context context) {
         this(context, null);
@@ -114,8 +116,6 @@ public class CakeShapeView extends View {
         guideTextPaint.setAntiAlias(true);
         guideTextPaint.setStrokeWidth(TEXT_WIDTH);
         guideTextPaint.setTextSize(TEXT_SIZE);
-        mAnimation = new CustomerAnimation();
-        mAnimation.setDuration(DURATION_TIME);
     }
 
     /**
@@ -151,11 +151,25 @@ public class CakeShapeView extends View {
     public void setData(List<Content> contents, int radius) {
         this.radius = radius;
         this.contents = contents;
-        if (mSweep == null)
-            mSweep = new float[contents.size()];
-        // 启动动画
-        if (mAnimation != null)
-            setAnimation(mAnimation);
+
+        float[] ultimate = new float[contents.size()];
+        for (int i = 0; i < contents.size(); i++) {
+            ultimate[i] = contents.get(i).getSize() * 3.6f;
+        }
+
+        ValueAnimator valueAnimator = ValueAnimator.ofObject(new MyEvaluator(), new float[contents.size()], ultimate);
+        valueAnimator.setDuration(2000);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                if (mSweep == null)
+                    mSweep = new float[contents.size()];
+                mSweep = (float[]) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        valueAnimator.start();
+
     }
 
 
@@ -248,6 +262,17 @@ public class CakeShapeView extends View {
                 mSweep[i] = interpolatedTime * contents.get(i).getSize() / PIE_ANIMATION_VALUE * 360f;
             }
             invalidate();
+        }
+    }
+
+    private class MyEvaluator implements TypeEvaluator<float[]> {
+        @Override
+        public float[] evaluate(float fraction, float[] startValue, float[] endValue) {
+            mSweep = new float[contents.size()];
+            for (int i = 0; i < mSweep.length; i++) {
+                mSweep[i] = endValue[i] * fraction;
+            }
+            return mSweep;
         }
     }
 

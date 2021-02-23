@@ -4,11 +4,16 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="tabSelected">#958787</color>
+    <color name="tabSelected_group">#716060</color>
+    <color name="tabUnSelected_group">#a59594</color>
     <color name="tabPrimary">#fff</color>
     <color name="warmColor">#f4dccb</color>
     <color name="gray">#aaa</color>
+    <color name="red">#ED0453</color>
     <color name="lightWarmColor">#fbf2ed</color>
     <color name="orange">#fb5f07</color>
     <color name="white">#fff</color>
+    <color name="lightWhite">#8BFFFFFF</color>
     <color name="black">#000</color>
+    <color name="createTextColor">#786666</color>
 </resources>

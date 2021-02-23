@@ -17,6 +17,13 @@ import androidx.fragment.app.DialogFragment;
 
 
 public class CustomerDialog extends DialogFragment {
+
+    private float dimAmount = 0.5f;
+
+    private int mHeight = 600;
+    private int mWidth = 900;
+
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -56,12 +63,6 @@ public class CustomerDialog extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         window.setAttributes(attributes);
     }
-
-
-    private float dimAmount = 0.5f;
-
-    private int mHeight = 600;
-    private int mWidth = 900;
 
 
     public int getmHeight() {

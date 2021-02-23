@@ -3,31 +3,30 @@ package com.example.huabei_competition.event;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.huabei_competition.db.FriendApply;
-import com.example.huabei_competition.ui.fragments.ApplyFragment;
+import com.example.huabei_competition.db.GroupApply;
+import com.example.huabei_competition.ui.fragments.ChatFragment;
+import com.example.huabei_competition.ui.fragments.NewFriendsFragment;
+import com.example.huabei_competition.util.DatabaseUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import cn.jmessage.biz.httptask.task.GetEventNotificationTaskMng;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetUserInfoCallback;
-import cn.jpush.im.android.api.callback.RequestCallback;
 import cn.jpush.im.android.api.content.EventNotificationContent;
-import cn.jpush.im.android.api.content.MessageContent;
 import cn.jpush.im.android.api.content.TextContent;
-import cn.jpush.im.android.api.event.CommandNotificationEvent;
 import cn.jpush.im.android.api.event.ContactNotifyEvent;
+import cn.jpush.im.android.api.event.GroupApprovalEvent;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
-import cn.jpush.im.android.api.model.DeviceInfo;
 import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
-import cn.jpush.im.api.BasicCallback;
 
 /**
  * Create by FanChenYang at 2021/1/26
@@ -37,9 +36,18 @@ import cn.jpush.im.api.BasicCallback;
  */
 public class EventReceiver {
     private volatile static EventReceiver eventReceiver;
+    private HashMap<String, Boolean> isViscosity = new HashMap<>();
+
+    public boolean getIsViscosity(String name) {
+        return isViscosity.containsKey(name);
+    }
 
     private EventReceiver() {
-        friendApply = LiveDataManager.getInstance().with(ApplyFragment.class.getSimpleName());
+        groupApplyMutableLiveData = LiveDataManager.getInstance().with(NewFriendsFragment.class.getSimpleName() + "group");
+        friendApplyMutableLiveData = LiveDataManager.getInstance()
+                .with(NewFriendsFragment.class.getSimpleName());
+        chatMutableLiveData = LiveDataManager.getInstance()
+                .with(ChatFragment.class.getSimpleName());
     }
 
     public static EventReceiver getInstance() {
@@ -110,13 +118,34 @@ public class EventReceiver {
                 // 消息发送者信息
                 UserInfo sender = msg.getFromUser();
                 TextContent content = (TextContent) msg.getContent();
-                Log.d(TAG, "onEvent: 收到消息" + content.getText());
+                chatMutableLiveData.postValue(msg);
+                isViscosity.put(ChatFragment.class.getSimpleName(), true);
                 break;
         }
     }
 
+    /**
+     * @param event 申请入群事件
+     */
+    public void onEvent(GroupApprovalEvent event) {
+        Log.d(TAG, "收到入群申请");
+        long groupID = event.getGid();
+        event.getFromUserInfo(new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                GroupApply apply = new GroupApply(String.valueOf(groupID), userInfo.getUserName(), event.getReason());
+                DatabaseUtil.updateNewGroupMemberApply(apply);
+                groupApplyMutableLiveData.postValue(apply);
+                isViscosity.put(NewFriendsFragment.class.getSimpleName() + "group", true);
+            }
+        });
+
+    }
+
     private static final String TAG = "EventReceiver";
-    private MutableLiveData<FriendApply> friendApply;
+    private MutableLiveData<FriendApply> friendApplyMutableLiveData;
+    private MutableLiveData<Message> chatMutableLiveData;
+    private MutableLiveData<GroupApply> groupApplyMutableLiveData;
 
     /**
      * @param event 好友相关通知时事件
@@ -125,11 +154,13 @@ public class EventReceiver {
         String reason = event.getReason();
         String fromUsername = event.getFromUsername();
         String appkey = event.getfromUserAppKey();
-
         switch (event.getType()) {
             case invite_received://收到好友邀请
+                FriendApply friendApply = new FriendApply(appkey, fromUsername, reason);
+                DatabaseUtil.updateNewFriendApply(friendApply);
+                friendApplyMutableLiveData.postValue(friendApply);
+                isViscosity.put(NewFriendsFragment.class.getSimpleName(), true);
                 // 有理由
-                friendApply.setValue(new FriendApply(appkey, fromUsername, reason));
                 //...
                 break;
             case invite_accepted://对方接收了你的好友邀请

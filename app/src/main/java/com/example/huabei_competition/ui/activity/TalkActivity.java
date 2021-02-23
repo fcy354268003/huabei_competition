@@ -419,7 +419,7 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
 
         @Override
         public int getLayoutId(int viewType) {
-            return viewType == 1 ? R.layout.item_system_view_talk : R.layout.item_user_view_talk;
+            return viewType == 1 ? R.layout.item_friend_view_talk : R.layout.item_user_view_talk;
         }
 
         @Override

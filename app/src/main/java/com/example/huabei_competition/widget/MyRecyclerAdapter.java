@@ -17,6 +17,7 @@ import com.example.huabei_competition.databinding.ItemProductBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * Create by FanChenYang
@@ -81,6 +82,13 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
 
 
     public void addResource(T data) {
+        if (isOpen) {
+            resources.add(data);
+            notifyItemInserted(resources.size() - 1);
+        } else {
+            storage.add(data);
+            notifyItemInserted(storage.size() - 1);
+        }
 
     }
 
@@ -99,7 +107,7 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            this.mView = mView;
+            this.mView = itemView;
             views = new SparseArray<>();
         }
 
@@ -109,13 +117,20 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
 
         public static MyHolder getInstance(ViewGroup parent, int layoutId) {
             ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), layoutId, parent, false);
-            return new MyHolder(binding);
+            if (binding != null)
+                return new MyHolder(binding);
+
+            else {
+                View inflate = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
+                return new MyHolder(inflate);
+            }
         }
 
         public <T extends View> T getView(int viewId) {
             View view = views.get(viewId);
             if (view == null) {
                 view = mView.findViewById(viewId);
+                views.put(viewId, view);
             }
             return (T) view;
         }

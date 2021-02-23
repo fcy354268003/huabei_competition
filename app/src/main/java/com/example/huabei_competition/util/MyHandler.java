@@ -25,15 +25,18 @@ public class MyHandler extends Handler {
         weakContext = new WeakReference<>(context);
     }
 
+    private Callback mCallback;
+
     /**
      * @param context 上下文
      * @return MyHandler 对象
      */
-    public static MyHandler obtain(Context context) {
+    public static MyHandler obtain(Context context, Callback callback) {
         if (handlerHashMap == null)
             handlerHashMap = new HashMap<>();
         if (!handlerHashMap.containsKey(context.toString())) {
             MyHandler myHandler = new MyHandler(context);
+            myHandler.mCallback = callback;
             handlerHashMap.put(context.toString(), myHandler);
         }
         return handlerHashMap.get(context.toString());
@@ -54,19 +57,23 @@ public class MyHandler extends Handler {
     @Override
     public void handleMessage(@NonNull Message msg) {
         super.handleMessage(msg);
+        if (mCallback != null)
+            mCallback.handle(msg);
     }
 
     /**
-     *
      * @param context 上下文
      * @return 删除成功返回true
-     *
+     * <p>
      * 在Activity的destroy()中调用，如果在该Activity中使用了obtain()方法
      */
 
     public static boolean removeByKey(Context context) {
 
         return handlerHashMap.remove(context.toString()) != null;
+    }
 
+    public interface Callback {
+        void handle(Message message);
     }
 }

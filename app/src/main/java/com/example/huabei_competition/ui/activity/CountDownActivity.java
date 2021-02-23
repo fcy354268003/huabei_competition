@@ -255,10 +255,7 @@ public class CountDownActivity extends BaseActivity {
 
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-            if (response.isSuccessful()) {
-                MyApplication application = (MyApplication) getApplication();
-                application.getUser().setStudyTime(application.getUser().getStudyTime() + final_hour * 60 + final_minute);
-            }
+
         }
     }
 

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,19 +34,19 @@ import scut.carson_ho.kawaii_loadingview.Kawaii_LoadingView;
 public abstract class BaseActivity extends AppCompatActivity {
     private final List<Activity> activities = new ArrayList<>();
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            );
-        }
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
-        getWindow().setNavigationBarColor(Color.TRANSPARENT);
-        initFontScale();
-    }
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus) {
+//            View decorView = getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//            );
+//        }
+//        getWindow().setStatusBarColor(Color.TRANSPARENT);
+//        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+//
+//    }
 
     private void initFontScale() {
         Configuration configuration = getResources().getConfiguration();
@@ -60,6 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activities.add(this);
+        initFontScale();
     }
 
     @Override
@@ -81,7 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 开始播放 等候 动画
      */
-    protected void startLoading() {
+    public void startLoading() {
         if (loadingView == null)
             loadingView = findViewById(R.id.loading);
         if (loadingView == null)
@@ -100,14 +102,22 @@ public abstract class BaseActivity extends AppCompatActivity {
         loadingView.setVisibility(View.GONE);
     }
 
+
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         // 点击空白 隐藏软键盘
+
         InputMethodManager methodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if (event.getAction() == KeyEvent.ACTION_DOWN && getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
+        if (ev.getAction() == KeyEvent.ACTION_DOWN && getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
             methodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
-        return super.onTouchEvent(event);
+        return super.dispatchTouchEvent(ev);
     }
 
+    private static final String TAG = "BaseActivity";
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

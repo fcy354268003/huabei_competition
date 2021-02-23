@@ -43,7 +43,7 @@ public class StatisticsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistics);
+        setContentView(R.layout.fragment_statistics);
 
     }
 
@@ -92,7 +92,6 @@ public class StatisticsActivity extends BaseActivity {
                             TextView total = findViewById(R.id.total_tv);
                             TextView week_total = findViewById(R.id.week_tv);
                             count.setText(String.valueOf(data.items.size()));
-                            total.setText(String.valueOf(((MyApplication) getApplication()).getUser().getStudyTime()));
                             int weekly = 0;
                             for (Data.Item item : data.items) {
                                 weekly += item.timeLen;

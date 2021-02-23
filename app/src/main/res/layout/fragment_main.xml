@@ -30,6 +30,8 @@
             android:layout_marginHorizontal="1dp"
             android:background="#fbf2ed"
             app:itemIconTint="@drawable/bottom_item_tint"
+            app:itemTextAppearanceActive="@style/TabLayoutStyleActive"
+            app:itemTextAppearanceInactive="@style/TabLayoutStyleInActive"
             app:itemTextColor="@drawable/bottom_item_tint"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"

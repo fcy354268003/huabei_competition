@@ -3,8 +3,12 @@ package com.example.huabei_competition.db;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
-// 将用户的聊天记录存储
-
+/**
+ * Create by FanChenYang
+ * <p>
+ * 将用户与故事情节对象的聊天记录存储
+ * </p>
+ */
 public class PlotCache extends LitePalSupport {
     @Column(unique = true)
     private String plot_id;

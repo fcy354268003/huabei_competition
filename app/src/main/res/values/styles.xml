@@ -9,9 +9,14 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="TabLayoutStyle">
+    <style name="TabLayoutStyleActive">
         <item name="android:textSize">25sp</item>
     </style>
+
+    <style name="TabLayoutStyleInActive">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="loadingDialogStyle" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>

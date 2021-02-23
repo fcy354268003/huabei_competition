@@ -3,6 +3,7 @@ package com.example.huabei_competition.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,12 +12,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 
+import androidx.annotation.RequiresApi;
+
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.User;
-import com.example.huabei_competition.event.EventReceiver;
+import com.example.huabei_competition.event.ChatRoomUtil;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
-import com.example.huabei_competition.util.UserUtil;
+import com.example.huabei_competition.event.UserUtil;
+import com.example.huabei_competition.util.MyCountDownTimer;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.gson.Gson;
@@ -41,13 +45,11 @@ public class CheckInActivity extends BaseActivity implements Callback {
 
     private EditText mPassword;
     private EditText mUserName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
-
     }
 
     private static final String TAG = "CheckInActivity";
@@ -88,7 +90,6 @@ public class CheckInActivity extends BaseActivity implements Callback {
             return;
         }
         UserUtil.logIn(this, mUserName.getText().toString(), mPassword.getText().toString(), this);
-
     }
 
     /**
@@ -121,7 +122,6 @@ public class CheckInActivity extends BaseActivity implements Callback {
                 Gson gson = new Gson();
                 User user = gson.fromJson(jsonObject.getString("data"), User.class);
                 MyApplication application = (MyApplication) getApplication();
-                application.setUser(user);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -181,4 +181,8 @@ public class CheckInActivity extends BaseActivity implements Callback {
 
     }
 
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+    }
 }

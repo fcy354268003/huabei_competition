@@ -21,8 +21,14 @@
         android:layout_gravity="end"
         android:layout_marginHorizontal="50dp"
         android:background="@drawable/back_talk"
-        android:textColor="#867676"
+        android:textColor="@color/black"
         android:textSize="20sp" />
 
-
+    <ImageView
+        android:id="@+id/iv_invitation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/invitation"
+        android:visibility="gone" />
 </LinearLayout>

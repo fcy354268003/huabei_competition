@@ -1,95 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@drawable/check1"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingTop="40dp"
-        android:paddingRight="10dp"
-        tools:ignore="MissingConstraints">
-
-
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="李白"
-            android:textColor="#fff"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/btn_personInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="#fff"
-            android:text="个人详情"
-            android:textColor="#867676"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_back"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="15"
-            android:background="#FAF2F0">
+            android:layout_height="90dp"
+            android:background="@drawable/check1"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingTop="40dp"
+            android:paddingRight="10dp"
+            tools:ignore="MissingConstraints">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/talk_window"
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="李白"
+                android:textColor="#fff"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/btn_personInfo"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp" />
-        </LinearLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#fff"
+                android:text="个人详情"
+                android:textColor="#867676"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/ll_allChoice"
+            android:id="@+id/ll_back"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4"
-            android:orientation="vertical"
-            android:paddingVertical="20dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_choice_1"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                android:background="#DCBDBD"
-                android:gravity="center"
-                android:text="选择一"
-                tools:ignore="NestedWeights" />
+                android:layout_weight="15"
+                android:background="#FAF2F0">
 
-            <TextView
-                android:id="@+id/tv_choice_2"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/talk_window"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_allChoice"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_weight="1"
-                android:background="#DCBDBD"
-                android:gravity="center"
-                android:text="选择二" />
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:paddingVertical="20dp">
+
+                <TextView
+                    android:id="@+id/tv_choice_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="#DCBDBD"
+                    android:gravity="center"
+                    android:text="选择一"
+                    tools:ignore="NestedWeights" />
+
+                <TextView
+                    android:id="@+id/tv_choice_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="1"
+                    android:background="#DCBDBD"
+                    android:gravity="center"
+                    android:text="选择二" />
+            </LinearLayout>
+
         </LinearLayout>
-
     </LinearLayout>
-</LinearLayout>
+</layout>

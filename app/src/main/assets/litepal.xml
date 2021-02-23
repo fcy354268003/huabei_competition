@@ -1,9 +1,13 @@
 <litepal>
-    <dbname value="detail"/>
-    <version value="1"/>
+    <dbname value="detail" />
+    <version value="8" />
     <list>
-        <mapping class="com.example.huabei_competition.db.PersonDetail"/>
-        <mapping class="com.example.huabei_competition.db.PlotCache"/>
-        <mapping class="com.example.huabei_competition.db.Blink"/>
+        <mapping class="com.example.huabei_competition.db.PersonDetail" />
+        <mapping class="com.example.huabei_competition.db.PlotCache" />
+        <mapping class="com.example.huabei_competition.db.Blink" />
+
+        <mapping class="com.example.huabei_competition.db.GroupApply" />
+        <mapping class="com.example.huabei_competition.db.FriendApply" />
+        <mapping class="com.example.huabei_competition.db.Label"/>
     </list>
 </litepal>

@@ -1,97 +1,77 @@
 package com.example.huabei_competition.ui.activity;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import android.net.Uri;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.example.huabei_competition.R;
+import com.example.huabei_competition.UserCardVM;
+import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.ui.fragments.CreateStudyRoomFragment;
+import com.example.huabei_competition.ui.fragments.MineFragment;
 import com.example.huabei_competition.util.BaseActivity;
-import com.example.huabei_competition.ui.fragments.FamousQuotesFragment;
-import com.example.huabei_competition.util.UserUtil;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.huabei_competition.widget.MyToast;
+import com.example.huabei_competition.widget.WidgetUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 
 /**
  * Create by FanChenYang
  */
 public class MainActivity extends BaseActivity {
-    private MediaPlayer mMediaPlayer;
-    private int current_position = 0;
-    private List<View> views = new ArrayList<>();
-    private Animation mAnimation;
-    private AnimationSet mAnimationSet;
-    private List<View> alpha_views = new ArrayList<>();
-    private FrameLayout frameLayout;
-    private Fragment[] fragments = new Fragment[]{new FamousQuotesFragment()};
-    private static final String TAG = "MainActivity";
-    private int isShowing;
+
+    private NavController controller;
+    private UserCardVM userCardVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_new);
+        controller = Navigation.findNavController(this, R.id.fragment3);
+        userCardVM = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(UserCardVM.class);
+    }
+
+    public NavController getController() {
+        return controller;
     }
 
     @Override
-    public void onContentChanged() {
-        super.onContentChanged();
-//        init();
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (mMediaPlayer == null) {
-            mMediaPlayer = MediaPlayer.create(this, R.raw.background_music);
-            mMediaPlayer.start();
-        } else {
-            mMediaPlayer.seekTo(current_position);
-            mMediaPlayer.start();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null || data.getData() == null)
+            return;
+        Uri uri = data.getData();
+        if (requestCode == CreateStudyRoomFragment.REQUEST_CODE) {
+            LiveDataManager.getInstance().with(CreateStudyRoomFragment.class.getSimpleName()).postValue(uri);
         }
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-            mMediaPlayer.pause();
-            current_position = mMediaPlayer.getCurrentPosition();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-            mMediaPlayer.release();
+        if (requestCode == MineFragment.REQUEST_CODE) {
+            File file = WidgetUtil.picToFile(this, uri);
+            if (file != null) {
+                JMessageClient.updateUserAvatar(file, new BasicCallback() {
+                    @Override
+                    public void gotResult(int i, String s) {
+                        if (i == 0) {
+                            MyToast.showMessage("头像更新成功");
+                            userCardVM.updateUserInfo();
+                        } else MyToast.showMessage("更新失败");
+                    }
+                });
+            }
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
+    public UserCardVM getUserCardVM() {
+        return userCardVM;
     }
 
-    public void changeUser(View view) {
-        UserUtil.logOut(this);
-    }
+
 }

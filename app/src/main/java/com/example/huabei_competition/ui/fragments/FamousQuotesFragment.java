@@ -1,6 +1,7 @@
 package com.example.huabei_competition.ui.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,8 +72,11 @@ public class FamousQuotesFragment extends Fragment {
         });
         TextView textView = inflate.findViewById(R.id.tv_quote);
         MyApplication application = (MyApplication) getActivity().getApplication();
-        textView.setText(application.getmQuote());
+        String s = application.loadOneQuote();
+        Log.d(TAG, "onCreateView: " + s);
+        textView.setText(s);
         return inflate;
     }
 
+    private static final String TAG = "FamousQuotesFragment";
 }

@@ -11,15 +11,28 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/guideline30"
+            android:layout_height="0dp"
+            android:background="@color/warmColor"
+            app:layout_constraintBottom_toTopOf="@+id/guideline31"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs_chat"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="#958787"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline31"
-            app:tabTextColor="#000" />
+            app:tabBackground="@drawable/tabitem"
+            app:tabIndicator="@drawable/tablaout_indicator"
+            app:tabIndicatorColor="@color/warmColor"
+            app:tabIndicatorHeight="60dp"
+            app:tabTextAppearance="@style/TabLayoutStyleActive" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline30"
@@ -49,6 +62,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabs" />
+            app:layout_constraintTop_toBottomOf="@+id/tabs_chat" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".util.MyApplication"
@@ -15,33 +16,28 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.ShopActivity">
-
-        </activity>
         <activity android:name=".ui.activity.StatisticsActivity" />
-        <activity android:name=".ui.activity.TalkActivity" />
-        <activity android:name=".ui.activity.StoryChoiceActivity" />
 
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity
             android:name=".ui.activity.CountDownActivity"
             android:launchMode="singleTask" />
-        <activity android:name=".ui.activity.CheckInActivity">
-
-        </activity>
+        <activity android:name=".ui.activity.CheckInActivity" />
         <activity android:name=".ui.activity.IntroduceActivity" />
         <activity android:name=".ui.activity.GuideActivity" />
         <activity android:name=".ui.activity.StartActivity">
-
-        </activity>
-        <activity
-            android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.TalkActivity" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
         </activity>
 
         <!-- Since JCore2.0.0 Required SDK核心功能-->

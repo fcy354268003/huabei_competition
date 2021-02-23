@@ -28,6 +28,7 @@ public class CommentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FragmentCommentBinding binding;
 
     public CommentFragment() {
         // Required empty public constructor
@@ -64,8 +65,17 @@ public class CommentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FragmentCommentBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment, container, false);
-        binding.setLifecycleOwner(getActivity());
+
+        if (binding != null) {
+            //缓存的rootView需要判断是否已经被加过parent， 如果有parent则从parent删除，防止发生这个rootview已经有parent的错误。
+            ViewGroup mViewGroup = (ViewGroup) binding.getRoot().getParent();
+            if (mViewGroup != null) {
+                mViewGroup.removeView(binding.getRoot());
+            }
+            return binding.getRoot();
+        }
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment, container, false);
+        binding.setLifecycleOwner(this);
         return binding.getRoot();
     }
 }

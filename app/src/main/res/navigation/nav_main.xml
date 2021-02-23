@@ -6,21 +6,25 @@
     android:id="@+id/chat">
 
     <fragment
-        android:id="@+id/applyFragment"
-        android:name="com.example.huabei_competition.ui.fragments.ApplyFragment"
+        android:id="@+id/newFriendFragment"
+        android:name="com.example.huabei_competition.ui.fragments.NewFriendsFragment"
         android:label="ApplyFragment" />
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.example.huabei_competition.ui.fragments.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_chatFragment_to_groupStudyPrepareFragment"
+            app:destination="@id/groupStudyPrepareFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.huabei_competition.ui.fragments.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_applyFragment"
-            app:destination="@id/applyFragment" />
+            android:id="@+id/action_mainFragment_to_newFriendFragment"
+            app:destination="@id/newFriendFragment" />
         <action
             android:id="@+id/action_mainFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
@@ -30,6 +34,21 @@
         <action
             android:id="@+id/action_mainFragment_to_dataShowFragment"
             app:destination="@id/dataShowFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_createStudyRoomFragment"
+            app:destination="@id/createStudyRoomFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selfStudyFragment"
+            app:destination="@id/selfStudyFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_groupStudyFragment"
+            app:destination="@id/groupStudyPrepareFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_groupSelectedFragment"
+            app:destination="@id/groupSelectedFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
@@ -40,5 +59,33 @@
         android:id="@+id/dataShowFragment"
         android:name="com.example.huabei_competition.ui.fragments.DataShowFragment"
         android:label="fragment_data_show"
-        tools:layout="@layout/fragment_data_show" />
+        tools:layout="@layout/fragment_statistics" />
+    <fragment
+        android:id="@+id/createStudyRoomFragment"
+        android:name="com.example.huabei_competition.ui.fragments.CreateStudyRoomFragment"
+        android:label="CreateStudyRoomFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.huabei_competition.ui.fragments.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupInfoFragment"
+        android:name="com.example.huabei_competition.ui.fragments.GroupInfoFragment"
+        android:label="GroupInfoFragment" />
+    <fragment
+        android:id="@+id/selfStudyFragment"
+        android:name="com.example.huabei_competition.ui.fragments.SelfStudyFragment"
+        android:label="SelfStudyFragment" />
+    <fragment
+        android:id="@+id/groupStudyPrepareFragment"
+        android:name="com.example.huabei_competition.ui.fragments.GroupStudyPrepareFragment"
+        android:label="GroupStudyFragment" />
+    <fragment
+        android:id="@+id/groupSelectedFragment"
+        android:name="com.example.huabei_competition.ui.fragments.GroupSelectedFragment"
+        android:label="GroupSelectedFragment" />
 </navigation>
