@@ -1,15 +1,19 @@
 package com.example.huabei_competition.ui.fragments;
 
 import android.graphics.Bitmap;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,26 +23,29 @@ import android.widget.ImageView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.FragmentGroupStudyPrepareBinding;
 import com.example.huabei_competition.event.ChatRoomUtil;
+import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.example.huabei_competition.widget.MyToast;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
+
 
 import cn.jpush.im.android.api.ChatRoomManager;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.callback.RequestCallback;
+import cn.jpush.im.android.api.event.CommandNotificationEvent;
 import cn.jpush.im.android.api.model.ChatRoomInfo;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.Message;
@@ -62,6 +69,8 @@ public class GroupStudyPrepareFragment extends Fragment {
     private long invitationGroupID;
     private int time;
     private Long chatRoomId;
+    // 0:房主
+    private int type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,8 +85,20 @@ public class GroupStudyPrepareFragment extends Fragment {
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_group_study_prepare, container, false);
         binding.ivBack.setOnClickListener(this::back);
+        binding.btnStart.setOnClickListener(this::start);
         return binding.getRoot();
     }
+
+    private void start(View view) {
+        if (userInfos.size() >= 2) {
+            // TODO 向所有用户发送一个 开始 的透传消息 跳转到学习页面
+            sendCMD(START_EVENT);
+            toNextFragment();
+        } else {
+            MyToast.showMessage("人数大于等于3个才可以开始哦！");
+        }
+    }
+
 
     private void back(View v) {
         ((MainActivity) getActivity()).getController().navigateUp();
@@ -90,6 +111,7 @@ public class GroupStudyPrepareFragment extends Fragment {
     }
 
     private void initData() {
+        initAdapter();
         Bundle arguments = getArguments();
         chatRoomId = arguments.getLong("chatRoomId");
         time = arguments.getInt("time");
@@ -99,75 +121,166 @@ public class GroupStudyPrepareFragment extends Fragment {
         } else {
             creatorAction();
         }
+        setObserver();
         binding.tvTimeLeft.setText(String.valueOf(time));
-        getUserList();
+    }
+
+    public static final String STATE_ING = "isGoing";
+
+    private void setObserver() {
+        LiveDataManager.getInstance().<CommandNotificationEvent>with(GroupStudyPrepareFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<CommandNotificationEvent>() {
+            @Override
+            public void onChanged(CommandNotificationEvent o) {
+                Log.d(TAG, "onChanged: livedata收到透传消息" + o.getMsg());
+                if (o.getMsg().equals(ADD_EVENT) || o.getMsg().equals(LEAVE_EVENT)) {
+                    getUserList();
+                    if (type == 0) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                check();
+                            }
+                        }, 500);
+                    }
+                }
+                if (o.getMsg().equals(START_EVENT)) {
+                    toNextFragment();
+                }
+
+            }
+        });
+    }
+
+    private void check() {
+        if (userInfos.size() >= 2) {
+            binding.btnStart.setBackgroundResource(R.color.orange);
+        }
+    }
+
+    /**
+     * 跳转到下一页面
+     */
+    private void toNextFragment() {
+        if (type == 0)
+            ChatRoomUtil.updateRoomState(String.valueOf(chatRoomId), UserUtil.sUserName, STATE_ING, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyToast.showMessage("网络出现异常");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("time", time);
+                                LiveDataManager.getInstance().with(GroupStudyFragment.class.getSimpleName()).postValue(userInfos);
+                                ((MainActivity) (getActivity())).getController().navigate(R.id.action_groupStudyPrepareFragment_to_groupStudyFragment, bundle);
+                            }
+                        });
+
+                    }
+                }
+            });
     }
 
     /**
      * 加入聊天室的动作
      */
     private void touristAction() {
-        ChatRoomManager.enterChatRoom(chatRoomId, new RequestCallback<Conversation>() {
+        type = 1;
+        ChatRoomManager.getChatRoomInfos(Collections.singleton(chatRoomId), new RequestCallback<List<ChatRoomInfo>>() {
             @Override
-            public void gotResult(int i, String s, Conversation conversation) {
-                Log.d(TAG, "gotResult: " + s);
-                if (i != 0) {
-                    MyToast.showMessage("进入自习室失败");
-                    back(binding.getRoot());
-                    chatRoomConversation = conversation;
+            public void gotResult(int i, String s, List<ChatRoomInfo> chatRoomInfos) {
+                if (i == 0) {
+                    ChatRoomInfo chatRoomInfo = chatRoomInfos.get(0);
+                    String description = chatRoomInfo.getDescription();
+                    if (TextUtils.equals(description, STATE_ING)) {
+                        back(getView());
+                    }
+                } else {
+                    back(getView());
                 }
             }
         });
+        binding.btnStart.setVisibility(View.GONE);
+        ChatRoomManager.enterChatRoom(chatRoomId, new RequestCallback<Conversation>() {
+            @Override
+            public void gotResult(int i, String s, Conversation conversation) {
+                if (i != 0) {
+                    MyToast.showMessage("进入自习室失败");
+                    back(binding.getRoot());
+                } else {
+                    Log.d(TAG, "gotResult: 成功进入");
+                    getUserList();
+                    chatRoomConversation = conversation;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendCMD(ADD_EVENT);
+                        }
+                    }, 1000);
+                }
+            }
+
+        });
     }
+
+    private void sendCMD(String content) {
+        Log.d(TAG, "sendCMD: " + userInfos.size());
+        for (UserInfo userInfo : userInfos) {
+            JMessageClient.sendSingleTransCommand(userInfo.getUserName(), null, content, new BasicCallback() {
+                @Override
+                public void gotResult(int i, String s) {
+                    Log.d(TAG, "gotResult: 发送透传消息" + s);
+                }
+            });
+        }
+    }
+
+    public static final String START_EVENT = "0x222";
+    public static final String ADD_EVENT = "0x111";
+    public static final String LEAVE_EVENT = "0x333";
 
     /**
      * 创建聊天室的动作
      */
     private void creatorAction() {
+        type = 0;
         Bundle arguments = getArguments();
         invitationGroupID = Long.parseLong(arguments.getString("groupId"));
         // 向群里发一条 邀请  信息
         Message groupTextMessage = JMessageClient.createGroupTextMessage(invitationGroupID, INVITATION_MESSAGE + "," + chatRoomId + "," + time);
         JMessageClient.sendMessage(groupTextMessage);
+        getUserList();
     }
 
     public static final String INVITATION_MESSAGE = "0x11111asdasd";
 
+    // 刷新用户列表
     private void getUserList() {
-        initAdapter();
-        ChatRoomUtil.getChatRoomUserList(chatRoomId, new Callback() {
+        userInfos.clear();
+        ChatRoomUtil.getChatRoomUserList(chatRoomId, new ChatRoomUtil.CallBack() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + "获取用户列表");
-                if (response.isSuccessful()) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response.body().string());
-                        int total = jsonObject.getInt("total");
-                        JSONArray users = jsonObject.getJSONArray("users");
-                        for (int j = 0; j < total; j++) {
-                            JSONObject userJSONObject = users.getJSONObject(j);
-                            String userId = userJSONObject.getString("username");
-                            JMessageClient.getUserInfo(userId, new GetUserInfoCallback() {
-                                @Override
-                                public void gotResult(int i, String s, UserInfo userInfo) {
-                                    if (i == 0) {
-                                        userInfos.add(userInfo);
-                                        myRecyclerAdapter.notifyDataSetChanged();
-                                    }
-                                }
-                            });
+            public void onListCallBack(List<String> userIds) {
+                for (String userId : userIds) {
+                    JMessageClient.getUserInfo(userId, new GetUserInfoCallback() {
+                        @Override
+                        public void gotResult(int i, String s, UserInfo userInfo) {
+                            if (i == 0) {
+                                userInfos.add(userInfo);
+                                myRecyclerAdapter.notifyDataSetChanged();
+                            }
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else
-                    Log.d(TAG, "onResponse: " + response.body().string());
-                response.close();
+                    });
+                }
             }
         });
     }
@@ -197,14 +310,15 @@ public class GroupStudyPrepareFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         ChatRoomManager.leaveChatRoom(chatRoomId, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
-                Log.d(TAG, "gotResult: " + s);
+                Log.d(TAG, "onDestroyViewgotResult: " + s);
             }
         });
+        sendCMD(LEAVE_EVENT);
     }
 
     private static final String TAG = "GroupStudyPrepareFragme";

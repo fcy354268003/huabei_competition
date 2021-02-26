@@ -83,4 +83,7 @@ dependencies {
 
     implementation 'com.contrarywind:wheelview:4.1.0'
 
+    implementation 'com.kd.easybarrage:library:0.0.1'
+
+
 }

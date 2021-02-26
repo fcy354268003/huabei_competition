@@ -1,10 +1,13 @@
 package com.example.huabei_competition.ui.fragments;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 
+
 /**
  * Create by FanChenYang at 2021/2/14
  * <p>
@@ -39,6 +43,8 @@ public class SelfStudyFragment extends Fragment {
     private TextView mLabel;
     private MyCountDownTimer myCountDownTimer;
     private TimerVM timerVM;
+    private static final String TAG = "SelfStudyFragment";
+    private FragmentSelfStudyBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,11 +56,6 @@ public class SelfStudyFragment extends Fragment {
         }
         Log.d(TAG, "onCreate: " + mTime);
     }
-
-    private static final String TAG = "SelfStudyFragment";
-
-
-    private FragmentSelfStudyBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,22 +118,81 @@ public class SelfStudyFragment extends Fragment {
         };
         binding.setVm(timerVM);
         myCountDownTimer.start();
+        binding.menu.findViewById(R.id.iv_sun).setOnClickListener(this::onSunClick);
+        binding.menu.findViewById(R.id.iv_music).setOnClickListener(this::onMusicClick);
+        binding.menu.findViewById(R.id.iv_breakOff).setOnClickListener(this::onBreakOffClick);
         return binding.getRoot();
     }
 
+    private PowerManager powerManager;
+
+    private void onBreakOffClick(View view) {
+        CustomerDialog customerDialog = new CustomerDialog();
+        customerDialog.setLayoutId(R.layout.customer_dialog);
+        customerDialog.setCallback(new CustomerDialog.InitCallback() {
+            @Override
+            public void initWidget(View rootView) {
+                TextView title = rootView.findViewById(R.id.tv_title);
+                title.setText("真的要退出吗");
+                TextView content = rootView.findViewById(R.id.tv_content);
+                content.setText("再坚持一会就有奖励了呀");
+                rootView.findViewById(R.id.btn_got).setVisibility(View.GONE);
+                rootView.findViewById(R.id.btn_cancel).setOnClickListener(view -> {
+                    customerDialog.dismiss();
+                });
+                rootView.findViewById(R.id.btn_confirm).setOnClickListener(view -> {
+                    customerDialog.dismiss();
+                    ((MainActivity) getActivity()).getController().navigateUp();
+                });
+            }
+        });
+        customerDialog.show(getActivity().getSupportFragmentManager(), "cancel");
+    }
+
+    private MediaPlayer mediaPlayer;
+    private boolean isMusicOn = false;
+
+    private void onMusicClick(View view) {
+        //TODO 播放音乐 等操作
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(getContext(), R.raw.background_music);
+        }
+        isMusicOn = !isMusicOn;
+        if (isMusicOn) {
+            mediaPlayer.start();
+        } else {
+            mediaPlayer.pause();
+        }
+    }
+
+    private boolean screenOn = false;
+
+    private void onSunClick(View view) {
+        view.setKeepScreenOn(!screenOn);
+        screenOn = !screenOn;
+    }
+
     @Override
-    public void onPause() {
-        super.onPause();
-        if (myCountDownTimer != null) {
+    public void onStop() {
+        super.onStop();
+        if (powerManager == null)
+            powerManager = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+        if (myCountDownTimer != null && powerManager.isInteractive()) {
             myCountDownTimer.pause();
+        }
+        if (mediaPlayer != null && isMusicOn) {
+            mediaPlayer.pause();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (myCountDownTimer.isPause()) {
+        if (myCountDownTimer != null && myCountDownTimer.isPause()) {
             myCountDownTimer.restart();
+        }
+        if (mediaPlayer != null && isMusicOn) {
+            mediaPlayer.start();
         }
     }
 }

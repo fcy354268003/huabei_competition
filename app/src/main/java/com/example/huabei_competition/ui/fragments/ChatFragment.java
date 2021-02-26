@@ -3,6 +3,8 @@ package com.example.huabei_competition.ui.fragments;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -29,6 +31,7 @@ import com.example.huabei_competition.widget.MyToast;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
+import cn.jpush.im.android.api.callback.GetGroupInfoCallback;
 import cn.jpush.im.android.api.content.EventNotificationContent;
 import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.model.Conversation;
@@ -134,6 +137,27 @@ public class ChatFragment extends Fragment implements ChatCallback {
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (groupId != 0) {
+            binding.ivMore.setVisibility(View.VISIBLE);
+            binding.ivMore.setOnClickListener(this::toGroupInfo);
+        }
+    }
+
+    private void toGroupInfo(View view) {
+        JMessageClient.getGroupInfo(groupId, new GetGroupInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, GroupInfo groupInfo) {
+                if (i == 0) {
+                    LiveDataManager.getInstance().<GroupInfo>with(GroupInfoFragment.class.getSimpleName()).setValue(groupInfo);
+                    ((MainActivity) getActivity()).getController().navigate(R.id.action_chatFragment_to_groupInfoFragment);
+                }
+            }
+        });
+    }
+
     private void initUser() {
         String nickname = orientedUserInfo.getNickname();
         String userName = orientedUserInfo.getUserName();
@@ -220,7 +244,7 @@ public class ChatFragment extends Fragment implements ChatCallback {
                                     Bundle bundle = new Bundle();
                                     bundle.putLong("chatRoomId", Long.parseLong(chatRoomId));
                                     bundle.putInt("time", Integer.parseInt(split[2]));
-                                    bundle.putInt("type",2);
+                                    bundle.putInt("type", 2);
                                     ((MainActivity) getActivity()).getController().navigate(R.id.action_chatFragment_to_groupStudyPrepareFragment, bundle);
                                 }
                             });

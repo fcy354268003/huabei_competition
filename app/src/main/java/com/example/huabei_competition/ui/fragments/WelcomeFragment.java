@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,56 +14,20 @@ import android.widget.TextView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.callback.WelcomeCallback;
 import com.example.huabei_competition.databinding.FragmentWelcomeBinding;
+import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.WidgetUtil;
 
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
+
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link WelcomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Create by FanChenYang at 2021/2/24
  */
 public class WelcomeFragment extends Fragment implements WelcomeCallback {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public WelcomeFragment() {
-        // Required empty public constructor
-    }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WelcomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WelcomeFragment newInstance(String param1, String param2) {
-        WelcomeFragment fragment = new WelcomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     private FragmentWelcomeBinding binding;
 
@@ -81,8 +46,11 @@ public class WelcomeFragment extends Fragment implements WelcomeCallback {
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false);
         binding.setCallback(this);
+
         return binding.getRoot();
     }
+
+    private static final String TAG = "WelcomeFragment";
 
     @Override
     public void onShopClick() {

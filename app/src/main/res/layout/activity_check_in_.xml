@@ -78,7 +78,7 @@
         android:layout_marginTop="25dp"
         android:background="?attr/selectableItemBackground"
         app:cardBackgroundColor="#FBF2EE"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="25dp"
         app:cardElevation="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

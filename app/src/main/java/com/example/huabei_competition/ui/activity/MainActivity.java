@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -73,5 +74,10 @@ public class MainActivity extends BaseActivity {
         return userCardVM;
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+    }
+    private static final String TAG = "MainActivity";
 }

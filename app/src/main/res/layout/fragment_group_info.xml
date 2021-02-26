@@ -31,6 +31,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/lightWarmColor"
+            android:paddingStart="20dp"
+            android:text="成员"
+            android:textSize="@dimen/textSize_25"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_members"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/lightWarmColor"
+            android:paddingStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
         <LinearLayout
             android:id="@+id/linearLayout8"
             android:layout_width="match_parent"
@@ -116,24 +138,62 @@
             android:paddingStart="20dp"
             android:text="简介"
             android:textColor="@color/createTextColor"
+            android:textSize="@dimen/textSize_25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_members" />
+
+        <TextView
+            android:id="@+id/tv_createTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:text=""
+            android:textColor="@color/createTextColor"
             android:textSize="@dimen/textSize_18"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
-            tools:layout_editor_absoluteX="50dp" />
+            app:layout_constraintBottom_toBottomOf="@+id/textView12"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="@+id/textView12"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/tv_des"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="100dp"
             android:background="@color/lightWarmColor"
             android:paddingHorizontal="40dp"
             android:paddingTop="30dp"
             android:text=""
             android:textColor="@color/createTextColor"
             android:textSize="@dimen/textSize_18"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/lightWarmColor"
+            android:paddingStart="20dp"
+            android:text="成就"
+            android:textSize="@dimen/textSize_25"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_des" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightWarmColor"
+            android:paddingStart="20dp"
+            android:paddingTop="30dp"
+            android:text="暂无成就"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <Button
             android:id="@+id/btn_apply"
@@ -150,5 +210,38 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_leaveGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="1dp"
+            android:text="退出该群"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/lightWarmColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <Button
+            android:id="@+id/btn_manageMember"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/yellow"
+            android:elevation="1dp"
+            android:text="管理成员"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/btn_leaveGroup" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

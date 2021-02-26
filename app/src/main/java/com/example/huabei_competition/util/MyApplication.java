@@ -3,6 +3,7 @@ package com.example.huabei_competition.util;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.os.Build;
+import android.util.Log;
 
 
 import androidx.annotation.NonNull;
@@ -77,8 +78,8 @@ public class MyApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         EventReceiver.unRegisterEventReceiver();
+        Log.d(TAG, "onTerminate: ");
     }
-
 
     @NonNull
     public String loadOneQuote() {

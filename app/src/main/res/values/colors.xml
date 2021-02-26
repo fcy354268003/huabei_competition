@@ -12,8 +12,11 @@
     <color name="red">#ED0453</color>
     <color name="lightWarmColor">#fbf2ed</color>
     <color name="orange">#fb5f07</color>
+    <color name="yellow">#FFC107</color>
     <color name="white">#fff</color>
     <color name="lightWhite">#8BFFFFFF</color>
+    <color name="middle_lightWhite">#0CFFFFFF</color>
     <color name="black">#000</color>
     <color name="createTextColor">#786666</color>
+    <color name="lightCreateTextColor">#FA786E66</color>
 </resources>

@@ -48,6 +48,7 @@ import okhttp3.Response;
  */
 public class SelfRoomFragment extends Fragment {
 
+    public static final int LIMIT = 1;
     private FragmentSelfRoomBinding binding;
     public static final String ADD_LABEL = "addLabel";
 
@@ -149,6 +150,7 @@ public class SelfRoomFragment extends Fragment {
         radioButton.setText(label.getLabelName());
         radioButton.setBackground(getResources().getDrawable(R.drawable.radioitem));
         radioButton.setButtonDrawable(R.drawable.back_talk);
+        radioButton.setTextSize(18);
         binding.rgLabel.addView(radioButton, binding.rgLabel.getChildCount(), layoutParams);
         long groupId = label.getGroupId();
         if (groupId != 0) {
@@ -175,11 +177,10 @@ public class SelfRoomFragment extends Fragment {
             String typeText = radioType.getText().toString();
             RadioButton radioLabel = root.findViewById(binding.rgLabel.getCheckedRadioButtonId());
             String labelText = radioLabel.getText().toString();
-            long groupId = (long) radioLabel.getTag();
             int hour = binding.wvHour.getCurrentItem();
             int minute = binding.wvMinute.getCurrentItem();
             int sum = hour * 60 + minute;
-            if (sum < 20) {
+            if (sum < LIMIT) {
                 MyToast.showMessage("时间不能低于20分钟哦，(●'◡'●)");
                 return;
             }
@@ -190,6 +191,7 @@ public class SelfRoomFragment extends Fragment {
                 bundle.putInt("type", 0);
                 ((MainActivity) getActivity()).getController().navigate(R.id.action_mainFragment_to_selfStudyFragment, bundle);
             } else {
+                long groupId = (long) radioLabel.getTag();
                 ChatRoomUtil.createChatRoom(new Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -209,8 +211,8 @@ public class SelfRoomFragment extends Fragment {
                                 if (response.isSuccessful()) {
                                     try {
                                         JSONObject jsonObject = new JSONObject(response.body().string());
-                                        Long chatRoomId  = jsonObject.getLong("chatroom_id");
-                                        bundle.putLong("chatRoomId",chatRoomId);
+                                        Long chatRoomId = jsonObject.getLong("chatroom_id");
+                                        bundle.putLong("chatRoomId", chatRoomId);
                                         // 跳转到 group等待界面
                                         bundle.putString("groupId", String.valueOf(groupId));
                                         bundle.putInt("type", 1);
@@ -229,6 +231,7 @@ public class SelfRoomFragment extends Fragment {
                 });
             }
         } catch (Exception e) {
+            e.printStackTrace();
             MyToast.showMessage("请将任务详情填写完整，(●'◡'●)");
         }
 

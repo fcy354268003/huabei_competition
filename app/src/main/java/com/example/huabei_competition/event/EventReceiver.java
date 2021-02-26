@@ -9,17 +9,25 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.huabei_competition.db.FriendApply;
 import com.example.huabei_competition.db.GroupApply;
 import com.example.huabei_competition.ui.fragments.ChatFragment;
+import com.example.huabei_competition.ui.fragments.GroupStudyFragment;
+import com.example.huabei_competition.ui.fragments.GroupStudyPrepareFragment;
 import com.example.huabei_competition.ui.fragments.NewFriendsFragment;
 import com.example.huabei_competition.util.DatabaseUtil;
+import com.example.huabei_competition.widget.MyToast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import cn.jmessage.biz.httptask.task.GetEventNotificationTaskMng;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.callback.GetUserInfoListCallback;
 import cn.jpush.im.android.api.content.EventNotificationContent;
 import cn.jpush.im.android.api.content.TextContent;
+import cn.jpush.im.android.api.event.ChatRoomMessageEvent;
+import cn.jpush.im.android.api.event.ChatRoomNotificationEvent;
+import cn.jpush.im.android.api.event.CommandNotificationEvent;
 import cn.jpush.im.android.api.event.ContactNotifyEvent;
 import cn.jpush.im.android.api.event.GroupApprovalEvent;
 import cn.jpush.im.android.api.event.MessageEvent;
@@ -48,6 +56,8 @@ public class EventReceiver {
                 .with(NewFriendsFragment.class.getSimpleName());
         chatMutableLiveData = LiveDataManager.getInstance()
                 .with(ChatFragment.class.getSimpleName());
+        groupStudyPrepareLiveData = LiveDataManager.getInstance().with(GroupStudyPrepareFragment.class.getSimpleName());
+        groupBarrageLiveData = LiveDataManager.getInstance().with(GroupStudyFragment.class.getSimpleName()+"barrage");
     }
 
     public static EventReceiver getInstance() {
@@ -178,5 +188,35 @@ public class EventReceiver {
         }
     }
 
+    public void onEvent(ChatRoomNotificationEvent event) {
+        Log.d(TAG, "onEvent: " + event.getType().name());
+        event.getOperator(new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                Log.d(TAG, "Operator,gotResult: " + s);
+                Log.d(TAG, "Operator,gotResult: " + userInfo.getUserName());
+            }
+        });
+    }
 
+    public void onEvent(ChatRoomMessageEvent event) {
+        Log.d(TAG, "onEvent: 1111");
+        for (Message message : event.getMessages()) {
+            Log.d(TAG, "onEvent: " + message.getContent().toJson());
+        }
+    }
+
+    private MutableLiveData<CommandNotificationEvent> groupStudyPrepareLiveData;
+    private MutableLiveData<CommandNotificationEvent> groupBarrageLiveData;
+    public void onEvent(CommandNotificationEvent event) {
+        Log.d(TAG, "onEvent: 命令透传" + event.getMsg());
+        event.getSenderUserInfo(new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                Log.d(TAG, "命令透传gotResult: " + s);
+            }
+        });
+        groupStudyPrepareLiveData.postValue(event);
+        groupBarrageLiveData.postValue(event);
+    }
 }

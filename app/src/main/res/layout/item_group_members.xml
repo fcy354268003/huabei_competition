@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:cardCornerRadius="20dp">
+
+        <ImageView
+            android:id="@+id/iv_portrait"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_nickName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:maxLength="5"
+        android:textColor="@color/createTextColor"
+        android:textSize="@dimen/textSize_20" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="10dp"
+        android:layout_marginEnd="50dp"
+        android:layout_weight="2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="2dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:text="最近学习："
+            android:textColor="@color/orange"
+            android:textSize="@dimen/textSize_15" />
+
+        <TextView
+            android:id="@+id/tv_currentStudyTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:text="无记录"
+            android:textColor="@color/orange"
+            android:textSize="@dimen/textSize_15" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_driveAway"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/radius_back"
+        android:backgroundTint="@color/orange"
+        android:paddingHorizontal="5dp"
+        android:text="踢出"
+        android:textColor="@color/white" />
+</LinearLayout>

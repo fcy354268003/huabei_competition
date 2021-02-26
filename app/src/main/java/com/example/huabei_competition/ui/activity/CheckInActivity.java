@@ -3,7 +3,6 @@ package com.example.huabei_competition.ui.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,15 +11,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 
-import androidx.annotation.RequiresApi;
-
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.User;
-import com.example.huabei_competition.event.ChatRoomUtil;
+
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.event.UserUtil;
-import com.example.huabei_competition.util.MyCountDownTimer;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.gson.Gson;
@@ -30,6 +26,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Calendar;
+
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
@@ -45,6 +43,7 @@ public class CheckInActivity extends BaseActivity implements Callback {
 
     private EditText mPassword;
     private EditText mUserName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

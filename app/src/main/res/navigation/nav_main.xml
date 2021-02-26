@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_chatFragment_to_groupStudyPrepareFragment"
             app:destination="@id/groupStudyPrepareFragment" />
+        <action
+            android:id="@+id/action_chatFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -75,7 +78,14 @@
     <fragment
         android:id="@+id/groupInfoFragment"
         android:name="com.example.huabei_competition.ui.fragments.GroupInfoFragment"
-        android:label="GroupInfoFragment" />
+        android:label="GroupInfoFragment" >
+        <action
+            android:id="@+id/action_groupInfoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_groupInfoFragment_to_managerGroupMemberFragment"
+            app:destination="@id/managerGroupMemberFragment" />
+    </fragment>
     <fragment
         android:id="@+id/selfStudyFragment"
         android:name="com.example.huabei_competition.ui.fragments.SelfStudyFragment"
@@ -83,9 +93,25 @@
     <fragment
         android:id="@+id/groupStudyPrepareFragment"
         android:name="com.example.huabei_competition.ui.fragments.GroupStudyPrepareFragment"
-        android:label="GroupStudyFragment" />
+        android:label="GroupStudyFragment" >
+        <action
+            android:id="@+id/action_groupStudyPrepareFragment_to_groupStudyFragment"
+            app:destination="@id/groupStudyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/groupSelectedFragment"
         android:name="com.example.huabei_competition.ui.fragments.GroupSelectedFragment"
         android:label="GroupSelectedFragment" />
+    <fragment
+        android:id="@+id/groupStudyFragment"
+        android:name="com.example.huabei_competition.ui.fragments.GroupStudyFragment"
+        android:label="GroupStudyFragment" >
+        <action
+            android:id="@+id/action_groupStudyFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/managerGroupMemberFragment"
+        android:name="com.example.huabei_competition.ui.fragments.ManagerGroupMemberFragment"
+        android:label="ManagerGroupMemberFragment" />
 </navigation>
