@@ -22,6 +22,7 @@ public class RegisterVM extends AndroidViewModel {
     private MutableLiveData<String> phoneNumber = new MutableLiveData<>("");
     private MutableLiveData<String> verification = new MutableLiveData<>("");
     private MutableLiveData<String> passSec = new MutableLiveData<>("");
+    private MutableLiveData<String> nickName = new MutableLiveData<>("");
 
     public RegisterVM(Application application) {
         super(application);
@@ -67,13 +68,23 @@ public class RegisterVM extends AndroidViewModel {
         this.passSec = passSec;
     }
 
+    public MutableLiveData<String> getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(MutableLiveData<String> nickName) {
+        this.nickName = nickName;
+    }
+
     public List<String> getList() {
         List<String> list = new ArrayList<>();
+        list.add(nickName.getValue());
         list.add(userName.getValue());
         list.add(password.getValue());
         list.add(passSec.getValue());
         list.add(phoneNumber.getValue());
         list.add(verification.getValue());
+
         return list;
     }
 

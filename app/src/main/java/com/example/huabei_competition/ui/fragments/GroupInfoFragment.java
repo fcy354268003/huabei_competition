@@ -135,6 +135,7 @@ public class GroupInfoFragment extends Fragment {
                 instance.setTime(date);
                 String createTime = "(创建于" + instance.get(Calendar.YEAR) + "," + (instance.get(Calendar.MONTH) + 1) + "," + instance.get(Calendar.DAY_OF_MONTH) + ")";
                 binding.tvCreateTime.setText(createTime);
+                binding.groupID.setText(String.valueOf(mGroupInfo.getGroupID()));
                 JMessageClient.getGroupMembers(groupInfo.getGroupID(), new RequestCallback<List<GroupMemberInfo>>() {
                     @Override
                     public void gotResult(int i, String s, List<GroupMemberInfo> groupMemberInfos) {

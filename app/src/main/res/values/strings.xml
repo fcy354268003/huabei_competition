@@ -6,6 +6,7 @@
     <string name="sum">统计</string>
     <string name="recall">回忆</string>
     <string name="userName">请输入用户名</string>
+    <string name="nickName">请输入昵称</string>
     <string name="password">设置密码</string>
     <string name="bindPhone">绑定手机号</string>
     <string name="verificationCode">发送验证码</string>
@@ -49,6 +50,12 @@
     <string name="npcs">名人</string>
     <string name="group">群聊</string>
     <string name="userPortrait">用户头像</string>
+    <string name="RegisterStandard">账号：8-16位数字\n
+        密码：混合数字和英文字母，8-16\n
+        昵称：汉字字母数字都可以，小于12位</string>
 
-
+    <string name="yesterday">昨日人均?分钟</string>
+    <string name="sum_time_group">累计时长?分钟</string>
+    <string name="emergine_rule">1.成组两周内，当天人数满4人即自动进入\n 2.小组人员日均学习时长与目标设置完成率会影响榜单的位置哦~</string>
+    <string name="general_rule">1.所有小组都有机会!\n 2.小组人员累积总时长是上榜决定性因素哦</string>
 </resources>

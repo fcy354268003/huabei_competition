@@ -11,7 +11,10 @@
     <include
         android:id="@+id/loading"
         layout="@layout/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
+        android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -75,7 +78,7 @@
         android:layout_width="230dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:background="?attr/selectableItemBackground"
         app:cardBackgroundColor="#FBF2EE"
         app:cardCornerRadius="25dp"
@@ -133,6 +136,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:paddingHorizontal="40dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,6 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="goToForget"
             android:text="找回密码"
             android:textColor="@color/white"
             android:textStyle="bold" />

@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.TimerVM;
 import com.example.huabei_competition.databinding.FragmentGroupStudyBinding;
-import com.example.huabei_competition.databinding.FragmentGroupStudyPrepareBinding;
+
 import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.MyCountDownTimer;
@@ -38,7 +38,7 @@ import com.kd.easybarrage.Barrage;
 
 import java.util.List;
 
-import cn.jpush.im.android.api.ChatRoomManager;
+
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import cn.jpush.im.android.api.event.CommandNotificationEvent;

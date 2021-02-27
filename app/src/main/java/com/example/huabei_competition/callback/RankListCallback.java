@@ -4,4 +4,6 @@ public interface RankListCallback {
     void onSearchClick();
 
     void onAddClick();
+
+    void onRuleClick();
 }

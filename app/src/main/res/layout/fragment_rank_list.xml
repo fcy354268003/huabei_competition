@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="callback"
             type="com.example.huabei_competition.callback.RankListCallback" />
@@ -47,7 +46,7 @@
             app:layout_constraintStart_toStartOf="@+id/tv_newRank" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tv_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
@@ -71,7 +70,7 @@
             android:layout_marginEnd="5dp"
             android:onClick="@{ () ->callback.onAddClick()}"
             android:src="@drawable/ic_baseline_add_24"
-            app:layout_constraintBottom_toTopOf="@+id/textView11"
+            app:layout_constraintBottom_toTopOf="@+id/tv_rule"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

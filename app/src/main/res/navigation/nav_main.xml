@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_mainFragment_to_groupSelectedFragment"
             app:destination="@id/groupSelectedFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_groupInfoFragment"
+            app:destination="@id/groupInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"

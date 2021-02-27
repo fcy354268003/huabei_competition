@@ -1,45 +1,28 @@
 package com.example.huabei_competition.ui.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
-
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.db.User;
-
+import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.util.BaseActivity;
-import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.event.UserUtil;
-import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
-import com.google.gson.Gson;
-
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Calendar;
-
+import com.google.android.material.snackbar.Snackbar;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 
 /**
  * Create by FanChenYang
  */
-public class CheckInActivity extends BaseActivity implements Callback {
+public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
 
     private EditText mPassword;
     private EditText mUserName;
@@ -49,6 +32,7 @@ public class CheckInActivity extends BaseActivity implements Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
+        animation();
     }
 
     private static final String TAG = "CheckInActivity";
@@ -75,19 +59,57 @@ public class CheckInActivity extends BaseActivity implements Callback {
         findViewById(R.id.l1).startAnimation(animation);
         findViewById(R.id.l2).startAnimation(animation);
         findViewById(R.id.btn_register).startAnimation(animation);
+        findViewById(R.id.findPassword).startAnimation(animation);
     }
 
+    @Override
+    public void startLoading() {
+        super.startLoading();
+        findViewById(R.id.l2).setVisibility(View.GONE);
+        findViewById(R.id.l1).setVisibility(View.GONE);
+        findViewById(R.id.btn_log).setVisibility(View.GONE);
+        findViewById(R.id.linearLayout2).setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void stopLoading() {
+        super.stopLoading();
+        findViewById(R.id.l2).setVisibility(View.VISIBLE);
+        findViewById(R.id.l1).setVisibility(View.VISIBLE);
+        findViewById(R.id.btn_log).setVisibility(View.VISIBLE);
+        findViewById(R.id.linearLayout2).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void success(String name, String pass) {
+        JMessageClient.login(name, pass, new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                if(i == 0){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(CheckInActivity.this,MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                }else {
+                    failure();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void failure() {
+        Snackbar.make(mPassword, "登陆失败", Snackbar.LENGTH_LONG).show();
+    }
 
     /**
      * @param view 登录按钮
      */
     public void log(View view) {
-        if (mPassword.getText().toString().equals("asd")) {
-            Intent intent = new Intent(CheckInActivity.this, MainActivity.class);
-            this.startActivity(intent);
-            finish();
-            return;
-        }
         UserUtil.logIn(this, mUserName.getText().toString(), mPassword.getText().toString(), this);
     }
 
@@ -99,89 +121,10 @@ public class CheckInActivity extends BaseActivity implements Callback {
         startActivity(intent);
     }
 
-
-    @Override
-    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-        Log.d(TAG, "onFailure: " + e.toString());
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                MyToast.showMessage("密码或用户名错误");
-                stopLoading();
-            }
-        });
-    }
-
-    @Override
-    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-        stopLoading();
-        if (response.isSuccessful()) {
-            try {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                Gson gson = new Gson();
-                User user = gson.fromJson(jsonObject.getString("data"), User.class);
-                MyApplication application = (MyApplication) getApplication();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent = new Intent(CheckInActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                // 极光相关登录
-                SharedPreferences jgim = getSharedPreferences(JG_SHARED_NAME, MODE_PRIVATE);
-                boolean isRegisted = jgim.getBoolean(IS_REGISTED, false);
-                //没有注册
-                if (!isRegisted) {
-                    // 先注册
-                    JGRegister(jgim);
-                }
-                JGLogin();
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static final String JG_SHARED_NAME = "JGIM";
-    public static final String IS_REGISTED = "isRegistered";
-
     /**
-     * 极光注册
+     * @param view 找回密码按钮
      */
-    private void JGRegister(SharedPreferences sharedPreferences) {
-        String password = mPassword.getText().toString();
-        String userName = mUserName.getText().toString();
-        JMessageClient.register(userName, password, new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                Log.d(TAG, "gotResult: " + s);
-            }
-        });
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putBoolean(IS_REGISTED, true);
-        edit.apply();
-    }
+    public void goToForget(View view) {
 
-    /**
-     * 极光登录
-     */
-    private void JGLogin() {
-        String password = mPassword.getText().toString();
-        String userName = mUserName.getText().toString();
-        JMessageClient.login(userName, password, new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                Log.d(TAG, "gotResult: " + s);
-            }
-        });
-
-    }
-
-    @Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
     }
 }

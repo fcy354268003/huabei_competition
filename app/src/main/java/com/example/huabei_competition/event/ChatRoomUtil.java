@@ -36,7 +36,7 @@ public class ChatRoomUtil {
     public static final String CREATE_CHART_ROOM = "/v1/chatroom/";
     public static final MediaType JSON
             = MediaType.get("application/json; charset=utf-8");
-
+    private static final String TAG = "ChatRoomUtil";
     static {
         String value = APP_KEY + ":" + MASTER_SECRET;
         byte[] bytes = value.getBytes();
@@ -89,7 +89,6 @@ public class ChatRoomUtil {
      * "start": 0
      * }
      */
-    private static final String TAG = "ChatRoomUtil";
 
     public static void getChatRoomUserList(Long roomId, CallBack callBack) {
         OkHttpClient client = new OkHttpClient();

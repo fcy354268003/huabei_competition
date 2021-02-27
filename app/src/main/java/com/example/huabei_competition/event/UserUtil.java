@@ -7,6 +7,7 @@ import android.util.Log;
 
 
 import com.example.huabei_competition.network.Network;
+import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.ui.activity.CheckInActivity;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.BaseActivity;
@@ -37,37 +38,17 @@ import okhttp3.Request;
 public class UserUtil {
     private static final String URL = MyApplication.URL + "/app/login";
     public static String sUserName;
-    public static void logIn(BaseActivity activity, String userName, String password, Callback callback) {
-//        if (!Network.checkNetWorkState(activity)) {
-//            MyToast.showMessage("网络不可用");
-//            return;
-//        }
-//
-//        if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(userName)) {
-//            activity.startLoading();
-//            MyApplication application = (MyApplication) activity.getApplication();
-//            OkHttpClient client = application.okHttpClient;
-//            FormBody formBody = new FormBody.Builder()
-//                    .add("username", userName)
-//                    .add("password", password)
-//                    .build();
-//            Request request = new Request.Builder().post(formBody).url(URL).build();
-//            client.newCall(request).enqueue(callback);
-//        } else MyToast.showMessage("登陆失败");
-        JMessageClient.login(userName, password, new BasicCallback() {
-            @Override
-            public void gotResult(int i, String s) {
-                if (i == 0) {
-                    MyToast.showMessage("登陆成功");
-                    Intent intent = new Intent(activity, MainActivity.class);
-                    activity.startActivity(intent);
-                    sUserName = userName;
-                } else {
-                    MyToast.showMessage("登陆失败");
-                }
-            }
-        });
-
+    public static void logIn(BaseActivity activity, String userName, String password,LogIn.LogCallback callback) {
+        if (!Network.checkNetWorkState(activity)) {
+            MyToast.showMessage("网络不可用");
+            return;
+        }
+        if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)){
+            MyToast.showMessage("请将用户名和密码填写完整");
+            return;
+        }
+        activity.startLoading();
+        LogIn.login(userName,password,callback);
     }
 
     /**
@@ -81,28 +62,15 @@ public class UserUtil {
      *                </>
      * @return true:成功发送请求
      */
-    public static boolean register(List<String> strings, Callback callback, BasicCallback imCallBack) {
-        if (isStandard(strings)) {
-            registerIM(strings, imCallBack);
-//            registerOwnBack(strings, callback);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @return 是否符合规范
-     */
-    private static boolean isStandard(List<String> strings) {
-        for (String string : strings) {
-            if (TextUtils.isEmpty(string)) {
-                MyToast.showMessage("请填写完整！");
-                return false;
-            }
-        }
-        return strings.get(1).equals(strings.get(2));
-    }
-
+//    public static boolean register(List<String> strings, Callback callback, BasicCallback imCallBack) {
+//        if (isStandard(strings)) {
+//            registerIM(strings, imCallBack);
+////            registerOwnBack(strings, callback);
+//            return true;
+//        }
+//        return false;
+//    }
+//
     /**
      * @param strings  注册页面填写内容
      * @param callback 回到接口
