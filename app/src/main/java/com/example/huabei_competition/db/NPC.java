@@ -1,18 +1,31 @@
 package com.example.huabei_competition.db;
 
+import com.example.huabei_competition.event.UserUtil;
+
 import org.litepal.crud.LitePalSupport;
 
 public class NPC extends LitePalSupport {
 
     private String id;
     private String name;
+    // 朝代
     private String dynasty;
+    //
     private String tradeName;
     private String headPicture;
     private String portrait;
     private String description;
     private String favor;
     private String isDialogue;
+    private String userName = UserUtil.sUserName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public String getId() {
         return id;

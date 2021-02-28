@@ -28,8 +28,8 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:textColor="#867676"
                 android:text="@string/personintro"
+                android:textColor="#867676"
                 android:textSize="25sp"
                 app:drawableEndCompat="@drawable/people" />
 
@@ -40,9 +40,9 @@
                 android:layout_height="match_parent"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:textColor="#867676"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
+                android:textColor="#867676"
                 android:textSize="18sp" />
 
 

@@ -85,16 +85,17 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
         JMessageClient.login(name, pass, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
-                if(i == 0){
+                if (i == 0) {
+                    UserUtil.sUserName = name;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent = new Intent(CheckInActivity.this,MainActivity.class);
+                            Intent intent = new Intent(CheckInActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
                         }
                     });
-                }else {
+                } else {
                     failure();
                 }
             }

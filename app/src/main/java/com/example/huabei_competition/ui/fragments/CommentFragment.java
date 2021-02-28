@@ -1,64 +1,45 @@
 package com.example.huabei_competition.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.huabei_competition.R;
+import com.example.huabei_competition.db.FriendCircle;
+import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.ui.activity.StoryChoiceActivity;
 import com.example.huabei_competition.databinding.FragmentCommentBinding;
+import com.example.huabei_competition.util.DatabaseUtil;
+import com.example.huabei_competition.widget.MyRecyclerAdapter;
+
+import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CommentFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Create by FanChenYang at 2021/2/28
  */
 public class CommentFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private FragmentCommentBinding binding;
-
-    public CommentFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CommentFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CommentFragment newInstance(String param1, String param2) {
-        CommentFragment fragment = new CommentFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private RequestManager glideManager;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        glideManager = Glide.with(context);
     }
 
     @Override
@@ -76,6 +57,45 @@ public class CommentFragment extends Fragment {
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comment, container, false);
         binding.setLifecycleOwner(this);
+        binding.rvComments.setLayoutManager(new LinearLayoutManager(getContext()));
+        initAdapter();
         return binding.getRoot();
+    }
+
+    private MyRecyclerAdapter<FriendCircle> blinkAdapter;
+
+    private void initAdapter() {
+        List<FriendCircle> allBlink = DatabaseUtil.getAllBlink();
+        blinkAdapter = new MyRecyclerAdapter<FriendCircle>(allBlink) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.item_circle_friend;
+            }
+            @Override
+            public void bindView(MyHolder holder, int position, FriendCircle circle) {
+                holder.setText(circle.getName(), R.id.petName);
+                holder.setText(circle.getContent(), R.id.content);
+                holder.setText(circle.getTime(), R.id.tv_sendTime);
+                ImageView thumb = holder.getView(R.id.iv_thumb);
+                glideManager.load(circle.getHeadPicture()).into(thumb);
+                if (!TextUtils.isEmpty(circle.getPicture())) {
+                    ImageView annexView = holder.getView(R.id.iv_annex);
+                    annexView.setVisibility(View.VISIBLE);
+                    glideManager.load(circle.getPicture()).into(annexView);
+                }
+            }
+        };
+        binding.rvComments.setAdapter(blinkAdapter);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        LiveDataManager.getInstance().<FriendCircle>with(CommentFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<FriendCircle>() {
+            @Override
+            public void onChanged(FriendCircle circle) {
+                initAdapter();
+            }
+        });
     }
 }

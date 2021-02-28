@@ -1,9 +1,14 @@
 package com.example.huabei_competition.util;
 
 
+import com.example.huabei_competition.db.Dialogue;
 import com.example.huabei_competition.db.FriendApply;
+import com.example.huabei_competition.db.FriendCircle;
 import com.example.huabei_competition.db.GroupApply;
 import com.example.huabei_competition.db.Label;
+import com.example.huabei_competition.db.NPC;
+import com.example.huabei_competition.db.Prop;
+import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.event.UserUtil;
 
 import org.litepal.LitePal;
@@ -43,9 +48,11 @@ public class DatabaseUtil {
         }
         return false;
     }
-    public static void saveOrUpdateLabel(Label label){
-        label.saveOrUpdate(" userName = ? and type = ? and groupId = ?",UserUtil.sUserName,"1", String.valueOf(label.getGroupId()));
+
+    public static void saveOrUpdateLabel(Label label) {
+        label.saveOrUpdate(" userName = ? and type = ? and groupId = ?", UserUtil.sUserName, "1", String.valueOf(label.getGroupId()));
     }
+
     /**
      * @param apply 更新数据库新添加朋友情况
      */
@@ -77,5 +84,46 @@ public class DatabaseUtil {
     public static List<Label> getGroupLabels() {
         List<Label> labels = LitePal.where(" userName = ? and type = ?", UserUtil.sUserName, "1").find(Label.class);
         return labels;
+    }
+
+    public static void saveOrUpdateShopItem(Prop prop) {
+        prop.saveOrUpdate("id = ?", prop.getId());
+    }
+
+    public static void saveOrUpdateShopItem(NPC npc) {
+        npc.saveOrUpdate("id = ?", npc.getId());
+    }
+
+    public static List<Prop> getProps() {
+        List<Prop> all = LitePal.findAll(Prop.class);
+        return all;
+    }
+
+    public static List<ShopRole> getRoles() {
+        List<ShopRole> all = LitePal.where("userName", UserUtil.sUserName).find(ShopRole.class);
+        return all;
+    }
+
+    public static void saveOrUpdateNPC(NPC npc) {
+        npc.saveOrUpdate("id = ?", npc.getId());
+    }
+    public static void saveOrUpdateDialogue(Dialogue npc) {
+        npc.saveOrUpdate("id = ? and userName = ? and Reid = ?", npc.getId(),UserUtil.sUserName,npc.getReid());
+    }
+    public static List<NPC> getMyNPCs() {
+        return LitePal.where("userName = ?", UserUtil.sUserName).find(NPC.class);
+    }
+
+    public static List<Dialogue> getStory(String id) {
+        return LitePal.where("userName = ? and id = ?", UserUtil.sUserName, id).find(Dialogue.class);
+    }
+    public static List<Dialogue> findByReid(String reid){
+        return LitePal.where("userName = ? and Reid = ?",reid).find(Dialogue.class);
+    }
+    public static void saveOrUpdateFriendCircle(FriendCircle circle){
+        circle.saveOrUpdate("id = ?",circle.getId());
+    }
+    public static List<FriendCircle> getAllBlink(){
+        return LitePal.where("userName = ?",UserUtil.sUserName).find(FriendCircle.class);
     }
 }

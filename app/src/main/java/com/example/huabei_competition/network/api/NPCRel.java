@@ -6,13 +6,23 @@ import com.example.huabei_competition.db.NPC;
 import com.example.huabei_competition.db.Prop;
 import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.event.ChatRoomUtil;
+import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.ui.fragments.FriendsFragment;
+import com.example.huabei_competition.util.DatabaseUtil;
 import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Create by FanChenYang at 2021/2/27
@@ -24,6 +34,7 @@ public class NPCRel {
     public static final String PATH_GET_PRO_LIST = "/story/getPropList";
     public static final String PATH_GET_ROLE = "/story/getRoleList";
     public static final String PATH_BUY_PROP = "/story/buyProps";
+    public static final String PATH_BUY_ROLE = "/story/buyRoles";
     public static final String PATH_GET_MINE_NPC = "/role/getInfo";
     public static final String PATH_GET_DIALOGUE = "/role/getDialogue";
     public static final String PATH_REPLY = "/role/reply";
@@ -206,25 +217,50 @@ public class NPCRel {
     /**
      * @param id 商品或者商店角色id
      */
-    public static void buyProp(String id, Callback callback) {
+    public static void buyProp(String id, Callback callback, int type) {
         String json = gson.toJson(new Buy(id));
         RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
-        Request request = new Request.Builder()
-                .url(LogIn.BASIC_PATH + PATH_BUY_PROP)
-                .post(requestBody)
-                .build();
+        Request request;
+        Request.Builder builder = new Request.Builder();
+        builder.url(LogIn.BASIC_PATH + PATH_BUY_PROP).post(requestBody);
+        if (type == 1) {
+            builder.url(LogIn.BASIC_PATH + PATH_BUY_ROLE);
+        }
+        request = builder.build();
         client.newCall(request).enqueue(callback);
     }
 
+
     //=====================================================================
-    public static void getNPCList(Callback callback) {
+    public static void getNPCList() {
         String json = gson.toJson(new MoneyGet());
         RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
         Request request = new Request.Builder()
                 .url(LogIn.BASIC_PATH + PATH_GET_MINE_NPC)
                 .post(requestBody)
                 .build();
-        client.newCall(request).enqueue(callback);
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String json = response.body().string();
+                if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    NPCRel.Get_NPC_1 get_npc_1 = gson.fromJson(json, NPCRel.Get_NPC_1.class);
+                    if (get_npc_1.getCode().equals(LogIn.OK)) {
+                        List<NPC> info = get_npc_1.getData().getInfo();
+                        for (NPC npc : info) {
+                            DatabaseUtil.saveOrUpdateNPC(npc);
+                        }
+                        LiveDataManager.getInstance().with(FriendsFragment.class.getSimpleName() + "NPC").postValue(new Object());
+                    }
+                }
+            }
+        });
     }
 
 
@@ -299,8 +335,14 @@ public class NPCRel {
             }
 
             private String isContinue;
+            // 本地要缓存
             private Dialogue info;
+            // 本地要缓存
             private FriendCircle pyc;
+
+            public FriendCircle getPyc() {
+                return pyc;
+            }
         }
     }
 
@@ -321,13 +363,12 @@ public class NPCRel {
     }
 
     /**
-     *
-     * @param id 角色id
+     * @param id    角色id
      * @param order 第几条 从0开始
-     * @param reid 对话id
+     * @param reid  对话id
      */
     public static void replyDialogue(String id, int order, String reid, Callback callback) {
-        String json = gson.toJson(new Reply(id,order,reid));
+        String json = gson.toJson(new Reply(id, order, reid));
         RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
         Request request = new Request.Builder()
                 .url(LogIn.BASIC_PATH + PATH_REPLY)

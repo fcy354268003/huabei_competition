@@ -9,6 +9,7 @@ public class ShopRole extends LitePalSupport {
     private String description;
     private String price;
     private String isHaving;
+    private String userName;
 
     public String getId() {
         return id;

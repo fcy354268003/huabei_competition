@@ -54,8 +54,8 @@ public class LogIn {
                     LogResponse logResponse = gson.fromJson(response.body().string(), LogResponse.class);
                     if (TextUtils.equals(logResponse.code, OK)) {
                         TOKEN = logResponse.data.token;
-                        callback.success(name,pass);
-                    }else {
+                        callback.success(name, pass);
+                    } else {
                         callback.failure();
                     }
                 }
@@ -64,7 +64,8 @@ public class LogIn {
     }
 
     public interface LogCallback {
-        void success(String name,String pass);
+        void success(String name, String pass);
+
         void failure();
     }
 

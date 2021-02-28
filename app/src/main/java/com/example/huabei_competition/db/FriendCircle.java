@@ -1,5 +1,7 @@
 package com.example.huabei_competition.db;
 
+import com.example.huabei_competition.event.UserUtil;
+
 import org.litepal.crud.LitePalSupport;
 
 public class FriendCircle extends LitePalSupport {
@@ -8,7 +10,13 @@ public class FriendCircle extends LitePalSupport {
     private String headPicture;
     private String content;
     private String picture;
+
     private String time;
+    private final String userName = UserUtil.sUserName;
+
+    public String getUserName() {
+        return userName;
+    }
 
     public String getId() {
         return id;

@@ -12,18 +12,23 @@
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:background="@drawable/check1"
-            android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingTop="40dp"
             android:paddingRight="10dp"
             tools:ignore="MissingConstraints">
 
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24_black" />
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="40dp"
+                android:layout_toEndOf="@id/iv_back"
                 android:gravity="center"
                 android:text="李白"
                 android:textColor="#fff"
@@ -66,6 +71,7 @@
                 android:id="@+id/ll_allChoice"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:visibility="gone"
                 android:layout_weight="4"
                 android:orientation="vertical"
                 android:paddingVertical="20dp">

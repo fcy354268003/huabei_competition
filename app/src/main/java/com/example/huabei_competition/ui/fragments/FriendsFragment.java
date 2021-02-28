@@ -23,14 +23,18 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.callback.FriendsCallback;
 import com.example.huabei_competition.databinding.ItemFriendBinding;
 import com.example.huabei_competition.db.FriendApply;
 import com.example.huabei_competition.db.GroupApply;
+import com.example.huabei_competition.db.NPC;
 import com.example.huabei_competition.event.FriendManager;
 import com.example.huabei_competition.event.GroupManager;
 import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.network.api.LogIn;
+import com.example.huabei_competition.network.api.NPCRel;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.databinding.FragmentFriendsBinding;
 import com.example.huabei_competition.db.Item;
@@ -40,8 +44,12 @@ import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
+import com.google.gson.Gson;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +62,9 @@ import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Create by FanChenYang at 2021/2/17
@@ -62,16 +73,10 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
 
     private SharedPreferences userData;
     private FragmentFriendsBinding binding;
-
+    private RequestManager glideManager;
     private boolean[] isClose = new boolean[]{true, true, true};
-    public int[] icons = new int[]{
-            R.drawable.head1,
-            R.drawable.head2,
-            R.drawable.head3,
-            R.drawable.head4};
-    public String[] names = new String[]{"李白", "杜甫", "苏轼", "花木兰"};
-    public String[] briefIntroduce;
-    private MyRecyclerAdapter<Item> NPCadapter;
+
+    private MyRecyclerAdapter<NPC> NPCadapter;
     private int currentSum = 0;
 
     @Override
@@ -86,11 +91,9 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
         }
         userData = getActivity().getSharedPreferences("userData"
                 , Context.MODE_PRIVATE);
-        briefIntroduce = getActivity().getResources()
-                .getStringArray(R.array.briefIntroduction);
         binding = DataBindingUtil.inflate(inflater,
                 R.layout.fragment_friends, container, false);
-
+        glideManager = Glide.with(binding.getRoot());
         binding.setLifecycleOwner(getActivity());
 
         binding.tvNewFriend.setOnClickListener(new View.OnClickListener() {
@@ -115,10 +118,14 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
         });
         setObserver();
         binding.setCallback(this);
-        binding.rvNpcs.setAdapter(getNPCsAdapter(binding));
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getNPCsAdapter();
+    }
 
     private void setPrompt() {
         int newFriendNotHandle = DatabaseUtil.getNewFriendNotHandle();
@@ -149,6 +156,52 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
     private void setObserver() {
         observeNewFriend();
         observeNewMessage();
+        observeNPC();
+    }
+
+    private void observeNPC() {
+        LiveDataManager.getInstance().with(FriendsFragment.class.getSimpleName() + "NPC")
+                .observe(getViewLifecycleOwner(), new Observer<Object>() {
+                    @Override
+                    public void onChanged(Object o) {
+                        // TODO 从本地数据库 刷新 adapter
+                        List<NPC> myNPCs = DatabaseUtil.getMyNPCs();
+                        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                        binding.rvNpcs.setLayoutManager(manager);
+                        NPCadapter = new MyRecyclerAdapter<NPC>(myNPCs) {
+                            @Override
+                            public int getLayoutId(int viewType) {
+                                return R.layout.item_friend;
+                            }
+
+                            @Override
+                            public void bindView(MyHolder holder, int position, NPC item) {
+                                ImageView imageView = holder.getView(R.id.iv_thumb);
+                                glideManager.load(item.getPortrait()).into(imageView);
+                                holder.getView(R.id.tv_sendTime).setVisibility(View.GONE);
+                                holder.setText(item.getName(), R.id.petName);
+                                String isDialogue = item.getIsDialogue();
+                                if (TextUtils.equals(isDialogue, "true")) {
+                                    holder.getView(R.id.cv_prompt).setVisibility(View.VISIBLE);
+                                    holder.setText("!", R.id.tv_promptNumber);
+                                }else {
+                                    holder.getView(R.id.cv_prompt).setVisibility(View.GONE);
+                                }
+                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getContext(), TalkActivity.class);
+                                        LiveDataManager.getInstance().with(TalkActivity.class.getSimpleName()).postValue(item);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+
+                        };
+                        if (isClose[0])
+                            NPCadapter.changeState();
+                    }
+                });
     }
 
     private void observeNewMessage() {
@@ -196,47 +249,10 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
 
     private static final String TAG = "FriendsFragment";
 
-    /**
-     * @param binding binding
-     * @return 构造好的friends adapter
-     */
-    private MyRecyclerAdapter<Item> getNPCsAdapter(FragmentFriendsBinding binding) {
-        List<Item> items = new ArrayList<>();
-        for (int i = 0; i < names.length; i++) {
-            Item item = new Item();
-            item.setName(names[i]);
-            item.setBrief(briefIntroduce[i]);
-            items.add(item);
-        }
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        binding.rvNpcs.setLayoutManager(manager);
-        NPCadapter = new MyRecyclerAdapter<Item>(items) {
-            @Override
-            public int getLayoutId(int viewType) {
-                return R.layout.item_friend;
-            }
-
-            @Override
-            public void bindView(MyHolder holder, int position, Item item) {
-                ImageView imageView = holder.getView(R.id.iv_thumb);
-                imageView.setImageResource(icons[position]);
-                holder.getView(R.id.tv_sendTime).setVisibility(View.GONE);
-                holder.setText(item.getName(), R.id.petName);
-                holder.setText(briefIntroduce[position], R.id.content);
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getContext(), TalkActivity.class);
-                        startActivity(intent);
-                    }
-                });
-            }
-
-        };
-        if (isClose[0])
-            NPCadapter.changeState();
-        return NPCadapter;
+    private void getNPCsAdapter() {
+        NPCRel.getNPCList();
     }
+
 
     private MyRecyclerAdapter<UserInfo> friendsAdapter;
 

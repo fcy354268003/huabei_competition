@@ -6,14 +6,16 @@
 
         <variable
             name="data"
-            type="com.example.huabei_competition.db.Prop" />
+            type="com.example.huabei_competition.db.ShopRole" />
     </data>
 
     <LinearLayout
         android:layout_width="200dp"
         android:layout_height="300dp"
         android:layout_marginVertical="20dp"
+        android:layout_marginStart="5dp"
         android:background="@color/lightWarmColor"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
@@ -24,7 +26,17 @@
             android:background="#fff"
             app:cardCornerRadius="20dp">
 
-
+            <TextView
+                android:id="@+id/tv_shop_prop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="1dp"
+                android:gravity="center"
+                android:text="已购买"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/textSize_30"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/iv_picture"
