@@ -19,4 +19,8 @@
     <color name="black">#000</color>
     <color name="createTextColor">#786666</color>
     <color name="lightCreateTextColor">#FA786E66</color>
+    <color name="green">#c4f6d4</color>
+    <color name="deepGreen">#084C0F</color>
+    <color name="lightGreen">#ebfcf1</color>
+    <color name="changePassTextColor">#8f9b93</color>
 </resources>

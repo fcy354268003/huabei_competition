@@ -114,10 +114,21 @@ public class SelfRoomFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
     private void onAddLabelClick(View v) {
         if (binding.rgType.getCheckedRadioButtonId() == R.id.rb_group) {
             // 跳转到自习室界面
             ((MainActivity) getActivity()).getController().navigate(R.id.action_mainFragment_to_groupSelectedFragment);
+            LiveDataManager.getInstance().<Label>with(GroupSelectedFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<Label>() {
+                @Override
+                public void onChanged(Label label) {
+                    initLabel(1);
+                }
+            });
         } else {
             CustomerDialog customerDialog = new CustomerDialog();
             customerDialog.setLayoutId(R.layout.dialog_add_label);

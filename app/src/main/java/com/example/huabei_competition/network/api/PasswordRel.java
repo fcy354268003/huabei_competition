@@ -65,7 +65,7 @@ public class PasswordRel {
     /**
      * 第一次返回信息
      */
-    private static class Forget_1_1 {
+    public static class Forget_1_1 {
 
         /**
          * code : code
@@ -77,7 +77,27 @@ public class PasswordRel {
         private String message;
         private DataDTO data;
 
+        public String getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public DataDTO getData() {
+            return data;
+        }
+
         public static class DataDTO {
+            public String getPhone() {
+                return phone;
+            }
+
+            public String getToken() {
+                return token;
+            }
+
             /**
              * phone : phone
              * token : token
@@ -147,7 +167,19 @@ public class PasswordRel {
         }
     }
 
-    private static class Forget_3_3 {
+    public static class Forget_3_3 {
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public DataDTO getData() {
+            return data;
+        }
 
         /**
          * code : code
@@ -160,6 +192,10 @@ public class PasswordRel {
         private DataDTO data;
 
         public static class DataDTO {
+            public String getToken() {
+                return token;
+            }
+
             /**
              * token : 用户更改密码权限的token
              */
@@ -188,8 +224,16 @@ public class PasswordRel {
         client.newCall(request).enqueue(callback);
     }
 
-    private static class Forget_4_4 {
+    public static class Forget_4_4 {
         String code;
         String message;
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
     }
 }

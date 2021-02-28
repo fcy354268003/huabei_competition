@@ -11,7 +11,7 @@
         android:title="计时" />
     <item
         android:id="@+id/selfStudyRoom"
-        android:title="排行榜3" />
+        android:title="排行榜" />
     <item
         android:id="@+id/mine"
         android:title="我的" />

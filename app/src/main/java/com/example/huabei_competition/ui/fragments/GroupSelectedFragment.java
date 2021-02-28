@@ -17,6 +17,7 @@ import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.FragmentGroupSelectedBinding;
 import com.example.huabei_competition.databinding.ItemFriendBinding;
 import com.example.huabei_competition.db.Label;
+import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
@@ -94,6 +95,7 @@ public class GroupSelectedFragment extends Fragment {
                                 Label label = new Label(groupName);
                                 label.setType(1);
                                 label.setGroupId(groupID);
+                                LiveDataManager.getInstance().with(GroupSelectedFragment.class.getSimpleName()).setValue(label);
                                 DatabaseUtil.saveOrUpdateLabel(label);
                                 back(v);
                             }

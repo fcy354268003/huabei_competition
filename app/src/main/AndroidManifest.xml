@@ -23,6 +23,7 @@
             android:name=".ui.activity.CountDownActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.CheckInActivity" />
+        <activity android:name=".ui.fragments.ForgetPassActivity"/>
         <activity android:name=".ui.activity.IntroduceActivity" />
         <activity android:name=".ui.activity.GuideActivity" />
         <activity android:name=".ui.activity.StartActivity">

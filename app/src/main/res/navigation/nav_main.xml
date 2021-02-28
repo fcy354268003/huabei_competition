@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_mainFragment_to_groupInfoFragment"
             app:destination="@id/groupInfoFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_changePassFragment"
+            app:destination="@id/changePassFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
@@ -117,4 +120,8 @@
         android:id="@+id/managerGroupMemberFragment"
         android:name="com.example.huabei_competition.ui.fragments.ManagerGroupMemberFragment"
         android:label="ManagerGroupMemberFragment" />
+    <fragment
+        android:id="@+id/changePassFragment"
+        android:name="com.example.huabei_competition.ui.fragments.ChangePassFragment"
+        android:label="ChangePassFragment" />
 </navigation>

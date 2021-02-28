@@ -1,6 +1,6 @@
 <litepal>
     <dbname value="detail" />
-    <version value="8" />
+    <version value="9" />
     <list>
         <mapping class="com.example.huabei_competition.db.PersonDetail" />
         <mapping class="com.example.huabei_competition.db.PlotCache" />
@@ -9,5 +9,10 @@
         <mapping class="com.example.huabei_competition.db.GroupApply" />
         <mapping class="com.example.huabei_competition.db.FriendApply" />
         <mapping class="com.example.huabei_competition.db.Label"/>
+        <mapping class="com.example.huabei_competition.db.NPC"/>
+        <mapping class="com.example.huabei_competition.db.FriendCircle"/>
+        <mapping class="com.example.huabei_competition.db.Dialogue"/>
+        <mapping class="com.example.huabei_competition.db.Prop"/>
+        <mapping class="com.example.huabei_competition.db.ShopRole"/>
     </list>
 </litepal>

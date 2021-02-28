@@ -63,6 +63,7 @@ public class MainActivity extends BaseActivity {
                         if (i == 0) {
                             MyToast.showMessage("头像更新成功");
                             userCardVM.updateUserInfo();
+                            LiveDataManager.getInstance().with(MineFragment.class.getSimpleName()).postValue(new Object());
                         } else MyToast.showMessage("更新失败");
                     }
                 });

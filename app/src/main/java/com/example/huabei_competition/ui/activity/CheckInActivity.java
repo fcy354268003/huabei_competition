@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.network.api.LogIn;
+import com.example.huabei_competition.ui.fragments.ForgetPassActivity;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.widget.WidgetUtil;
@@ -126,6 +127,7 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
      * @param view 找回密码按钮
      */
     public void goToForget(View view) {
-
+        Intent intent = new Intent(this, ForgetPassActivity.class);
+        startActivity(intent);
     }
 }

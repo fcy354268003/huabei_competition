@@ -1,6 +1,7 @@
 package com.example.huabei_competition.db;
 
 import com.example.huabei_competition.event.UserUtil;
+import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
@@ -10,8 +11,9 @@ public class NPC extends LitePalSupport {
     private String name;
     // 朝代
     private String dynasty;
-    //
+    //字号
     private String tradeName;
+    @SerializedName("picture")
     private String headPicture;
     private String portrait;
     private String description;

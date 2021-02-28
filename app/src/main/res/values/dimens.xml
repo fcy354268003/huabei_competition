@@ -10,5 +10,6 @@
     <dimen name="textSize_30">30sp</dimen>
     <dimen name="textSize_35">35sp</dimen>
     <dimen name="textSize_40">40sp</dimen>
+    <dimen name="textSize_50">50sp</dimen>
 
 </resources>

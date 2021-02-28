@@ -26,7 +26,7 @@
         android:gravity="center"
         android:text="@string/app_name"
         android:textColor="@color/white"
-        android:textSize="45sp"
+        android:textSize="@dimen/textSize_50"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline17"
         app:layout_constraintEnd_toEndOf="parent"
