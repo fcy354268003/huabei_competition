@@ -123,6 +123,26 @@ public class SelfStudyFragment extends Fragment {
             @Override
             public void onFinish() {
                 MyToast.showMessage("完成计时");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        StudyDataGet.SubmitTime submitTime = new StudyDataGet.SubmitTime(String.valueOf(mTime), EncryptionTransmission.test(LogIn.TOKEN + mTime), mLabelText);
+                        StudyDataGet.submitTimePerson(submitTime, new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                if (response.isSuccessful()) {
+                                    Log.d(TAG, "onResponse: " + response.body().string());
+                                }
+                                response.close();
+                            }
+                        });
+                    }
+                }).start();
                 CustomerDialog dialog = new CustomerDialog();
                 dialog.setLayoutId(R.layout.dialog_add_label);
                 dialog.setCancelable(false);
@@ -141,21 +161,7 @@ public class SelfStudyFragment extends Fragment {
                         confirm.setOnClickListener(view -> {
                             dialog.dismiss();
                             ((MainActivity) getActivity()).getController().navigateUp();
-                            StudyDataGet.SubmitTime submitTime = new StudyDataGet.SubmitTime(String.valueOf(mTime), EncryptionTransmission.test(LogIn.TOKEN + mTime), mLabelText);
-                            StudyDataGet.submitTimePerson(submitTime, new Callback() {
-                                @Override
-                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                                }
-
-                                @Override
-                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                    if (response.isSuccessful()) {
-                                        Log.d(TAG, "onResponse: " + response.body().string());
-                                    }
-                                    response.close();
-                                }
-                            });
                         });
                     }
                 });

@@ -309,6 +309,27 @@ public class GroupStudyFragment extends Fragment {
             @Override
             public void onFinish() {
                 MyToast.showMessage("完成计时");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        StudyDataGet.submitTimeTeam(new StudyDataGet.SubmitTime(String.valueOf(mTime), XhhEnc.enc(LogIn.TOKEN + mTime), "小组学习"), new Callback() {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                Log.d(TAG, "onResponse: " + response.body().string());
+                                if (response.isSuccessful()) {
+
+                                }
+                                response.body().close();
+                            }
+                        });
+                    }
+                }).start();
+
                 CustomerDialog dialog = new CustomerDialog();
                 dialog.setLayoutId(R.layout.dialog_add_label);
                 dialog.setCancelable(false);
@@ -325,20 +346,7 @@ public class GroupStudyFragment extends Fragment {
                         Button confirm = rootView.findViewById(R.id.btn_sure);
                         confirm.setText("欢喜收下！！");
                         confirm.setOnClickListener(view -> {
-                            StudyDataGet.submitTimeTeam(new StudyDataGet.SubmitTime(String.valueOf(mTime), XhhEnc.enc(LogIn.TOKEN + mTime),"小组学习"), new Callback() {
-                                @Override
-                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
-                                }
-
-                                @Override
-                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                    if(response.isSuccessful()){
-
-                                    }
-                                    response.body().close();
-                                }
-                            });
                             dialog.dismiss();
                             ((MainActivity) getActivity()).getController().navigate(R.id.action_groupStudyFragment_to_mainFragment);
                         });

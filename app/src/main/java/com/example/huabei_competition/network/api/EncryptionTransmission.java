@@ -13,7 +13,7 @@ public class EncryptionTransmission {
     private static final String TAG = "EncryptionTransmission";
 
     public static String test(String body) {
-        String enc = XhhEnc.enc(body);
+        String enc = XhhEncNew.enc(body);
         Log.d(TAG, "test: \n" + enc);
         return XhhEnc.enc(body);
     }

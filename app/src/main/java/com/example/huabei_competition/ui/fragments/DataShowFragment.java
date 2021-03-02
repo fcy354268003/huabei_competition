@@ -98,7 +98,7 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
                 }
             });
         });
-        StudyDataGet.getUserData("currentUserName", this);
+        StudyDataGet.getUserData(currentUserName, this);
     }
 
     private void initView(StudyDataGet.UserData userData) {
@@ -115,18 +115,30 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
         binding.tvTodayMin.setText(time);
         List<CakeShapeView.Content> contents = new ArrayList<>();
         List<StudyDataGet.UserData.DataDTO.InfoDTO> info = data.getInfo();
-        if (info.size() == 0)
+        if (info.size() == 0) {
+            initOnNoNetWork();
             return;
-        Random random = new Random();
+        }
+        int i = 0;
         for (StudyDataGet.UserData.DataDTO.InfoDTO infoDTO : info) {
             String name = infoDTO.getName();
             String size = infoDTO.getSize();
-            int i = random.nextInt(256);
-            contents.add(new CakeShapeView.Content(name, Integer.parseInt(size), i));
+            contents.add(new CakeShapeView.Content(name + ":" + size + "%", Integer.parseInt(size), colors[i++]));
+            i = i % 7;
         }
+        Log.d(TAG, "initView: " + "setData");
         binding.cakeView.setData(contents, 200);
     }
 
+    private int[] colors = new int[]{
+            Color.BLACK,
+            Color.RED,
+            Color.YELLOW,
+            Color.GREEN,
+            Color.BLUE,
+            Color.DKGRAY,
+            Color.GRAY,
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -150,10 +162,19 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
      * 记载数据失败时
      */
     private void initOnNoNetWork() {
-        CakeShapeView.Content ca = new CakeShapeView.Content("暂无数据", 100, Color.BLACK);
-        List<CakeShapeView.Content> contents = new ArrayList<>();
-        contents.add(ca);
-        binding.cakeView.setData(contents, 200);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "run: ");
+                CakeShapeView.Content ca = new CakeShapeView.Content("暂无数据", 100, Color.BLACK);
+                List<CakeShapeView.Content> contents = new ArrayList<>();
+                contents.add(ca);
+                Log.d(TAG, "initView: " + "setData");
+                binding.cakeView.setData(contents, 200);
+
+            }
+        });
+
     }
 
     @Override
@@ -197,9 +218,7 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
                     }
                 });
             }
-        } else {
-            initOnNoNetWork();
-        }
+        } else initOnNoNetWork();
         response.close();
 
     }

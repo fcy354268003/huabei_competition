@@ -324,7 +324,7 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                                     }
                                 });
                             } else
-                                onFailure(call, new IOException());
+                                Snackbar.make(confirm, buy_1.getMessage(), Snackbar.LENGTH_SHORT).show();
                         } else {
                             onFailure(call, new IOException());
                         }

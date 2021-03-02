@@ -259,6 +259,7 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
                 LiveDataManager.getInstance().with(IntroduceActivity.class.getSimpleName()).setValue(mNpc);
                 Intent intent = new Intent(this, IntroduceActivity.class);
                 startActivity(intent);
+                break;
             case R.id.tv_choice_1:
                 if (isContinue.equals("true")) {
                     which = 0;

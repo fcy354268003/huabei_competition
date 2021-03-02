@@ -100,6 +100,7 @@ public class MineFragment extends Fragment implements MineCallback {
             userCardVM.getMyInfo().getAvatarBitmap(new GetAvatarBitmapCallback() {
                 @Override
                 public void gotResult(int i, String s, Bitmap bitmap) {
+                    Log.d(TAG, "gotResult: " + s);
                     if (i == 0) {
                         binding.ivPortrait.setImageBitmap(bitmap);
                     }

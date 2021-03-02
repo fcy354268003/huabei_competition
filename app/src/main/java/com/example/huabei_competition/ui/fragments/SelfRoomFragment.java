@@ -190,6 +190,9 @@ public class SelfRoomFragment extends Fragment {
                 MyToast.showMessage("时间不能低于20分钟哦，(●'◡'●)");
                 return;
             }
+            if(labelText.length() > 6){
+                MyToast.showMessage("标签cha");
+            }
             Bundle bundle = new Bundle();
             bundle.putInt("time", sum);
             bundle.putString("label", labelText);
