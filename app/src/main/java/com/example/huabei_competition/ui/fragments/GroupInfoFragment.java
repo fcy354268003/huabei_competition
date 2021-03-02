@@ -104,6 +104,9 @@ public class GroupInfoFragment extends Fragment {
                         }
                     }
                 });
+                holder.getView(R.id.portrait).setOnClickListener(view -> {
+                    LiveDataManager.getInstance().with(DataShowFragment.class.getSimpleName()).setValue(userInfo.getUserName());
+                });
                 String name;
                 name = userInfo.getNickname();
                 if (TextUtils.isEmpty(name)) {

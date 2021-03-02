@@ -2,12 +2,12 @@ package com.example.huabei_competition.network.api;
 
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
+
 
 import androidx.annotation.NonNull;
 
 import com.example.huabei_competition.event.ChatRoomUtil;
-import com.google.android.material.snackbar.Snackbar;
+
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,7 @@ public class LogIn {
     public static String TOKEN;
     private static final String TAG = "LogIn";
     private static final Gson gson = new Gson();
-    public static final String BASIC_PATH = "https://www.baidu.com/";
+    public static final String BASIC_PATH = "http://5.180.76.28:51575/";
 
     public static void login(@NonNull final String name, @NonNull final String pass, @NonNull LogCallback callback) {
         UserLogIn post = new UserLogIn(name, pass);
@@ -59,6 +59,7 @@ public class LogIn {
                         callback.failure();
                     }
                 }
+                response.close();
             }
         });
     }

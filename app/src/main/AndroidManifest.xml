@@ -12,6 +12,7 @@
         android:allowBackup="true"
         android:icon="@drawable/head3"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
@@ -23,7 +24,7 @@
             android:name=".ui.activity.CountDownActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.CheckInActivity" />
-        <activity android:name=".ui.fragments.ForgetPassActivity"/>
+        <activity android:name=".ui.fragments.ForgetPassActivity" />
         <activity android:name=".ui.activity.IntroduceActivity" />
         <activity android:name=".ui.activity.GuideActivity" />
         <activity android:name=".ui.activity.StartActivity">

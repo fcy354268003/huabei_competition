@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.callback.WelcomeCallback;
 import com.example.huabei_competition.databinding.FragmentWelcomeBinding;
+import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.MyApplication;
@@ -46,6 +48,7 @@ public class WelcomeFragment extends Fragment implements WelcomeCallback {
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false);
         binding.setCallback(this);
+        Log.d(TAG, "=========" + UserUtil.sUserName);
 
         return binding.getRoot();
     }
@@ -59,6 +62,7 @@ public class WelcomeFragment extends Fragment implements WelcomeCallback {
 
     @Override
     public void onDataShowClick() {
+        LiveDataManager.getInstance().<String>with(DataShowFragment.class.getSimpleName()).setValue(UserUtil.sUserName);
         ((MainActivity) getActivity()).getController().navigate(R.id.action_mainFragment_to_dataShowFragment);
     }
 

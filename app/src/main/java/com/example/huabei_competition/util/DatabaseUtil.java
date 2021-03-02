@@ -1,6 +1,8 @@
 package com.example.huabei_competition.util;
 
 
+import android.util.Log;
+
 import com.example.huabei_competition.db.Dialogue;
 import com.example.huabei_competition.db.FriendApply;
 import com.example.huabei_competition.db.FriendCircle;
@@ -25,7 +27,10 @@ public class DatabaseUtil {
         return all;
     }
 
+    private static final String TAG = "DatabaseUtil";
+
     public static int getNewFriendNotHandle() {
+        Log.d(TAG, "getNewFriendNotHandle: " + UserUtil.sUserName);
         return LitePal.where("acquirerUserName = ? and state = ?", UserUtil.sUserName, "0").find(FriendApply.class).size();
     }
 
@@ -87,11 +92,15 @@ public class DatabaseUtil {
     }
 
     public static void saveOrUpdateShopItem(Prop prop) {
-        prop.saveOrUpdate("id = ?", prop.getId());
+        prop.saveOrUpdate("PropId = ?", prop.getPropId());
+    }
+
+    public static void saveOrUpdateShopRoleItem(ShopRole prop) {
+        prop.saveOrUpdate("ShopRoleId = ?", prop.getShopRoleId());
     }
 
     public static void saveOrUpdateShopItem(NPC npc) {
-        npc.saveOrUpdate("id = ?", npc.getId());
+        npc.saveOrUpdate("NPCID = ?", npc.getNPCID());
     }
 
     public static List<Prop> getProps() {
@@ -100,30 +109,35 @@ public class DatabaseUtil {
     }
 
     public static List<ShopRole> getRoles() {
-        List<ShopRole> all = LitePal.where("userName", UserUtil.sUserName).find(ShopRole.class);
+        List<ShopRole> all = LitePal.where("userName = ?", UserUtil.sUserName).find(ShopRole.class);
         return all;
     }
 
     public static void saveOrUpdateNPC(NPC npc) {
-        npc.saveOrUpdate("id = ?", npc.getId());
+        npc.saveOrUpdate("NPCID = ?", npc.getNPCID());
     }
+
     public static void saveOrUpdateDialogue(Dialogue npc) {
-        npc.saveOrUpdate("id = ? and userName = ? and Reid = ?", npc.getId(),UserUtil.sUserName,npc.getReid());
+        npc.saveOrUpdate("NPCId = ? and userName = ? and Reid = ?", npc.getNPCId(), UserUtil.sUserName, npc.getReid());
     }
+
     public static List<NPC> getMyNPCs() {
         return LitePal.where("userName = ?", UserUtil.sUserName).find(NPC.class);
     }
 
     public static List<Dialogue> getStory(String id) {
-        return LitePal.where("userName = ? and id = ?", UserUtil.sUserName, id).find(Dialogue.class);
+        return LitePal.where("userName = ? and NPCId = ?", UserUtil.sUserName, id).find(Dialogue.class);
     }
-    public static List<Dialogue> findByReid(String reid){
-        return LitePal.where("userName = ? and Reid = ?",reid).find(Dialogue.class);
+
+    public static List<Dialogue> findByReid(String reid) {
+        return LitePal.where("userName = ? and Reid = ?", UserUtil.sUserName, reid).find(Dialogue.class);
     }
-    public static void saveOrUpdateFriendCircle(FriendCircle circle){
-        circle.saveOrUpdate("id = ?",circle.getId());
+
+    public static void saveOrUpdateFriendCircle(FriendCircle circle) {
+        circle.saveOrUpdate("FCID = ?", circle.getFCID());
     }
-    public static List<FriendCircle> getAllBlink(){
-        return LitePal.where("userName = ?",UserUtil.sUserName).find(FriendCircle.class);
+
+    public static List<FriendCircle> getAllBlink() {
+        return LitePal.where("userName = ?", UserUtil.sUserName).find(FriendCircle.class);
     }
 }

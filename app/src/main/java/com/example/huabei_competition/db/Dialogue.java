@@ -1,6 +1,7 @@
 package com.example.huabei_competition.db;
 
 import com.example.huabei_competition.event.UserUtil;
+import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
@@ -17,7 +18,7 @@ public class Dialogue extends LitePalSupport {
     private List<String> content = new ArrayList<>();
     private List<String> reply = new ArrayList<>();
     // 哪个npc
-    private String id;
+    private String NPCId;
     private String userName = UserUtil.sUserName;
 
     public void setWhichOne(int whichOne) {
@@ -36,12 +37,12 @@ public class Dialogue extends LitePalSupport {
         return Reid;
     }
 
-    public String getId() {
-        return id;
+    public String getNPCId() {
+        return NPCId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setNPCId(String NPCId) {
+        this.NPCId = NPCId;
     }
 
     public void setReid(String reid) {

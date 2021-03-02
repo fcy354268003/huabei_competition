@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.util.MyHandler;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.example.huabei_competition.widget.MyToast;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -72,6 +72,8 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
         });
         choice_1 = findViewById(R.id.tv_choice_1);
         choice_2 = findViewById(R.id.tv_choice_2);
+        choice_1.setOnClickListener(this);
+        choice_2.setOnClickListener(this);
         recyclerView = findViewById(R.id.talk_window);
         glideManager = Glide.with(this);
         findViewById(R.id.btn_personInfo).setOnClickListener(this);
@@ -87,15 +89,15 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
                 mNpc = npc;
                 TextView textView = findViewById(R.id.tv_name);
                 textView.setText(mNpc.getName());
+                initAdapter();
+                getDialogue();
             }
         });
-        initAdapter();
-        getDialogue();
     }
 
     // TODO 查找以前的 缓存 加载历史
     private void initAdapter() {
-        List<Dialogue> story = DatabaseUtil.getStory(mNpc.getId());
+        List<Dialogue> story = DatabaseUtil.getStory(mNpc.getNPCID());
         List<DD> dds = changeStoryToDD(story);
         adapter = new MyRecyclerAdapter<DD>(dds) {
             @Override
@@ -156,7 +158,7 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
 
     // 尝试获取
     private void getDialogue() {
-        NPCRel.getDialogue(mNpc.getId(), new Callback() {
+        NPCRel.getDialogue(mNpc.getNPCID(), new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -170,42 +172,64 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
                     if (dialogueResponse.getCode().equals(LogIn.OK)) {
                         isContinue = dialogueResponse.getData().getIsContinue();
                         Dialogue info = dialogueResponse.getData().getInfo();
+                        info.setNPCId(mNpc.getNPCID());
                         DatabaseUtil.saveOrUpdateDialogue(info);
                         reid = dialogueResponse.getData().getInfo().getReid();
                         if (isContinue.equals("false")) {
                             //TODO 刷新朋友圈并缓存
+                            try {
+                                FriendCircle pyc = dialogueResponse.getData().getPyc();
+                                Calendar instance = Calendar.getInstance();
+                                int year = instance.get(Calendar.YEAR);
+                                int month = instance.get(Calendar.MONTH) + 1;
+                                int day = instance.get(Calendar.DAY_OF_MONTH);
+                                String time = year + "-" + month + "-" + day;
+                                pyc.setTime(time);
+                                DatabaseUtil.saveOrUpdateFriendCircle(pyc);
+                                LiveDataManager.getInstance().<FriendCircle>with(CommentFragment.class.getSimpleName()).postValue(pyc);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
                         }
                         addToTalker(info);
                     }
                 }
+                response.close();
             }
         });
     }
 
     private void addToTalker(Dialogue dialogue) {
+        choice_1.setClickable(false);
+        choice_2.setClickable(false);
         List<String> content = dialogue.getContent();
-        for (String s : content) {
+        for (int i = 0; i < content.size(); i++) {
+            String s = content.get(i);
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     adapter.addResource(new DD(0, s));
                     refreshPosition();
                 }
-            }, 500);
+            }, 1000 * i);
         }
+
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //TODO 显示选项
+                choice_1.setClickable(true);
+                choice_2.setClickable(true);
                 findViewById(R.id.ll_allChoice).setVisibility(View.VISIBLE);
                 List<String> reply = dialogue.getReply();
                 choice_1.setText(reply.get(0));
-                if (reply.size() == 2)
+                if (reply.size() == 2) {
                     choice_2.setText(reply.get(1));
-                else choice_2.setVisibility(View.GONE);
+                    choice_2.setVisibility(View.VISIBLE);
+                } else choice_2.setVisibility(View.GONE);
             }
-        }, 500 * (content.size() + 1));
+        }, 1000 * (content.size()));
     }
 
     private static List<DD> changeStoryToDD(List<Dialogue> dialogues) {
@@ -219,10 +243,12 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
             for (String s : content) {
                 res.add(new DD(0, s));
             }
-            res.add(new DD(1, reply.get(whichOne - 1)));
+            res.add(new DD(1, reply.get(whichOne)));
         }
         return res;
     }
+
+    private static final String TAG = "TalkActivity";
 
     @Override
     public void onClick(View v) {
@@ -230,6 +256,7 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.btn_personInfo:
                 //TODO 跳转到NPC详情页面
+                LiveDataManager.getInstance().with(IntroduceActivity.class.getSimpleName()).setValue(mNpc);
                 Intent intent = new Intent(this, IntroduceActivity.class);
                 startActivity(intent);
             case R.id.tv_choice_1:
@@ -258,7 +285,8 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
             String s = dialogue.getReply().get(which);
             adapter.addResource(new DD(1, s));
             refreshPosition();
-            NPCRel.replyDialogue(mNpc.getId(), which, reid, new Callback() {
+
+            NPCRel.replyDialogue(mNpc.getNPCID(), which, reid, new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
@@ -272,9 +300,10 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
                         if (dialogueResponse.getCode().equals(LogIn.OK)) {
                             isContinue = dialogueResponse.getData().getIsContinue();
                             Dialogue info = dialogueResponse.getData().getInfo();
+                            info.setNPCId(mNpc.getNPCID());
                             DatabaseUtil.saveOrUpdateDialogue(info);
                             reid = dialogueResponse.getData().getInfo().getReid();
-                            if (isContinue.equals("false")) {
+                            if (TextUtils.equals(isContinue, "false")) {
                                 mHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
@@ -295,6 +324,7 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
                                 addToTalker(info);
                         }
                     }
+                    response.close();
                 }
             });
         }

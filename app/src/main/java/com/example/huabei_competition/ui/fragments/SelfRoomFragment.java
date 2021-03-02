@@ -2,14 +2,12 @@ package com.example.huabei_competition.ui.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
 import android.text.TextUtils;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +31,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
-import cn.jpush.im.android.api.JMessageClient;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -94,7 +89,7 @@ public class SelfRoomFragment extends Fragment {
         hourList.add("1");
         hourList.add("2");
         List<String> minuteList = new ArrayList<>();
-        for (int i = 0; i < 59; i++) {
+        for (int i = 0; i <= 59; i++) {
             minuteList.add(String.valueOf(i));
         }
         binding.wvHour.setAdapter(new ArrayWheelAdapter<>(hourList));

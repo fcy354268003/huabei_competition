@@ -35,7 +35,7 @@ public class Register {
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
         Request request = new Request.Builder()
-                .url(LogIn.BASIC_PATH + PATH_REGISTER)
+                .url(LogIn.BASIC_PATH + PATH_SEND_VERIFICATION)
                 .post(requestBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
@@ -48,21 +48,24 @@ public class Register {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 Log.d(TAG, "onResponse: " + response.body().string());
+                response.close();
             }
         });
     }
 
     private static final String TAG = "Register";
 
-    public static void register(@NonNull String userName, @NonNull String password, @NonNull String phone, @NonNull String ver,@NonNull View v,@NonNull VerificationCallback callback) {
+    public static void register(@NonNull String userName, @NonNull String password, @NonNull String phone, @NonNull String ver, @NonNull View v, @NonNull VerificationCallback callback) {
         Reg reg = new Reg(userName, password, phone, ver);
         String json = gson.toJson(reg);
+        Log.d(TAG, "register: " + json);
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
         Request request = new Request.Builder()
                 .url(LogIn.BASIC_PATH + PATH_REGISTER)
                 .post(requestBody)
                 .build();
+        Log.d(TAG, "register: ");
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -72,8 +75,10 @@ public class Register {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String string = response.body().string();
+                Log.d(TAG, "onResponse: " + string);
                 if (response.isSuccessful()) {
-                    LogIn.LogResponse logResponse = gson.fromJson(response.body().string(), LogIn.LogResponse.class);
+                    LogIn.LogResponse logResponse = gson.fromJson(string, LogIn.LogResponse.class);
                     if (TextUtils.equals(logResponse.code, LogIn.OK)) {
                         callback.success();
                     }
@@ -81,6 +86,8 @@ public class Register {
                     Log.d(TAG, "onResponse: " + response.body().string());
                     callback.failure();
                 }
+                response.close();
+
             }
         });
     }
@@ -107,6 +114,7 @@ public class Register {
 
     private static class Phone {
         String phone;
+
         public Phone(String phone) {
             this.phone = phone;
         }

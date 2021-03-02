@@ -1,11 +1,17 @@
 package com.example.huabei_competition.ui.fragments;
 
+
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,61 +20,113 @@ import android.widget.TextView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.callback.DataShowCallback;
 import com.example.huabei_competition.databinding.FragmentStatisticsBinding;
+import com.example.huabei_competition.event.FriendManager;
+import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.event.UserUtil;
+import com.example.huabei_competition.network.api.LogIn;
+import com.example.huabei_competition.network.api.StudyDataGet;
 import com.example.huabei_competition.ui.activity.MainActivity;
+
 import com.example.huabei_competition.widget.CakeShapeView;
 import com.example.huabei_competition.widget.CustomerDialog;
+import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
+import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import cn.jpush.im.api.BasicCallback;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link DataShowFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Create by FanChenYang at 2021/3/1
  */
-public class DataShowFragment extends Fragment implements DataShowCallback {
+public class DataShowFragment extends Fragment implements DataShowCallback, Callback {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentStatisticsBinding binding;
+    private String currentUserName;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public DataShowFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DataShowFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DataShowFragment newInstance(String param1, String param2) {
-        DataShowFragment fragment = new DataShowFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        LiveDataManager.getInstance().<String>with(DataShowFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                currentUserName = s;
+                // TODO 刷新界面
+                if (TextUtils.equals(s, UserUtil.sUserName)) {
+                    initData(0);
+                } else {
+                    initData(1);
+                }
+            }
+        });
     }
 
-    private FragmentStatisticsBinding binding;
+    private static final String TAG = "DataShowFragment";
+
+    /**
+     * @param type 查看自己信息还是查看别人信息
+     *             0：self   1:others
+     */
+    private void initData(int type) {
+        if (type == 0) {
+            binding.addFriend.setVisibility(View.GONE);
+        }
+        binding.addFriend.setOnClickListener(view -> {
+            FriendManager.sendInvitationRequest(currentUserName, null, "可以一块学习吗", new BasicCallback() {
+                @Override
+                public void gotResult(int i, String s) {
+                    if (i == 0) {
+                        MyToast.showMessage("邀请信息已发送");
+                    } else {
+                        MyToast.showMessage(s);
+                    }
+                }
+            });
+        });
+        StudyDataGet.getUserData("currentUserName", this);
+    }
+
+    private void initView(StudyDataGet.UserData userData) {
+        StudyDataGet.UserData.DataDTO data = userData.getData();
+        String allNumber = data.getAllNumber();
+        String allTime = data.getAllTime();
+        String avgTime = data.getAvgTime();
+        String time = data.getTime();
+        String number = data.getNumber();
+        binding.cishuTv.setText(allNumber);
+        binding.totalTv.setText(allTime);
+        binding.weekTv.setText(avgTime);
+        binding.tvTodayFrequency.setText(number);
+        binding.tvTodayMin.setText(time);
+        List<CakeShapeView.Content> contents = new ArrayList<>();
+        List<StudyDataGet.UserData.DataDTO.InfoDTO> info = data.getInfo();
+        if (info.size() == 0)
+            return;
+        Random random = new Random();
+        for (StudyDataGet.UserData.DataDTO.InfoDTO infoDTO : info) {
+            String name = infoDTO.getName();
+            String size = infoDTO.getSize();
+            int i = random.nextInt(256);
+            contents.add(new CakeShapeView.Content(name, Integer.parseInt(size), i));
+        }
+        binding.cakeView.setData(contents, 200);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,7 +142,18 @@ public class DataShowFragment extends Fragment implements DataShowCallback {
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_statistics, container, false);
         binding.setCallback(this);
+        initOnNoNetWork();
         return binding.getRoot();
+    }
+
+    /**
+     * 记载数据失败时
+     */
+    private void initOnNoNetWork() {
+        CakeShapeView.Content ca = new CakeShapeView.Content("暂无数据", 100, Color.BLACK);
+        List<CakeShapeView.Content> contents = new ArrayList<>();
+        contents.add(ca);
+        binding.cakeView.setData(contents, 200);
     }
 
     @Override
@@ -106,5 +175,32 @@ public class DataShowFragment extends Fragment implements DataShowCallback {
             WidgetUtil.setCustomerText(content, WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         });
         customerDialog.show(getActivity().getSupportFragmentManager(), "question");
+    }
+
+    @Override
+    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+        initOnNoNetWork();
+    }
+
+    @Override
+    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+        if (response.isSuccessful()) {
+            String json = response.body().string();
+            Log.d(TAG, "onResponse: " + json);
+            Gson gson = new Gson();
+            StudyDataGet.UserData userData = gson.fromJson(json, StudyDataGet.UserData.class);
+            if (TextUtils.equals(userData.getCode(), LogIn.OK)) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initView(userData);
+                    }
+                });
+            }
+        } else {
+            initOnNoNetWork();
+        }
+        response.close();
+
     }
 }

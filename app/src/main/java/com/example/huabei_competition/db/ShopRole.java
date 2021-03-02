@@ -1,9 +1,12 @@
 package com.example.huabei_competition.db;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.litepal.crud.LitePalSupport;
 
 public class ShopRole extends LitePalSupport {
-    private String id;
+    @SerializedName("id")
+    private String ShopRoleId;
     private String name;
     private String picture;
     private String description;
@@ -11,12 +14,20 @@ public class ShopRole extends LitePalSupport {
     private String isHaving;
     private String userName;
 
-    public String getId() {
-        return id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getShopRoleId() {
+        return ShopRoleId;
+    }
+
+    public void setShopRoleId(String shopRoleId) {
+        this.ShopRoleId = shopRoleId;
     }
 
     public String getName() {

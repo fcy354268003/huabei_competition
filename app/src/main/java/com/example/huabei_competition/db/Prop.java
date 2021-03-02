@@ -1,20 +1,23 @@
 package com.example.huabei_competition.db;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.litepal.crud.LitePalSupport;
 
 public class Prop extends LitePalSupport {
-    private String id;
+    @SerializedName("id")
+    private String PropId;
     private String name;
     private String picture;
     private String description;
     private String price;
 
-    public String getId() {
-        return id;
+    public String getPropId() {
+        return PropId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPropId(String propId) {
+        this.PropId = propId;
     }
 
     public String getName() {

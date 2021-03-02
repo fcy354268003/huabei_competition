@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,13 +10,12 @@
             type="com.example.huabei_competition.callback.DataShowCallback" />
     </data>
 
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/check">
 
-        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <LinearLayout
             android:id="@+id/ll_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,6 +53,14 @@
                     android:textColor="#ffffff"
                     android:textSize="22sp"
                     tools:ignore="RelativeOverlap" />
+
+                <ImageView
+                    android:id="@+id/add_friend"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="50dp"
+                    android:src="@drawable/ic_baseline_add_24" />
 
                 <ImageView
                     android:id="@+id/img_question"
@@ -97,7 +106,7 @@
                                 android:layout_height="40dp"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginTop="5dp"
-                                android:text="累计学习"
+                                android:text="累计专注"
                                 android:textColor="#867676"
                                 android:textSize="20sp" />
 
@@ -128,13 +137,13 @@
                                 <TextView
                                     android:layout_width="130dp"
                                     android:layout_height="40dp"
-                                    android:text="总计时长"
+                                    android:text="时长"
                                     android:textSize="20sp" />
 
                                 <TextView
                                     android:layout_width="124dp"
                                     android:layout_height="40dp"
-                                    android:text="本周时长"
+                                    android:text="日均时长"
                                     android:textSize="20sp" />
 
                             </LinearLayout>
@@ -197,13 +206,95 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="15dp"
+                app:cardBackgroundColor="#FAF2F0"
+                app:cardCornerRadius="16dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="当日专注"
+                        android:textSize="@dimen/textSize_20"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="10dp"
+                        android:text="次数"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+                    <TextView
+                        android:id="@+id/tv_todayFrequency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="0"
+                        android:textSize="@dimen/textSize_30"
+                        app:layout_constraintEnd_toEndOf="@+id/textView25"
+                        app:layout_constraintStart_toStartOf="@+id/textView25"
+                        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+                    <TextView
+                        android:id="@+id/textView27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="40dp"
+                        android:text="时长"
+                        android:textSize="@dimen/textSize_20"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView25"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+                    <TextView
+                        android:id="@+id/textView28"
+                        android:layout_width="36dp"
+                        android:layout_height="16dp"
+                        android:layout_marginTop="30dp"
+                        android:text="分钟"
+                        android:textSize="@dimen/textSize_15"
+                        app:layout_constraintStart_toEndOf="@+id/textView27"
+                        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+                    <TextView
+                        android:id="@+id/tv_todayMin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="0"
+                        android:textSize="@dimen/textSize_30"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView28"
+                        app:layout_constraintEnd_toStartOf="@+id/textView28"
+                        app:layout_constraintStart_toStartOf="@+id/textView27"
+                        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
             <LinearLayout
                 android:id="@+id/record"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="20dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardview_record"
@@ -245,11 +336,11 @@
                         <ScrollView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
+
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/statistics_lv"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                            </androidx.recyclerview.widget.RecyclerView>
+                                android:layout_height="wrap_content" />
                         </ScrollView>
                     </LinearLayout>
 
@@ -257,11 +348,39 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-            <com.example.huabei_competition.widget.CakeShapeView
-                android:id="@+id/cakeView"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_cake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:outlineAmbientShadowColor="@color/cardview_shadow_end_color"
+                app:cardBackgroundColor="#FAF2F0"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="本周专注时间分布图"
+                        android:textSize="@dimen/textSize_20" />
+
+                    <com.example.huabei_competition.widget.CakeShapeView
+                        android:id="@+id/cakeView"
+                        android:layout_width="match_parent"
+                        android:layout_height="500dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
 

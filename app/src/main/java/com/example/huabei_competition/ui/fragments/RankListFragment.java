@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,16 +117,23 @@ public class RankListFragment extends Fragment implements RankListCallback {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String resp = response.body().string();
+                Log.d(TAG, "onResponse: " + resp);
+                Gson gson = new Gson();
                 if (response.isSuccessful()) {
-                    String resp = response.body().string();
-                    Gson gson = new Gson();
                     RankList.Emerging emerging = gson.fromJson(resp, RankList.Emerging.class);
                     if (emerging.getCode().equals(LogIn.OK)) {
                         initEmerging(emerging);
                     } else onFailure(call, new IOException());
                 } else {
-                    MyToast.showMessage("加载数据失败");
+                    myHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyToast.showMessage("加载数据失败");
+                        }
+                    });
                 }
+                response.close();
             }
         });
         RankList.getGeneralList(new Callback() {
@@ -141,16 +149,17 @@ public class RankListFragment extends Fragment implements RankListCallback {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                String resp = response.body().string();
+                Gson gson = new Gson();
+                Log.d(TAG, "onResponse: " + resp);
                 if (response.isSuccessful()) {
-                    String resp = response.body().string();
-                    Gson gson = new Gson();
                     RankList.General general = gson.fromJson(resp, RankList.General.class);
                     if (general.getCode().equals(LogIn.OK)) {
                         initGeneral(general);
                     } else onFailure(call, new IOException());
-                } else {
-                    MyToast.showMessage("加载数据失败");
                 }
+                response.close();
+
             }
         });
     }

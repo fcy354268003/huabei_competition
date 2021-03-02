@@ -140,6 +140,7 @@
             android:layout_marginTop="400dp"
             android:background="@drawable/radius_back_15"
             android:backgroundTint="@color/white"
+            android:elevation="200dp"
             android:paddingHorizontal="20dp"
             android:text="确认"
             android:textColor="#5e6761"

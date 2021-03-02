@@ -29,6 +29,9 @@ import com.example.huabei_competition.TimerVM;
 import com.example.huabei_competition.databinding.FragmentGroupStudyBinding;
 
 import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.network.api.LogIn;
+import com.example.huabei_competition.network.api.StudyDataGet;
+import com.example.huabei_competition.network.api.XhhEnc;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.MyCountDownTimer;
 import com.example.huabei_competition.widget.CustomerDialog;
@@ -36,6 +39,9 @@ import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.example.huabei_competition.widget.MyToast;
 import com.kd.easybarrage.Barrage;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.List;
 
 
@@ -44,6 +50,9 @@ import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import cn.jpush.im.android.api.event.CommandNotificationEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Create by FanChenYang at 2021/2/24
@@ -316,6 +325,20 @@ public class GroupStudyFragment extends Fragment {
                         Button confirm = rootView.findViewById(R.id.btn_sure);
                         confirm.setText("欢喜收下！！");
                         confirm.setOnClickListener(view -> {
+                            StudyDataGet.submitTimeTeam(new StudyDataGet.SubmitTime(String.valueOf(mTime), XhhEnc.enc(LogIn.TOKEN + mTime),"小组学习"), new Callback() {
+                                @Override
+                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                                }
+
+                                @Override
+                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                    if(response.isSuccessful()){
+
+                                    }
+                                    response.body().close();
+                                }
+                            });
                             dialog.dismiss();
                             ((MainActivity) getActivity()).getController().navigate(R.id.action_groupStudyFragment_to_mainFragment);
                         });

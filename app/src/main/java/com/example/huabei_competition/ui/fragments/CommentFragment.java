@@ -3,6 +3,7 @@ package com.example.huabei_competition.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,6 @@ import com.bumptech.glide.RequestManager;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.FriendCircle;
 import com.example.huabei_competition.event.LiveDataManager;
-import com.example.huabei_competition.ui.activity.StoryChoiceActivity;
 import com.example.huabei_competition.databinding.FragmentCommentBinding;
 import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
@@ -63,7 +63,7 @@ public class CommentFragment extends Fragment {
     }
 
     private MyRecyclerAdapter<FriendCircle> blinkAdapter;
-
+    private static final String TAG = "CommentFragment";
     private void initAdapter() {
         List<FriendCircle> allBlink = DatabaseUtil.getAllBlink();
         blinkAdapter = new MyRecyclerAdapter<FriendCircle>(allBlink) {
@@ -75,11 +75,12 @@ public class CommentFragment extends Fragment {
             public void bindView(MyHolder holder, int position, FriendCircle circle) {
                 holder.setText(circle.getName(), R.id.petName);
                 holder.setText(circle.getContent(), R.id.content);
+                Log.d(TAG, "bindView: " + circle.getContent());
                 holder.setText(circle.getTime(), R.id.tv_sendTime);
                 ImageView thumb = holder.getView(R.id.iv_thumb);
                 glideManager.load(circle.getHeadPicture()).into(thumb);
+                ImageView annexView = holder.getView(R.id.iv_annex);
                 if (!TextUtils.isEmpty(circle.getPicture())) {
-                    ImageView annexView = holder.getView(R.id.iv_annex);
                     annexView.setVisibility(View.VISIBLE);
                     glideManager.load(circle.getPicture()).into(annexView);
                 }

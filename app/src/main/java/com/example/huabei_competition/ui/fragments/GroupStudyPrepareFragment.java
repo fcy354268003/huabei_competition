@@ -90,12 +90,12 @@ public class GroupStudyPrepareFragment extends Fragment {
     }
 
     private void start(View view) {
-        if (userInfos.size() >= 2) {
+        if (userInfos.size() > 1) {
             // TODO 向所有用户发送一个 开始 的透传消息 跳转到学习页面
             sendCMD(START_EVENT);
             toNextFragment();
         } else {
-            MyToast.showMessage("人数大于等于3个才可以开始哦！");
+            MyToast.showMessage("人数大于等于2个才可以开始哦！");
         }
     }
 
@@ -153,7 +153,7 @@ public class GroupStudyPrepareFragment extends Fragment {
 
     private void check() {
         if (userInfos.size() >= 2) {
-            binding.btnStart.setBackgroundResource(R.color.orange);
+            binding.btnStart.setBackgroundColor(getResources().getColor(R.color.orange));
         }
     }
 

@@ -3,16 +3,19 @@ package com.example.huabei_competition.ui.activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 import com.example.huabei_competition.R;
+import com.example.huabei_competition.network.api.EncryptionTransmission;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.ui.fragments.ForgetPassActivity;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
+import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -32,6 +35,8 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
+        boolean aa = EncryptionTransmission.test("ewfhojirwhoweiofhweipjf").equals("TWpGVFYxZHdVVTFvV1dwVE1IcHdia0ZQVlhKRk1WTkpla05STkVNMVIydzRTWEJWVHk4eU9XaFpNRWx5Ym5wbVJYaEZZbnBKTVVGeVRYUkJWMkptUlROaQ==");
+        Log.d(TAG, "onCreate: ssssssssssss\n" +aa);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         animation();
     }
@@ -94,6 +99,7 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
                             Intent intent = new Intent(CheckInActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
+                            MyToast.showMessage("登陆成功");
                         }
                     });
                 } else {
@@ -106,27 +112,45 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
     @Override
     public void failure() {
         Snackbar.make(mPassword, "登陆失败", Snackbar.LENGTH_LONG).show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                stopLoading();
+            }
+        });
     }
 
     /**
      * @param view 登录按钮
      */
     public void log(View view) {
+//                UserUtil.logIn(this, "87654321", "12345678", this);
+
         UserUtil.logIn(this, mUserName.getText().toString(), mPassword.getText().toString(), this);
+
     }
 
     /**
      * @param view 注册按钮
      */
     public void goToRegister(View view) {
+        view.setClickable(false);
         Intent intent = new Intent(CheckInActivity.this, RegisterActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        findViewById(R.id.btn_register).setClickable(true);
+        findViewById(R.id.findPassword).setClickable(true);
     }
 
     /**
      * @param view 找回密码按钮
      */
     public void goToForget(View view) {
+        view.setClickable(false);
         Intent intent = new Intent(this, ForgetPassActivity.class);
         startActivity(intent);
     }

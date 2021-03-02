@@ -4,6 +4,8 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -18,6 +20,10 @@ import android.widget.TextView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.TimerVM;
 import com.example.huabei_competition.databinding.FragmentSelfStudyBinding;
+import com.example.huabei_competition.event.GroupManager;
+import com.example.huabei_competition.network.api.EncryptionTransmission;
+import com.example.huabei_competition.network.api.LogIn;
+import com.example.huabei_competition.network.api.StudyDataGet;
 import com.example.huabei_competition.ui.activity.MainActivity;
 
 import com.example.huabei_competition.util.MyApplication;
@@ -25,6 +31,18 @@ import com.example.huabei_competition.util.MyCountDownTimer;
 import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.List;
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetGroupIDListCallback;
+import cn.jpush.im.android.api.model.UserInfo;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 /**
@@ -54,7 +72,6 @@ public class SelfStudyFragment extends Fragment {
             mLabelText = getArguments().getString(LABEL);
             timerVM = new TimerVM(mTime);
         }
-        Log.d(TAG, "onCreate: " + mTime);
     }
 
     @Override
@@ -69,17 +86,30 @@ public class SelfStudyFragment extends Fragment {
             return binding.getRoot();
         }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_self_study, container, false);
-        binding.setLifecycleOwner(this);
+        binding.setLifecycleOwner(getViewLifecycleOwner());
         mMotto = binding.tvMotto;
         mLabel = binding.tvLabel;
         String quote = ((MyApplication) getActivity().getApplication()).loadOneQuote();
         mMotto.setText(quote);
         mLabel.setText(mLabelText);
         WidgetUtil.setCustomerText(mMotto, WidgetUtil.CUSTOMER_HUAKANGSHAONV);
-        myCountDownTimer = new MyCountDownTimer(getContext(), mTime * 60 * 1000, 1000) {
+        binding.menu.findViewById(R.id.iv_sun).setOnClickListener(this::onSunClick);
+        binding.menu.findViewById(R.id.iv_music).setOnClickListener(this::onMusicClick);
+        binding.menu.findViewById(R.id.iv_breakOff).setOnClickListener(this::onBreakOffClick);
+        return binding.getRoot();
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setCountDownTimer();
+    }
+
+    private void setCountDownTimer() {
+        myCountDownTimer = new MyCountDownTimer(getContext(), mTime * 60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                Log.d(TAG, "onTick: ");
                 if (timerVM.getSecond().getValue() > 0) {
                     Long value = timerVM.getSecond().getValue();
                     timerVM.getSecond().setValue(--value);
@@ -104,12 +134,28 @@ public class SelfStudyFragment extends Fragment {
                         TextView title = rootView.findViewById(R.id.tv_title);
                         title.setText("学习及时完成！");
                         TextView money = rootView.findViewById(R.id.tv_moneyReward);
+                        money.setVisibility(View.VISIBLE);
                         money.setText("铜钱+" + mTime);
                         Button confirm = rootView.findViewById(R.id.btn_sure);
                         confirm.setText("欢喜收下！！");
                         confirm.setOnClickListener(view -> {
                             dialog.dismiss();
                             ((MainActivity) getActivity()).getController().navigateUp();
+                            StudyDataGet.SubmitTime submitTime = new StudyDataGet.SubmitTime(String.valueOf(mTime), EncryptionTransmission.test(LogIn.TOKEN + mTime), mLabelText);
+                            StudyDataGet.submitTimePerson(submitTime, new Callback() {
+                                @Override
+                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                                }
+
+                                @Override
+                                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                                    if (response.isSuccessful()) {
+                                        Log.d(TAG, "onResponse: " + response.body().string());
+                                    }
+                                    response.close();
+                                }
+                            });
                         });
                     }
                 });
@@ -118,10 +164,6 @@ public class SelfStudyFragment extends Fragment {
         };
         binding.setVm(timerVM);
         myCountDownTimer.start();
-        binding.menu.findViewById(R.id.iv_sun).setOnClickListener(this::onSunClick);
-        binding.menu.findViewById(R.id.iv_music).setOnClickListener(this::onMusicClick);
-        binding.menu.findViewById(R.id.iv_breakOff).setOnClickListener(this::onBreakOffClick);
-        return binding.getRoot();
     }
 
     private PowerManager powerManager;
@@ -189,6 +231,7 @@ public class SelfStudyFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (myCountDownTimer != null && myCountDownTimer.isPause()) {
+            Log.d(TAG, "onResume: myCountDownTimer restart");
             myCountDownTimer.restart();
         }
         if (mediaPlayer != null && isMusicOn) {

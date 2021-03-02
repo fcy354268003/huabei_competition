@@ -18,13 +18,9 @@ import java.util.Objects;
  */
 public class FriendApply extends LitePalSupport implements DiffDataCallback.Differ<FriendApply> {
     // 申请接收方用户用户名
-    @Column(nullable = false)
     private String acquirerUserName;
-    @Column(nullable = true)
     private String appKey;
-    @Column(nullable = false, unique = true)
     private String userName;
-    @Column(nullable = true)
     private String reason;
     // 被处理状态 0 未处理 1 接受 2 未接受
     private int state;

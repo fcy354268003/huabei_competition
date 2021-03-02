@@ -3,6 +3,7 @@ package com.example.huabei_competition.util;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -26,15 +27,17 @@ public class MyHandler extends Handler {
     }
 
     private Callback mCallback;
+    private static final String TAG = "MyHandler";
 
     /**
      * @param context 上下文
      * @return MyHandler 对象
      */
     public static MyHandler obtain(Context context, Callback callback) {
+        Log.d(TAG, "obtain: " + context.toString());
         if (handlerHashMap == null)
             handlerHashMap = new HashMap<>();
-        if (!handlerHashMap.containsKey(context.toString())) {
+        if (!handlerHashMap.containsKey(context.toString() + callback)) {
             MyHandler myHandler = new MyHandler(context);
             myHandler.mCallback = callback;
             handlerHashMap.put(context.toString(), myHandler);

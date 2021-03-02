@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import android.os.Bundle;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,12 +58,14 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
             public void run() {
                 view.setClickable(true);
             }
-        }, 1000);
+        }, 1000 * 60);
         PasswordRel.forget_2(token, this);
     }
 
+    private static final String TAG = "ForgetPassActivity";
+
     private void sure(View view) {
-        binding.btnConfirm.setClickable(false);
+        Log.d(TAG, "sure: ");
         switch (state) {
             case 0:
                 String s = binding.etUserOrPhone.getText().toString();
@@ -71,11 +74,13 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
                     return;
                 }
                 PasswordRel.forget_1(s, this);
+                Log.d(TAG, "sure:  " + s + state);
                 break;
             case 2:
                 EditText editText = binding.sendVer.findViewById(R.id.verification);
                 String ver = editText.getText().toString();
                 PasswordRel.forget_3(token, ver, this);
+                Log.d(TAG, "sure: " + state);
                 break;
             case 3:
                 String one = binding.etOne.getText().toString();
@@ -88,9 +93,11 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
                     MyToast.showMessage("两次填写密码不一致");
                     return;
                 }
+                Log.d(TAG, "sure: " + state);
                 PasswordRel.forget_4(token, one, this);
                 break;
         }
+        binding.btnConfirm.setClickable(false);
     }
 
     private void back(View view) {
@@ -174,5 +181,6 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
                     break;
             }
         }
+        response.close();
     }
 }

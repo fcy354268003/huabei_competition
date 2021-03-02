@@ -62,8 +62,7 @@ public class MainActivity extends BaseActivity {
                     public void gotResult(int i, String s) {
                         if (i == 0) {
                             MyToast.showMessage("头像更新成功");
-                            userCardVM.updateUserInfo();
-                            LiveDataManager.getInstance().with(MineFragment.class.getSimpleName()).postValue(new Object());
+                            LiveDataManager.getInstance().with(MineFragment.class.getSimpleName()).setValue(new Object());
                         } else MyToast.showMessage("更新失败");
                     }
                 });
@@ -80,5 +79,6 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy: ");
     }
+
     private static final String TAG = "MainActivity";
 }

@@ -259,6 +259,7 @@ public class NPCRel {
                         LiveDataManager.getInstance().with(FriendsFragment.class.getSimpleName() + "NPC").postValue(new Object());
                     }
                 }
+                response.close();
             }
         });
     }

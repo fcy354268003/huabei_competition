@@ -19,23 +19,13 @@ import com.example.huabei_competition.network.api.Register;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.util.MyHandler;
-import com.example.huabei_competition.event.UserUtil;
-import com.example.huabei_competition.widget.CakeShapeView;
 import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyToast;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
 import cn.jpush.im.api.BasicCallback;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * Create by FanChenYang
@@ -62,14 +52,13 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
 
     public void onConfirm() {
         // TODO 检查是否规范 开启动画 提交表单
-
         // 检查是否符合规范
         if (isStandard()) {
             startAni();
-            Register.register(mViewModel.getUserName().toString()
-                    , mViewModel.getPassword().toString()
-                    , mViewModel.getPhoneNumber().toString()
-                    , mViewModel.getVerification().toString()
+            Register.register(mViewModel.getUserName().getValue().toString()
+                    , mViewModel.getPassword().getValue().toString()
+                    , mViewModel.getPhoneNumber().getValue().toString()
+                    , mViewModel.getVerification().getValue().toString()
                     , mBinding.getRoot()
                     , this);
         }
@@ -127,10 +116,12 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
             return;
         }
         view.setClickable(false);
+        view.setBackgroundColor(getResources().getColor(R.color.gray));
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 view.setClickable(true);
+                view.setBackgroundColor(getResources().getColor(R.color.orange));
             }
         }, 1000 * 60);
         Register.sendVerification(value, view);
@@ -166,7 +157,9 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
         myHandler.post(new Runnable() {
             @Override
             public void run() {
-                Snackbar.make(mBinding.getRoot(), "注册异常", Snackbar.LENGTH_LONG).show();
+                Log.d(TAG, "run: ");
+//                Snackbar.make(mBinding.getRoot(), "注册异常", Snackbar.LENGTH_LONG).show();
+                MyToast.showMessage("注册异常");
                 stopLoading();
                 finish();
             }
@@ -176,14 +169,15 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
     @Override
     public void success() {
         RegisterOptionalUserInfo registerOptionalUserInfo = new RegisterOptionalUserInfo();
-        registerOptionalUserInfo.setNickname(mViewModel.getNickName().toString());
-        JMessageClient.register(mViewModel.getUserName().toString(), mViewModel.getPassword().toString(), registerOptionalUserInfo, new BasicCallback() {
+        registerOptionalUserInfo.setNickname(mViewModel.getNickName().getValue());
+        JMessageClient.register(mViewModel.getUserName().getValue().toString(), mViewModel.getPassword().getValue().toString(), registerOptionalUserInfo, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
+                Log.d(TAG, "gotResult: " + s);
                 if (i == 0) {
-                    Snackbar.make(mBinding.getRoot(), "注册成功", Snackbar.LENGTH_LONG).show();
+                    MyToast.showMessage("注册成功");
                 } else {
-                    Snackbar.make(mBinding.getRoot(), s, Snackbar.LENGTH_LONG).show();
+                    MyToast.showMessage(s);
                 }
                 myHandler.post(new Runnable() {
                     @Override

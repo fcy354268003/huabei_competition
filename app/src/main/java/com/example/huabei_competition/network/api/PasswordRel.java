@@ -1,5 +1,7 @@
 package com.example.huabei_competition.network.api;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.huabei_competition.event.ChatRoomUtil;
@@ -53,14 +55,18 @@ public class PasswordRel {
      * @param username 用户名 可以是 手机号
      */
     public static void forget_1(String username, Callback callback) {
+        OkHttpClient client = new OkHttpClient();
         String json = gson.toJson(new Forget_1(username));
         RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
         Request request = new Request.Builder()
                 .url(LogIn.BASIC_PATH + FOR_1)
                 .post(requestBody)
                 .build();
+        Log.d(TAG, "forget_1: ");
         client.newCall(request).enqueue(callback);
     }
+
+    private static final String TAG = "PasswordRel";
 
     /**
      * 第一次返回信息

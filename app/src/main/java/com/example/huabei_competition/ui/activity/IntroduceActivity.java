@@ -22,15 +22,20 @@ public class IntroduceActivity extends BaseActivity {
         findViewById(R.id.iv_back).setOnClickListener(view -> {
             finish();
         });
-        LiveDataManager.getInstance().<NPC>with(TalkActivity.class.getSimpleName()).observe(this, new Observer<NPC>() {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LiveDataManager.getInstance().<NPC>with(IntroduceActivity.class.getSimpleName()).observe(this, new Observer<NPC>() {
             @Override
             public void onChanged(NPC npc) {
                 View v1 = findViewById(R.id.detail1);
                 ImageView head = v1.findViewById(R.id.bighead);
-                Glide.with(head).load(npc.getPortrait()).into(head);
+                Glide.with(head).load(npc.getHeadPicture()).into(head);
                 TextView name = v1.findViewById(R.id.textview_name);
                 name.setText(npc.getName());
-                ((TextView) v1.findViewById(R.id.textview_zihao)).setText(npc.getTradeName());
+                ((TextView) v1.findViewById(R.id.textview_zihao)).setText(npc.getTradename());
                 ((TextView) v1.findViewById(R.id.textview_dynasty)).setText(npc.getDynasty());
                 ((TextView) findViewById(R.id.detail2).findViewById(R.id.basic_all)).setText(npc.getDescription());
                 ImageView img = findViewById(R.id.detail3).findViewById(R.id.iv);
@@ -38,7 +43,6 @@ public class IntroduceActivity extends BaseActivity {
             }
         });
     }
-
 
     @Override
     public void onBackPressed() {

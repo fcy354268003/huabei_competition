@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
 import org.litepal.crud.LitePalSupport;
 
 public class NPC extends LitePalSupport {
-
-    private String id;
+    @SerializedName("id")
+    private String NPCID;
     private String name;
     // 朝代
     private String dynasty;
     //字号
-    private String tradeName;
+    private String tradename;
     @SerializedName("picture")
     private String headPicture;
     private String portrait;
@@ -29,12 +29,12 @@ public class NPC extends LitePalSupport {
         this.userName = userName;
     }
 
-    public String getId() {
-        return id;
+    public String getNPCID() {
+        return NPCID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setNPCID(String NPCID) {
+        this.NPCID = NPCID;
     }
 
     public String getName() {
@@ -53,12 +53,12 @@ public class NPC extends LitePalSupport {
         this.dynasty = dynasty;
     }
 
-    public String getTradeName() {
-        return tradeName;
+    public String getTradename() {
+        return tradename;
     }
 
-    public void setTradeName(String tradeName) {
-        this.tradeName = tradeName;
+    public void setTradename(String tradename) {
+        this.tradename = tradename;
     }
 
     public String getHeadPicture() {

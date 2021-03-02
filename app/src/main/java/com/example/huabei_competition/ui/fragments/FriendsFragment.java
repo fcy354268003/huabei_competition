@@ -105,14 +105,20 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
             }
         });
         binding.tvNpcs.setOnClickListener(view -> {
+            if (NPCadapter == null)
+                return;
             NPCadapter.changeState();
             isClose[0] = !isClose[0];
         });
         binding.tvFriends.setOnClickListener(view -> {
+            if (friendsAdapter == null)
+                return;
             friendsAdapter.changeState();
             isClose[1] = !isClose[1];
         });
         binding.tvGroup.setOnClickListener(view -> {
+            if (groupInfoMyRecyclerAdapter == null)
+                return;
             groupInfoMyRecyclerAdapter.changeState();
             isClose[2] = !isClose[2];
         });
@@ -166,6 +172,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
                     public void onChanged(Object o) {
                         // TODO 从本地数据库 刷新 adapter
                         List<NPC> myNPCs = DatabaseUtil.getMyNPCs();
+                        Log.d(TAG, "onChanged: " + "购买消息" + myNPCs);
                         LinearLayoutManager manager = new LinearLayoutManager(getContext());
                         binding.rvNpcs.setLayoutManager(manager);
                         NPCadapter = new MyRecyclerAdapter<NPC>(myNPCs) {
@@ -177,6 +184,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
                             @Override
                             public void bindView(MyHolder holder, int position, NPC item) {
                                 ImageView imageView = holder.getView(R.id.iv_thumb);
+                                imageView.setScaleType(ImageView.ScaleType.FIT_START);
                                 glideManager.load(item.getPortrait()).into(imageView);
                                 holder.getView(R.id.tv_sendTime).setVisibility(View.GONE);
                                 holder.setText(item.getName(), R.id.petName);
@@ -184,7 +192,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
                                 if (TextUtils.equals(isDialogue, "true")) {
                                     holder.getView(R.id.cv_prompt).setVisibility(View.VISIBLE);
                                     holder.setText("!", R.id.tv_promptNumber);
-                                }else {
+                                } else {
                                     holder.getView(R.id.cv_prompt).setVisibility(View.GONE);
                                 }
                                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -200,6 +208,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
                         };
                         if (isClose[0])
                             NPCadapter.changeState();
+                        binding.rvNpcs.setAdapter(NPCadapter);
                     }
                 });
     }

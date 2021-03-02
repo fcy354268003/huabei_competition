@@ -25,7 +25,9 @@ public abstract class MyCountDownTimer {
      * @param interval 毫秒数
      */
     public MyCountDownTimer(Context context, long sum, long interval) {
+        Log.d(TAG, "MyCountDownTimer: ");
         mHandler = MyHandler.obtain(context, message -> {
+            Log.d(TAG, "MyCountDownTimer: ");
             if (isPause || isCancelled)
                 return;
             long millisLeft = mStopTimeFuture - SystemClock.elapsedRealtime();
@@ -73,6 +75,7 @@ public abstract class MyCountDownTimer {
             onFinish();
             return this;
         }
+        Log.d(TAG, "start: ");
         mStopTimeFuture = SystemClock.elapsedRealtime() + mSum;
         mHandler.sendMessage(mHandler.obtainMessage(MSG));
         return this;

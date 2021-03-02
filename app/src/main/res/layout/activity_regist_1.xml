@@ -32,8 +32,8 @@
         <include
             android:id="@+id/loading"
             layout="@layout/loading"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:elevation="1dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

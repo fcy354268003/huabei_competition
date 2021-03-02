@@ -1,11 +1,13 @@
 package com.example.huabei_competition.db;
 
 import com.example.huabei_competition.event.UserUtil;
+import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
 public class FriendCircle extends LitePalSupport {
-    private String id;
+    @SerializedName("id")
+    private String FCID;
     private String name;
     private String headPicture;
     private String content;
@@ -18,12 +20,12 @@ public class FriendCircle extends LitePalSupport {
         return userName;
     }
 
-    public String getId() {
-        return id;
+    public String getFCID() {
+        return FCID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFCID(String FCID) {
+        this.FCID = FCID;
     }
 
     public String getName() {
