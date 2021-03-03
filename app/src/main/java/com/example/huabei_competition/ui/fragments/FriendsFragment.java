@@ -126,13 +126,8 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
         });
         setObserver();
         binding.setCallback(this);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         getNPCsAdapter();
+        return binding.getRoot();
     }
 
     private void setPrompt() {
@@ -150,6 +145,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
         Log.d(TAG, "onRefresh: ");
         FriendManager.getFriends(new FriendsListCallback());
         GroupManager.getGroupIdList(new GroupListCallback());
+        NPCRel.getNPCList();
         setPrompt();
     }
 
@@ -173,11 +169,11 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
                 .observe(getViewLifecycleOwner(), new Observer<Object>() {
                     @Override
                     public void onChanged(Object o) {
-                        // TODO 从本地数据库 刷新 adapter
                         List<NPC> myNPCs = DatabaseUtil.getMyNPCs();
                         Log.d(TAG, "onChanged: " + "购买消息" + myNPCs);
                         LinearLayoutManager manager = new LinearLayoutManager(getContext());
                         binding.rvNpcs.setLayoutManager(manager);
+                        Log.d(TAG, "onChanged: " + myNPCs.size());
                         NPCadapter = new MyRecyclerAdapter<NPC>(myNPCs) {
                             @Override
                             public int getLayoutId(int viewType) {
@@ -280,16 +276,10 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
         });
     }
 
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
     private static final String TAG = "FriendsFragment";
 
     private void getNPCsAdapter() {
+        Log.d(TAG, "getNPCsAdapter: ");
         NPCRel.getNPCList();
     }
 

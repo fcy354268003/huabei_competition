@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.util.Objects;
+
 public class NPC extends LitePalSupport {
     @SerializedName("id")
     private String NPCID;
@@ -98,6 +100,21 @@ public class NPC extends LitePalSupport {
     }
 
     public void setIsDialogue(String isDialogue) {
+
         this.isDialogue = isDialogue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NPC npc = (NPC) o;
+        return Objects.equals(NPCID, npc.NPCID) &&
+                Objects.equals(userName, npc.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(NPCID, userName);
     }
 }

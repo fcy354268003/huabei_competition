@@ -2,7 +2,7 @@ package com.example.huabei_competition.db;
 
 import org.litepal.crud.LitePalSupport;
 
-public class PersonDetail extends LitePalSupport {
+public class  PersonDetail extends LitePalSupport {
 
 
     //public String img1;
@@ -46,23 +46,7 @@ public class PersonDetail extends LitePalSupport {
     public String getSummary(){
         return Summary;
     }
-   /*public void setSummary(String Summary){
-        this.Summary=Summary;
-    }
-    public String getImgOne(){
-        return img1;
-    }
-    public void setImgOne(String img1){
-        this.img1=img1;
-    }
-    public String getImgTwo(){
-        return img2;
-    }
-    public void setImgTwo(String img2){
-        this.img2=img2;
-    }
 
-    */
 
 
 

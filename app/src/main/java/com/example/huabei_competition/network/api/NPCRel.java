@@ -1,5 +1,7 @@
 package com.example.huabei_competition.network.api;
 
+import android.util.Log;
+
 import com.example.huabei_competition.db.Dialogue;
 import com.example.huabei_competition.db.FriendCircle;
 import com.example.huabei_competition.db.NPC;
@@ -7,6 +9,7 @@ import com.example.huabei_competition.db.Prop;
 import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.event.ChatRoomUtil;
 import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.ui.fragments.FriendsFragment;
 import com.example.huabei_competition.util.DatabaseUtil;
 import com.google.gson.Gson;
@@ -239,6 +242,7 @@ public class NPCRel {
                 .url(LogIn.BASIC_PATH + PATH_GET_MINE_NPC)
                 .post(requestBody)
                 .build();
+        OkHttpClient client = new OkHttpClient();
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -248,14 +252,17 @@ public class NPCRel {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String json = response.body().string();
+                Log.d(TAG, "onResponse: " + json) ;
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
                     NPCRel.Get_NPC_1 get_npc_1 = gson.fromJson(json, NPCRel.Get_NPC_1.class);
                     if (get_npc_1.getCode().equals(LogIn.OK)) {
                         List<NPC> info = get_npc_1.getData().getInfo();
                         for (NPC npc : info) {
+                            npc.setUserName(UserUtil.sUserName);
                             DatabaseUtil.saveOrUpdateNPC(npc);
                         }
+
                         LiveDataManager.getInstance().with(FriendsFragment.class.getSimpleName() + "NPC").postValue(new Object());
                     }
                 }
@@ -264,6 +271,7 @@ public class NPCRel {
         });
     }
 
+    private static final String TAG = "FriendsFragment";
 
     public static class Get_NPC_1 {
         private String code;

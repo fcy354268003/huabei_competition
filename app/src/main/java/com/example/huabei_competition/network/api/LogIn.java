@@ -30,7 +30,7 @@ public class LogIn {
     public static String TOKEN;
     private static final String TAG = "LogIn";
     private static final Gson gson = new Gson();
-    public static final String BASIC_PATH = "http://5.180.76.28:51575/";
+    public static final String BASIC_PATH = "http://5.180.76.28:51575";
 
     public static void login(@NonNull final String name, @NonNull final String pass, @NonNull LogCallback callback) {
         UserLogIn post = new UserLogIn(name, pass);

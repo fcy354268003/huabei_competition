@@ -125,12 +125,10 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
 
     private void observe() {
         LiveDataManager.getInstance()
-                .<Object>with(ShopFragment.class.getSimpleName() + "prop")
-                .observe(getViewLifecycleOwner(), new Observer<Object>() {
+                .<List<Prop>>with(ShopFragment.class.getSimpleName() + "prop")
+                .observe(getViewLifecycleOwner(), new Observer<List<Prop>>() {
                     @Override
-                    public void onChanged(Object prop) {
-                        //TODO 初始化
-                        List<Prop> props = DatabaseUtil.getProps();
+                    public void onChanged(List<Prop> props) {
                         propAdapter = new MyRecyclerAdapter<Prop>(props) {
                             @Override
                             public int getLayoutId(int viewType) {
@@ -160,10 +158,12 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                     }
                 });
         LiveDataManager.getInstance()
-                .<Object>with(ShopFragment.class.getSimpleName() + "role").observe(getViewLifecycleOwner(), new Observer<Object>() {
+                .<List<ShopRole>>with(ShopFragment.class.getSimpleName() + "role").observe(getViewLifecycleOwner(), new Observer<List<ShopRole>>() {
             @Override
-            public void onChanged(Object o) {
-                List<ShopRole> roles = DatabaseUtil.getRoles();
+            public void onChanged(List<ShopRole> roles) {
+                for (ShopRole role : roles) {
+                    Log.d(TAG, "onChanged: " + role);
+                }
                 shopRoleAdapter = new MyRecyclerAdapter<ShopRole>(roles) {
                     @Override
                     public int getLayoutId(int viewType) {
@@ -174,6 +174,7 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                     public void bindView(MyHolder holder, int position, ShopRole shopRole) {
                         ItemShopRoleBinding binding = (ItemShopRoleBinding) holder.getBinding();
                         binding.setData(shopRole);
+                        Log.d(TAG, "bindView: ----------" + shopRole.getIsHaving());
                         Log.d(TAG, "bindView: " + shopRole.getPrice());
                         glideManager.load(shopRole.getPicture()).override(140, 140).into(binding.ivPicture);
 //                        Glide.with(binding.ivPicture).load(shopRole.getPicture()).into(binding.ivPicture);
@@ -210,12 +211,9 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                     NPCRel.PropResponse propResponse = gson.fromJson(response.body().string(), NPCRel.PropResponse.class);
                     if (propResponse.getCode().equals(LogIn.OK)) {
                         ArrayList<Prop> info = propResponse.getData().getInfo();
-                        for (Prop prop : info) {
-                            DatabaseUtil.saveOrUpdateShopItem(prop);
-                        }
                         LiveDataManager.getInstance()
                                 .with(ShopFragment.class.getSimpleName() + "prop")
-                                .postValue(new Object());
+                                .postValue(info);
                     }
                 } else {
                     onFailure(call, new IOException());
@@ -238,13 +236,9 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                                        Log.d(TAG, "onResponse: " + json);
                                        if (shopRoleResponse.getCode().equals(LogIn.OK)) {
                                            ArrayList<ShopRole> info = shopRoleResponse.getData().getInfo();
-                                           for (ShopRole role : info) {
-                                               role.setUserName(UserUtil.sUserName);
-                                               DatabaseUtil.saveOrUpdateShopRoleItem(role);
-                                           }
                                            LiveDataManager.getInstance()
                                                    .with(ShopFragment.class.getSimpleName() + "role")
-                                                   .postValue(new Object());
+                                                   .postValue(info);
                                        }
                                    } else {
                                        onFailure(call, new IOException());
@@ -310,18 +304,21 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                                 Snackbar.make(confirm, "购买成功", Snackbar.LENGTH_SHORT).show();
                                 if (type == 1) {
                                     NPCRel.getNPCList();
-                                    List<ShopRole> shopRoles = LitePal.where("ShopRoleId = ? and userName = ?", id, UserUtil.sUserName).find(ShopRole.class);
-                                    if (shopRoles != null && shopRoles.size() > 0) {
-                                        shopRoles.get(0).setIsHaving("true");
-                                        DatabaseUtil.saveOrUpdateShopRoleItem(shopRoles.get(0));
-                                    }
-                                    LiveDataManager.getInstance()
-                                            .with(ShopFragment.class.getSimpleName() + "role")
-                                            .postValue(new Object());
                                 }
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
+                                        if (type == 1) {
+                                            int i = 0;
+                                            List<ShopRole> resources = shopRoleAdapter.getResources();
+                                            for (ShopRole resource : resources) {
+                                                if (resource.getShopRoleId().equals(id)) {
+                                                    resource.setIsHaving("true");
+                                                    shopRoleAdapter.notifyItemChanged(i);
+                                                }
+                                                i++;
+                                            }
+                                        }
                                         customerDialog.dismiss();
                                         String money = buy_1.getData().getMoney();
                                         binding.tvMyMoney.setText(money);

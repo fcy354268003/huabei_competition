@@ -7,6 +7,7 @@ import org.litepal.crud.LitePalSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Create by FanChenYang at 2021/2/28
@@ -63,5 +64,19 @@ public class Dialogue extends LitePalSupport {
 
     public void setReply(List<String> reply) {
         this.reply = reply;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dialogue dialogue = (Dialogue) o;
+        return Objects.equals(Reid, dialogue.Reid) &&
+                Objects.equals(userName, dialogue.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Reid, userName);
     }
 }

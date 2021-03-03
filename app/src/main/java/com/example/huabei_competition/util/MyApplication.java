@@ -63,12 +63,10 @@ public class MyApplication extends Application {
         // 极光IM
         JMessageClient.init(this);
         // 通知栏
-        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_DISABLE);
+//        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_DISABLE);
         JMessageClient.registerEventReceiver(EventReceiver.getInstance());
-//        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND);
+        JMessageClient.setNotificationFlag(JMessageClient.FLAG_NOTIFY_WITH_SOUND);
         LitePal.initialize(this);
-        loadOneQuote();
-
     }
 
 

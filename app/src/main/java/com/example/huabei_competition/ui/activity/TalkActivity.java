@@ -201,18 +201,26 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void addToTalker(Dialogue dialogue) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.ll_allChoice).setVisibility(View.GONE);
+            }
+        });
         choice_1.setClickable(false);
         choice_2.setClickable(false);
         List<String> content = dialogue.getContent();
         for (int i = 0; i < content.size(); i++) {
             String s = content.get(i);
+            if (TextUtils.isEmpty(s))
+                break;
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     adapter.addResource(new DD(0, s));
                     refreshPosition();
                 }
-            }, 1000 * i);
+            }, 1500 * i);
         }
 
         mHandler.postDelayed(new Runnable() {
@@ -229,7 +237,7 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
                     choice_2.setVisibility(View.VISIBLE);
                 } else choice_2.setVisibility(View.GONE);
             }
-        }, 1000 * (content.size()));
+        }, 1500 * (content.size()));
     }
 
     private static List<DD> changeStoryToDD(List<Dialogue> dialogues) {

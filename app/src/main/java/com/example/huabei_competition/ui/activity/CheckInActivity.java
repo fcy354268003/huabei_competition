@@ -45,10 +45,10 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
         Log.d(TAG, "onCreate: ssssssssssss\n" +aa);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         animation();
-//        LitePal.f
-//        for (ShopRole role : roles) {
-//            Log.d(TAG, "onCreate: " + role.getIsHaving() + "\n" + role.getUserName());
-//        }
+        List<ShopRole> shopRoles = LitePal.where().find(ShopRole.class);
+        for (ShopRole shopRole : shopRoles) {
+            Log.d(TAG, "" + shopRole.toString());
+        }
     }
 
     private static final String TAG = "CheckInActivity";

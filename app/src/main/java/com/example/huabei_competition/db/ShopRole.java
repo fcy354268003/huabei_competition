@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.util.Objects;
+
 public class ShopRole extends LitePalSupport {
     @SerializedName("id")
     private String ShopRoleId;
@@ -68,5 +70,32 @@ public class ShopRole extends LitePalSupport {
 
     public void setIsHaving(String isHaving) {
         this.isHaving = isHaving;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShopRole shopRole = (ShopRole) o;
+        return Objects.equals(ShopRoleId, shopRole.ShopRoleId) &&
+                Objects.equals(userName, shopRole.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ShopRoleId, userName);
+    }
+
+    @Override
+    public String toString() {
+        return "ShopRole{" +
+                "ShopRoleId='" + ShopRoleId + '\'' +
+                ", name='" + name + '\'' +
+                ", picture='" + picture + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                ", isHaving='" + isHaving + '\'' +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 }

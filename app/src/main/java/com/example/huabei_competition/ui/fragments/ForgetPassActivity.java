@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import androidx.databinding.DataBindingUtil;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.text.TextUtils;
@@ -53,6 +54,7 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
 
     private void sendVer(View view) {
         view.setClickable(false);
+        view.setBackgroundColor(Color.GRAY);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -141,7 +143,6 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
                     }
                     break;
                 case 1:
-
                     state++;
                     runOnUiThread(new Runnable() {
                         @Override
@@ -149,7 +150,6 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
                             MyToast.showMessage("已成功发送验证码");
                         }
                     });
-
                     break;
                 case 2:
                     PasswordRel.Forget_3_3 forget_3_3 = gson.fromJson(response.body().string(), PasswordRel.Forget_3_3.class);
