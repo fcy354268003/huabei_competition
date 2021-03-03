@@ -123,7 +123,12 @@ public class RankListFragment extends Fragment implements RankListCallback {
                 if (response.isSuccessful()) {
                     RankList.Emerging emerging = gson.fromJson(resp, RankList.Emerging.class);
                     if (emerging.getCode().equals(LogIn.OK)) {
-                        initEmerging(emerging);
+                        myHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                initEmerging(emerging);
+                            }
+                        });
                     } else onFailure(call, new IOException());
                 } else {
                     myHandler.post(new Runnable() {
@@ -155,7 +160,12 @@ public class RankListFragment extends Fragment implements RankListCallback {
                 if (response.isSuccessful()) {
                     RankList.General general = gson.fromJson(resp, RankList.General.class);
                     if (general.getCode().equals(LogIn.OK)) {
-                        initGeneral(general);
+                        myHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                initGeneral(general);
+                            }
+                        });
                     } else onFailure(call, new IOException());
                 }
                 response.close();
@@ -164,6 +174,9 @@ public class RankListFragment extends Fragment implements RankListCallback {
         });
     }
 
+    /**
+     * 初始化总排行榜
+     */
     private void initGeneral(RankList.General general) {
         generalAdapter = new MyRecyclerAdapter<RankList.General.DataDTO.InfoDTO>(general.getData().getInfo()) {
             @Override
@@ -201,7 +214,8 @@ public class RankListFragment extends Fragment implements RankListCallback {
                 binding.tvRanking.setText(String.valueOf(i));
                 WidgetUtil.setCustomerText(binding.tvRanking, WidgetUtil.CUSTOMER_HUAKANGSHAONV);
                 String yesterday = getActivity().getResources().getString(R.string.sum_time_group);
-                binding.tvAverYes.setText(yesterday.replace("?", emerging.getAllTime()));
+                Log.d(TAG, "bindView: pppppppppp" + yesterday);
+                binding.tvAverYes.setText(yesterday.replace("p", emerging.getAllTime()));
                 JMessageClient.getGroupMembers(Long.parseLong(emerging.getGroupId()), new RequestCallback<List<GroupMemberInfo>>() {
                     @Override
                     public void gotResult(int i, String s, List<GroupMemberInfo> groupMemberInfos) {
@@ -215,6 +229,10 @@ public class RankListFragment extends Fragment implements RankListCallback {
         };
     }
 
+    /**
+     * 初始化新晋榜
+     *
+     */
     private void initEmerging(RankList.Emerging emerging) {
         emergingAdapter = new MyRecyclerAdapter<RankList.Emerging.DataDTO.InfoDTO>(emerging.getData().getInfo()) {
             @Override
@@ -278,11 +296,11 @@ public class RankListFragment extends Fragment implements RankListCallback {
         binding.tvNewRank.setOnClickListener(new_ -> {
             if (selected == 1)
                 return;
-            binding.rvRank.setAdapter(emergingAdapter);
+            if (emergingAdapter != null)
+                binding.rvRank.setAdapter(emergingAdapter);
             selected = 1;
-            // TODO 切换列表adapter
-            binding.tvNewRank.setTextSize(40);
             binding.tvRank.setTextSize(18);
+            binding.tvNewRank.setTextSize(40);
             binding.tvNewRank.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
             binding.tvNewRank.setTextColor(getResources().getColor(R.color.tabSelected_group));
             binding.tvRank.setTextColor(getResources().getColor(R.color.tabUnSelected_group));
@@ -291,15 +309,15 @@ public class RankListFragment extends Fragment implements RankListCallback {
         binding.tvRank.setOnClickListener(rank -> {
             if (selected == 2)
                 return;
+            if (generalAdapter != null)
+                binding.rvRank.setAdapter(generalAdapter);
             selected = 2;
-            // TODO 切换列表adapter
-            binding.rvRank.setAdapter(generalAdapter);
             binding.tvNewRank.setTextSize(18);
             binding.tvRank.setTextSize(40);
             binding.tvRank.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-            binding.tvNewRank.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
             binding.tvRank.setTextColor(getResources().getColor(R.color.tabSelected_group));
             binding.tvNewRank.setTextColor(getResources().getColor(R.color.tabUnSelected_group));
+            binding.tvNewRank.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
         });
     }
 

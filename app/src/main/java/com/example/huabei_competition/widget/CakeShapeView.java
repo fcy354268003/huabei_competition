@@ -42,7 +42,7 @@ public class CakeShapeView extends View {
     private Paint guideLinePaint;
     // 说明文字画笔
     private Paint guideTextPaint;
-
+    private CustomerAnimation customerAnimation;
     private float[] mSweep;
     private static final float LINE_WIDTH = 4f;
     private static final int PAINT_COLOR = 0xed3535;
@@ -116,6 +116,7 @@ public class CakeShapeView extends View {
         guideTextPaint.setAntiAlias(true);
         guideTextPaint.setStrokeWidth(TEXT_WIDTH);
         guideTextPaint.setTextSize(TEXT_SIZE);
+        customerAnimation = new CustomerAnimation();
     }
 
     /**
@@ -157,19 +158,20 @@ public class CakeShapeView extends View {
             ultimate[i] = contents.get(i).getSize() * 3.6f;
         }
 
-        ValueAnimator valueAnimator = ValueAnimator.ofObject(new MyEvaluator(), new float[contents.size()], ultimate);
-        valueAnimator.setDuration(2000);
-        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                if (mSweep == null)
-                    mSweep = new float[contents.size()];
-                mSweep = (float[]) animation.getAnimatedValue();
-                invalidate();
-            }
-        });
-        valueAnimator.start();
-
+//        ValueAnimator valueAnimator = ValueAnimator.ofObject(new MyEvaluator(), new float[contents.size()], ultimate);
+//        valueAnimator.setDuration(2000);
+//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                if (mSweep == null)
+//                    mSweep = new float[contents.size()];
+//                mSweep = (float[]) animation.getAnimatedValue();
+//                invalidate();
+//            }
+//        });
+//        valueAnimator.start();
+        customerAnimation.setDuration(2000);
+        setAnimation(customerAnimation);
     }
 
 
@@ -269,6 +271,7 @@ public class CakeShapeView extends View {
         @Override
         public float[] evaluate(float fraction, float[] startValue, float[] endValue) {
             mSweep = new float[contents.size()];
+            Log.d(TAG, "evaluate: " + mSweep.length + endValue.length);
             for (int i = 0; i < mSweep.length; i++) {
                 mSweep[i] = endValue[i] * fraction;
             }

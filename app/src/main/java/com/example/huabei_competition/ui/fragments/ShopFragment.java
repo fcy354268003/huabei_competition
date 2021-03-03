@@ -105,6 +105,7 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
     private MyRecyclerAdapter<Prop> propAdapter;
     private MyRecyclerAdapter<ShopRole> shopRoleAdapter;
     private int prePosition = 0;
+    private String shopRoleId;
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -189,6 +190,8 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                         }
                     }
                 };
+                if (prePosition == 1)
+                    binding.content.setAdapter(shopRoleAdapter);
             }
         });
     }
@@ -316,13 +319,14 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                                             .with(ShopFragment.class.getSimpleName() + "role")
                                             .postValue(new Object());
                                 }
-                                handler.post(new Runnable() {
+                                handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
+                                        customerDialog.dismiss();
                                         String money = buy_1.getData().getMoney();
                                         binding.tvMyMoney.setText(money);
                                     }
-                                });
+                                }, 500);
                             } else
                                 Snackbar.make(confirm, buy_1.getMessage(), Snackbar.LENGTH_SHORT).show();
                         } else {

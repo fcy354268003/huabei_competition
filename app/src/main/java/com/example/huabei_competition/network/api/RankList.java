@@ -42,6 +42,7 @@ public class RankList {
                 .url(LogIn.BASIC_PATH + PATH_GET_GENERAL_LIST)
                 .post(requestBody)
                 .build();
+        OkHttpClient client = new OkHttpClient();
         client.newCall(request).enqueue(callback);
     }
 
@@ -127,6 +128,7 @@ public class RankList {
             public static class InfoDTO {
                 @SerializedName("id")
                 private String groupId;
+                @SerializedName("time")
                 private String allTime;
 
                 public String getGroupId() {

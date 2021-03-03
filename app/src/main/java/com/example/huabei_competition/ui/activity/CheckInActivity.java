@@ -10,14 +10,20 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 import com.example.huabei_competition.R;
+import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.network.api.EncryptionTransmission;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.ui.fragments.ForgetPassActivity;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
+import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
+
+import org.litepal.LitePal;
+
+import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
@@ -39,6 +45,10 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
         Log.d(TAG, "onCreate: ssssssssssss\n" +aa);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         animation();
+//        LitePal.f
+//        for (ShopRole role : roles) {
+//            Log.d(TAG, "onCreate: " + role.getIsHaving() + "\n" + role.getUserName());
+//        }
     }
 
     private static final String TAG = "CheckInActivity";

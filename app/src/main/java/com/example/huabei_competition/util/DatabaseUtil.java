@@ -31,7 +31,9 @@ public class DatabaseUtil {
 
     public static int getNewFriendNotHandle() {
         Log.d(TAG, "getNewFriendNotHandle: " + UserUtil.sUserName);
-        return LitePal.where("acquirerUserName = ? and state = ?", UserUtil.sUserName, "0").find(FriendApply.class).size();
+        int friendSize = LitePal.where("acquirerUserName = ? and state = ?", UserUtil.sUserName, "0").find(FriendApply.class).size();
+        int groupSize = LitePal.where("acquirerUserName = ? and state = ?", UserUtil.sUserName, "0").find(GroupApply.class).size();
+        return friendSize + groupSize;
     }
 
     /**

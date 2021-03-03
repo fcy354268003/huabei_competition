@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.huabei_competition.db.FriendApply;
 import com.example.huabei_competition.db.GroupApply;
 import com.example.huabei_competition.ui.fragments.ChatFragment;
+import com.example.huabei_competition.ui.fragments.FriendsFragment;
 import com.example.huabei_competition.ui.fragments.GroupStudyFragment;
 import com.example.huabei_competition.ui.fragments.GroupStudyPrepareFragment;
 import com.example.huabei_competition.ui.fragments.NewFriendsFragment;
@@ -57,7 +58,7 @@ public class EventReceiver {
         chatMutableLiveData = LiveDataManager.getInstance()
                 .with(ChatFragment.class.getSimpleName());
         groupStudyPrepareLiveData = LiveDataManager.getInstance().with(GroupStudyPrepareFragment.class.getSimpleName());
-        groupBarrageLiveData = LiveDataManager.getInstance().with(GroupStudyFragment.class.getSimpleName()+"barrage");
+        groupBarrageLiveData = LiveDataManager.getInstance().with(GroupStudyFragment.class.getSimpleName() + "barrage");
     }
 
     public static EventReceiver getInstance() {
@@ -108,6 +109,10 @@ public class EventReceiver {
                     case group_member_added:
                         //群成员加群事件
                         Log.d(TAG, "onEvent: 群成员加群事件");
+                        UserInfo fromUser = msg.getFromUser();
+                        Log.d(TAG, "onEvent: " + fromUser.getUserName());
+                        // TODO 刷新群
+                        LiveDataManager.getInstance().with(FriendsFragment.class.getSimpleName() + "groupp").postValue(new Object());
                         break;
                     case group_member_removed:
                         //群成员被踢事件
@@ -175,6 +180,7 @@ public class EventReceiver {
                 break;
             case invite_accepted://对方接收了你的好友邀请
                 //...
+                LiveDataManager.getInstance().<String>with(GET_INVITATION).postValue(fromUsername);
                 break;
             case invite_declined://对方拒绝了你的好友邀请
                 //有理由
@@ -187,6 +193,8 @@ public class EventReceiver {
                 break;
         }
     }
+
+    public static final String GET_INVITATION = "getInvitation";
 
     public void onEvent(ChatRoomNotificationEvent event) {
         Log.d(TAG, "onEvent: " + event.getType().name());
@@ -208,6 +216,7 @@ public class EventReceiver {
 
     private MutableLiveData<CommandNotificationEvent> groupStudyPrepareLiveData;
     private MutableLiveData<CommandNotificationEvent> groupBarrageLiveData;
+
     public void onEvent(CommandNotificationEvent event) {
         Log.d(TAG, "onEvent: 命令透传" + event.getMsg());
         event.getSenderUserInfo(new GetUserInfoCallback() {

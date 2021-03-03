@@ -30,6 +30,7 @@ import com.example.huabei_competition.databinding.ItemFriendBinding;
 import com.example.huabei_competition.db.FriendApply;
 import com.example.huabei_competition.db.GroupApply;
 import com.example.huabei_competition.db.NPC;
+import com.example.huabei_competition.event.EventReceiver;
 import com.example.huabei_competition.event.FriendManager;
 import com.example.huabei_competition.event.GroupManager;
 import com.example.huabei_competition.event.LiveDataManager;
@@ -56,6 +57,7 @@ import java.util.List;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetGroupIDListCallback;
 import cn.jpush.im.android.api.callback.GetGroupInfoCallback;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
 import cn.jpush.im.android.api.callback.GetUserInfoListCallback;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
@@ -145,6 +147,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
     }
 
     public void onRefresh() {
+        Log.d(TAG, "onRefresh: ");
         FriendManager.getFriends(new FriendsListCallback());
         GroupManager.getGroupIdList(new GroupListCallback());
         setPrompt();
@@ -219,6 +222,8 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
         newMessage.observe(getViewLifecycleOwner(), new Observer<Message>() {
             @Override
             public void onChanged(Message message) {
+                if (friendsAdapter == null)
+                    return;
                 String userName = message.getFromUser().getUserName();
                 int position = -1;
                 List<UserInfo> resources = friendsAdapter.getResources();
@@ -245,6 +250,32 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
             @Override
             public void onChanged(FriendApply apply) {
                 setPrompt();
+            }
+        });
+
+        LiveDataManager.getInstance().<GroupApply>with(NewFriendsFragment.class.getSimpleName() + "group").observe(getViewLifecycleOwner(), new Observer<GroupApply>() {
+            @Override
+            public void onChanged(GroupApply groupApply) {
+                setPrompt();
+            }
+        });
+        LiveDataManager.getInstance().with(FriendsFragment.class.getSimpleName() + "groupp").observe(getViewLifecycleOwner(), new Observer<Object>() {
+            @Override
+            public void onChanged(Object o) {
+                GroupManager.getGroupIdList(new GroupListCallback());
+            }
+        });
+        LiveDataManager.getInstance().<String>with(EventReceiver.GET_INVITATION).observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String o) {
+                JMessageClient.getUserInfo(o, new GetUserInfoCallback() {
+                    @Override
+                    public void gotResult(int i, String s, UserInfo userInfo) {
+                        if (i == 0) {
+                            FriendManager.getFriends(new FriendsListCallback());
+                        }
+                    }
+                });
             }
         });
     }
@@ -447,11 +478,11 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
                         @Override
                         public void gotResult(int i, String s, GroupInfo groupInfo) {
                             groupInfos.add(groupInfo);
+                            initGroupInfoList();
                         }
                     });
                 }
             }
-            initGroupInfoList();
         }
     }
 

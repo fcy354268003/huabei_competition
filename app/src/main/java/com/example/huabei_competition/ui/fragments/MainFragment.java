@@ -66,28 +66,36 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
                 , FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, fragments));
         binding.vpMain.setOffscreenPageLimit(0);
         binding.vpMain.addOnPageChangeListener(this);
+        binding.aa.setOnClickListener(view ->{
+            binding.vpMain.setCurrentItem(2, true);
+        });
         binding.bnvGuide.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.d(TAG, "onNavigationItemSelected: ");
+
                 switch (item.getItemId()) {
                     case R.id.main:
+                        binding.aa.setChecked(false);
                         binding.vpMain.setCurrentItem(0, true);
                         Log.d(TAG, "onNavigationItemSelected: " + 0);
                         break;
                     case R.id.chat:
+                        binding.aa.setChecked(false);
                         Log.d(TAG, "onNavigationItemSelected: " + 1);
                         binding.vpMain.setCurrentItem(1, true);
                         break;
                     case R.id.study:
                         Log.d(TAG, "onNavigationItemSelected: " + 2);
-                        binding.vpMain.setCurrentItem(2, true);
+//                        binding.vpMain.setCurrentItem(2, true);
                         break;
                     case R.id.selfStudyRoom:
+                        binding.aa.setChecked(false);
                         Log.d(TAG, "onNavigationItemSelected: " + 3);
                         binding.vpMain.setCurrentItem(3, true);
                         break;
                     case R.id.mine:
+                        binding.aa.setChecked(false);
                         Log.d(TAG, "onNavigationItemSelected: " + 4);
                         binding.vpMain.setCurrentItem(4, true);
                         break;

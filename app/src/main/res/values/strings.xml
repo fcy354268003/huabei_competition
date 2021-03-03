@@ -55,7 +55,7 @@
         昵称：汉字字母数字都可以，小于12位</string>
 
     <string name="yesterday">昨日人均?分钟</string>
-    <string name="sum_time_group">累计时长?分钟</string>
+    <string name="sum_time_group">累计时长p分钟</string>
     <string name="emergine_rule">1.成组两周内，当天人数满4人即自动进入\n 2.小组人员日均学习时长与目标设置完成率会影响榜单的位置哦~</string>
     <string name="general_rule">1.所有小组都有机会!\n 2.小组人员累积总时长是上榜决定性因素哦</string>
 </resources>

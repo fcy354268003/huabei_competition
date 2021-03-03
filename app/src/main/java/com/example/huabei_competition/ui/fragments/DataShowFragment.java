@@ -115,6 +115,7 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
         binding.tvTodayMin.setText(time);
         List<CakeShapeView.Content> contents = new ArrayList<>();
         List<StudyDataGet.UserData.DataDTO.InfoDTO> info = data.getInfo();
+        Log.d(TAG, "initView: " + info.size());
         if (info.size() == 0) {
             initOnNoNetWork();
             return;

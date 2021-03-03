@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_groupInfoFragment_to_managerGroupMemberFragment"
             app:destination="@id/managerGroupMemberFragment" />
+        <action
+            android:id="@+id/action_groupInfoFragment_to_dataShowFragment"
+            app:destination="@id/dataShowFragment" />
     </fragment>
     <fragment
         android:id="@+id/selfStudyFragment"

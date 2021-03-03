@@ -22,7 +22,7 @@ public class GroupManager {
         // TODO 向后端发送请求  是否改昵称已存在
         if (avatarFile != null)
             JMessageClient.createPublicGroup(groupName, groupDesc, avatarFile, format, callback);
-        JMessageClient.createPublicGroup(groupName, groupDesc, callback);
+        else JMessageClient.createPublicGroup(groupName, groupDesc, callback);
     }
 
     private static void isNameStandard() {

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="callback"
             type="com.example.huabei_competition.callback.RankListCallback" />
@@ -18,7 +19,7 @@
             android:id="@+id/tv_newRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="15dp"
             android:text="新晋榜"
             android:textColor="@color/tabSelected"
             android:textSize="40sp"

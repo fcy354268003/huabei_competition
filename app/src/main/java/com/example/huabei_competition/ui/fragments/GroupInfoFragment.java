@@ -106,6 +106,7 @@ public class GroupInfoFragment extends Fragment {
                 });
                 holder.getView(R.id.portrait).setOnClickListener(view -> {
                     LiveDataManager.getInstance().with(DataShowFragment.class.getSimpleName()).setValue(userInfo.getUserName());
+                    ((MainActivity) getActivity()).getController().navigate(R.id.action_groupInfoFragment_to_dataShowFragment);
                 });
                 String name;
                 name = userInfo.getNickname();
@@ -188,7 +189,7 @@ public class GroupInfoFragment extends Fragment {
                         @Override
                         public void gotResult(int i, String s) {
                             if (i == 0) {
-                                Snackbar.make(getView(), "推出群成功", Snackbar.LENGTH_LONG);
+                                Snackbar.make(getView(), "退出群成功", Snackbar.LENGTH_LONG);
                                 ((MainActivity) getActivity()).getController().navigate(R.id.action_groupInfoFragment_to_mainFragment);
                             }
                         }
@@ -216,7 +217,7 @@ public class GroupInfoFragment extends Fragment {
                     @Override
                     public void gotResult(int i, String s) {
                         if (i == 0) {
-                            Snackbar.make(getView(), "推出群成功", Snackbar.LENGTH_LONG);
+                            Snackbar.make(getView(), "退出群成功", Snackbar.LENGTH_LONG);
                             ((MainActivity) getActivity()).getController().navigate(R.id.action_groupInfoFragment_to_mainFragment);
                         }
                     }

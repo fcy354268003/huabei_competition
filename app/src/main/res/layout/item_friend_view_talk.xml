@@ -10,8 +10,7 @@
         android:id="@+id/img_head"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:contentDescription="@string/img_description"
-        android:src="@drawable/head1" />
+        android:contentDescription="@string/img_description" />
 
     <TextView
         android:id="@+id/content_wrapper"

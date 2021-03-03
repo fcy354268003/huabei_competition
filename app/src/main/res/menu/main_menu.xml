@@ -2,17 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/main"
+        android:icon="@drawable/draw_main"
         android:title="主页" />
     <item
         android:id="@+id/chat"
+        android:icon="@drawable/draw_chat"
         android:title="微聊" />
     <item
         android:id="@+id/study"
-        android:title="计时" />
+        android:title="" />
     <item
         android:id="@+id/selfStudyRoom"
+        android:icon="@drawable/self_room"
         android:title="排行榜" />
     <item
         android:id="@+id/mine"
+        android:icon="@drawable/user2"
         android:title="我的" />
 </menu>

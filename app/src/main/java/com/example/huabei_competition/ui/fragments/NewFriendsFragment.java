@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.callback.NewFriendsCallback;
@@ -22,6 +23,7 @@ import com.example.huabei_competition.db.FriendApply;
 import com.example.huabei_competition.db.GroupApply;
 import com.example.huabei_competition.event.EventReceiver;
 import com.example.huabei_competition.event.FriendManager;
+import com.example.huabei_competition.event.GroupManager;
 import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.DatabaseUtil;
@@ -85,7 +87,7 @@ public class NewFriendsFragment extends Fragment implements NewFriendsCallback {
                 }
             }
         });
-        MutableLiveData<GroupApply> groupObserver = LiveDataManager.getInstance().with(this.getClass().getSimpleName());
+        MutableLiveData<GroupApply> groupObserver = LiveDataManager.getInstance().with(this.getClass().getSimpleName() + "group");
         groupObserver.observe(getViewLifecycleOwner(), new Observer<GroupApply>() {
             private boolean isFirst = EventReceiver.getInstance().getIsViscosity(NewFriendsFragment.class.getSimpleName() + "group");
 
@@ -249,7 +251,15 @@ public class NewFriendsFragment extends Fragment implements NewFriendsCallback {
                                 if (i == 0) {
                                     MyToast.showMessage("请求发送成功");
                                 } else {
-                                    MyToast.showMessage("请求发送失败");
+                                    GroupManager.applyToGroup(Long.parseLong(user), res, new BasicCallback() {
+                                        @Override
+                                        public void gotResult(int i, String s) {
+                                            Log.d(TAG, "gotResult: " + s);
+                                            if (i != 0)
+                                                MyToast.showMessage(s);
+                                            else MyToast.showMessage("请求已发送");
+                                        }
+                                    });
                                 }
                             }
                         });

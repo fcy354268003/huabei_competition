@@ -11,5 +11,9 @@
     <dimen name="textSize_35">35sp</dimen>
     <dimen name="textSize_40">40sp</dimen>
     <dimen name="textSize_50">50sp</dimen>
-
+    <dimen name="fixed_height_bottom_padding">6dp</dimen>
+    <dimen name="fixed_height_top_padding">2dp</dimen>
+    <dimen name="fixed_height">56dp</dimen>
+    <dimen name="fixed_height_top_padding_inactive">2dp</dimen><!-- 8(Top Padding) - 12/2(extra padding due to badges) = 2 -->
+    <dimen name="fixed_height_top_padding_active">0dp</dimen><!-- 6(Top Padding) - 12/2(extra padding due to badges) = 0 -->
 </resources>

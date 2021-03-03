@@ -13,8 +13,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/orange"
+            android:textSize="@dimen/textSize_25"
             android:textStyle="bold"
-            android:textSize="@dimen/textSize_18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline52"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,8 @@
             <ImageView
                 android:id="@+id/iv_portrait"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
         <Button

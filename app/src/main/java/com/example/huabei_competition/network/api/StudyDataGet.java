@@ -121,6 +121,10 @@ public class StudyDataGet {
         client.newCall(request).enqueue(callback);
     }
 
+    public static void initGroup() {
+
+    }
+
     public static class SubmitTime {
 
         private String token = LogIn.TOKEN;
