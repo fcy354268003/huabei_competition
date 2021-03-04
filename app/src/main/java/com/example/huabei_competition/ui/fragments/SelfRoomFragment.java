@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 
+import android.os.Handler;
 import android.text.TextUtils;
 
 import android.view.LayoutInflater;
@@ -59,6 +60,12 @@ public class SelfRoomFragment extends Fragment {
             }
             return binding.getRoot();
         }
+        LiveDataManager.getInstance().<Label>with(GroupSelectedFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<Label>() {
+            @Override
+            public void onChanged(Label label) {
+                initLabel(1);
+            }
+        });
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_self_room, container, false);
         binding.ivAddLabel.setOnClickListener(this::onAddLabelClick);
         binding.btnGo.setOnClickListener(this::startMission);
@@ -71,10 +78,12 @@ public class SelfRoomFragment extends Fragment {
         switch (checkedId) {
             case R.id.rb_person:
                 binding.tvPrompt.setText("标签");
+                binding.btnGo.setText("GO!");
                 initLabel(0);
                 break;
             case R.id.rb_group:
                 initLabel(1);
+                binding.btnGo.setText("邀请");
                 binding.tvPrompt.setText("自习室");
                 break;
         }
@@ -92,6 +101,8 @@ public class SelfRoomFragment extends Fragment {
         for (int i = 0; i <= 59; i++) {
             minuteList.add(String.valueOf(i));
         }
+        binding.wvMinute.setTextSize(30);
+        binding.wvHour.setTextSize(30);
         binding.wvHour.setAdapter(new ArrayWheelAdapter<>(hourList));
         binding.wvMinute.setAdapter(new ArrayWheelAdapter<>(minuteList));
     }
@@ -118,16 +129,12 @@ public class SelfRoomFragment extends Fragment {
         if (binding.rgType.getCheckedRadioButtonId() == R.id.rb_group) {
             // 跳转到自习室界面
             ((MainActivity) getActivity()).getController().navigate(R.id.action_mainFragment_to_groupSelectedFragment);
-            LiveDataManager.getInstance().<Label>with(GroupSelectedFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<Label>() {
-                @Override
-                public void onChanged(Label label) {
-                    initLabel(1);
-                }
-            });
+
         } else {
             CustomerDialog customerDialog = new CustomerDialog();
             customerDialog.setLayoutId(R.layout.dialog_add_label);
             customerDialog.setmWidth(500);
+            customerDialog.setCancelable(false);
             customerDialog.setCallback(new CustomerDialog.InitCallback() {
                 @Override
                 public void initWidget(View rootView) {
@@ -141,7 +148,12 @@ public class SelfRoomFragment extends Fragment {
                         Label label = new Label(labelName);
                         DatabaseUtil.save(label);
                         showLabel(label);
-                        customerDialog.dismiss();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                customerDialog.dismiss();
+                            }
+                        },500);
                     });
                 }
             });
@@ -153,10 +165,12 @@ public class SelfRoomFragment extends Fragment {
         RadioGroup.LayoutParams layoutParams = new RadioGroup.LayoutParams(RadioGroup.LayoutParams.WRAP_CONTENT, RadioGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.leftMargin = 15;
         RadioButton radioButton = new RadioButton(getContext());
+        radioButton.setBackgroundResource(R.drawable.radius_back);
         radioButton.setText(label.getLabelName());
         radioButton.setBackground(getResources().getDrawable(R.drawable.radioitem));
         radioButton.setButtonDrawable(R.drawable.back_talk);
-        radioButton.setTextSize(18);
+        radioButton.setTextSize(25);
+        radioButton.setTextColor(getResources().getColor(R.color.createTextColor));
         binding.rgLabel.addView(radioButton, binding.rgLabel.getChildCount(), layoutParams);
         long groupId = label.getGroupId();
         if (groupId != 0) {
@@ -166,6 +180,7 @@ public class SelfRoomFragment extends Fragment {
             @Override
             public boolean onLongClick(View v) {
                 label.delete();
+                v.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -190,7 +205,7 @@ public class SelfRoomFragment extends Fragment {
                 MyToast.showMessage("时间不能低于20分钟哦，(●'◡'●)");
                 return;
             }
-            if(labelText.length() > 6){
+            if (labelText.length() > 6) {
                 MyToast.showMessage("标签cha");
             }
             Bundle bundle = new Bundle();

@@ -55,6 +55,7 @@ public class ForgetPassActivity extends BaseActivity implements Callback {
     private void sendVer(View view) {
         view.setClickable(false);
         view.setBackgroundColor(Color.GRAY);
+        MyToast.showMessage("消息已发送");
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

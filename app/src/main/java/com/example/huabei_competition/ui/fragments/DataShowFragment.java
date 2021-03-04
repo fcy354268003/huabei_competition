@@ -128,17 +128,19 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
             i = i % 7;
         }
         Log.d(TAG, "initView: " + "setData");
-        binding.cakeView.setData(contents, 200);
+        binding.cakeView.setData(contents, 180);
     }
 
     private int[] colors = new int[]{
-            Color.BLACK,
-            Color.RED,
-            Color.YELLOW,
-            Color.GREEN,
-            Color.BLUE,
-            Color.DKGRAY,
-            Color.GRAY,
+            0xFFf4dccb,
+            0xFFf5cec7,
+            0xffffb383,
+            0xffffeb70,
+            0xffedb5d2,
+            0xfffff5e9,
+            0xffff7b89,
+            0xffc0bccc,
+            0xffc8a8da
     };
 
     @Override
@@ -167,11 +169,11 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
             @Override
             public void run() {
                 Log.d(TAG, "run: ");
-                CakeShapeView.Content ca = new CakeShapeView.Content("暂无数据", 100, Color.BLACK);
+                CakeShapeView.Content ca = new CakeShapeView.Content("暂无数据", 100, colors[0]);
                 List<CakeShapeView.Content> contents = new ArrayList<>();
                 contents.add(ca);
                 Log.d(TAG, "initView: " + "setData");
-                binding.cakeView.setData(contents, 200);
+                binding.cakeView.setData(contents, 180);
 
             }
         });
@@ -188,7 +190,7 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
         CustomerDialog customerDialog = new CustomerDialog();
         customerDialog.setLayoutId(R.layout.fragment_question);
         customerDialog.setCancelable(false);
-        customerDialog.setmHeight(1000);
+        customerDialog.setmHeight(1500);
         customerDialog.setCallback(view -> {
             view.findViewById(R.id.iv_close).setOnClickListener(v -> {
                 customerDialog.dismiss();

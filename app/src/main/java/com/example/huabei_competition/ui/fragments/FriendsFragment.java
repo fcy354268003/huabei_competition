@@ -184,7 +184,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
                             public void bindView(MyHolder holder, int position, NPC item) {
                                 ImageView imageView = holder.getView(R.id.iv_thumb);
                                 imageView.setScaleType(ImageView.ScaleType.FIT_START);
-                                glideManager.load(item.getPortrait()).into(imageView);
+                                glideManager.load(item.getHeadPicture()).into(imageView);
                                 holder.getView(R.id.tv_sendTime).setVisibility(View.GONE);
                                 holder.setText(item.getName(), R.id.petName);
                                 String isDialogue = item.getIsDialogue();
@@ -304,14 +304,16 @@ public class FriendsFragment extends Fragment implements FriendsCallback {
             public void initWidget(View rootView) {
                 EditText reason = rootView.findViewById(R.id.et_reason);
                 EditText userName = rootView.findViewById(R.id.et_userInfo);
+                userName.setHint("请输入对方用户名");
                 rootView.findViewById(R.id.et_reason);
                 rootView.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         final String res = reason.getText().toString();
                         final String user = userName.getText().toString();
+                        String replace = user.replace(" ", "");
                         // 调用添加好友的办法
-                        FriendManager.sendInvitationRequest(user, null, res, new BasicCallback() {
+                        FriendManager.sendInvitationRequest(replace, null, res, new BasicCallback() {
                             @Override
                             public void gotResult(int i, String s) {
                                 Log.d(TAG, "gotResult: " + s);

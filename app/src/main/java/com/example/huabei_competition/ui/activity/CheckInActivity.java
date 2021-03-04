@@ -2,6 +2,7 @@ package com.example.huabei_competition.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,10 +10,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
+import androidx.annotation.RequiresApi;
+
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.network.api.EncryptionTransmission;
 import com.example.huabei_competition.network.api.LogIn;
+import com.example.huabei_competition.network.api.XhhEnc;
 import com.example.huabei_competition.ui.fragments.ForgetPassActivity;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
@@ -20,9 +24,13 @@ import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.LitePal;
 
+import java.util.Base64;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -41,14 +49,8 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in_);
-        boolean aa = EncryptionTransmission.test("ewfhojirwhoweiofhweipjf").equals("TWpGVFYxZHdVVTFvV1dwVE1IcHdia0ZQVlhKRk1WTkpla05STkVNMVIydzRTWEJWVHk4eU9XaFpNRWx5Ym5wbVJYaEZZbnBKTVVGeVRYUkJWMkptUlROaQ==");
-        Log.d(TAG, "onCreate: ssssssssssss\n" +aa);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         animation();
-        List<ShopRole> shopRoles = LitePal.where().find(ShopRole.class);
-        for (ShopRole shopRole : shopRoles) {
-            Log.d(TAG, "" + shopRole.toString());
-        }
     }
 
     private static final String TAG = "CheckInActivity";

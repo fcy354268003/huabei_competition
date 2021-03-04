@@ -10,17 +10,18 @@
         <RelativeLayout
             android:id="@+id/relativeLayout2"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="60dp"
             android:background="@drawable/check1"
             android:paddingLeft="10dp"
-            android:paddingTop="40dp"
+            android:gravity="center_vertical"
             android:paddingRight="10dp"
             tools:ignore="MissingConstraints">
 
             <ImageView
                 android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/ic_baseline_arrow_back_ios_24_black" />
 
             <TextView

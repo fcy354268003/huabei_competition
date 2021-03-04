@@ -15,9 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.callback.GetUserInfoCallback;
-import cn.jpush.im.android.api.model.UserInfo;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -145,14 +142,14 @@ public class ChatRoomUtil {
     }
 
     static class ChatRoom {
-        String ownerName;
-        String roomName;
-        String desc;
+        String owner_username;
+        String name;
+        String description;
 
-        public ChatRoom(String ownerName, String desc) {
-            this.ownerName = ownerName;
-            this.roomName = "roomName";
-            this.desc = desc;
+        public ChatRoom(String owner_username, String description) {
+            this.owner_username = owner_username;
+            this.name = "roomName";
+            this.description = description;
         }
     }
 

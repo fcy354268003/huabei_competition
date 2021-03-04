@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,9 +96,15 @@ public class GroupSelectedFragment extends Fragment {
                                 Label label = new Label(groupName);
                                 label.setType(1);
                                 label.setGroupId(groupID);
-                                LiveDataManager.getInstance().with(GroupSelectedFragment.class.getSimpleName()).setValue(label);
                                 DatabaseUtil.saveOrUpdateLabel(label);
-                                back(v);
+                                LiveDataManager.getInstance().with(GroupSelectedFragment.class.getSimpleName()).setValue(label);
+                                v.setClickable(false);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        back(v);
+                                    }
+                                },300);
                             }
                         });
 

@@ -21,6 +21,7 @@ import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.util.MyHandler;
 import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyToast;
+
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -116,6 +117,7 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
             return;
         }
         view.setClickable(false);
+        MyToast.showMessage("消息已发送");
         view.setBackgroundColor(getResources().getColor(R.color.gray));
         myHandler.postDelayed(new Runnable() {
             @Override

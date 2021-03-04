@@ -236,22 +236,21 @@ public class NewFriendsFragment extends Fragment implements NewFriendsCallback {
             public void initWidget(View rootView) {
                 EditText reason = rootView.findViewById(R.id.et_reason);
                 EditText userName = rootView.findViewById(R.id.et_userInfo);
-
-                rootView.findViewById(R.id.et_reason);
                 rootView.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final String res = reason.getText().toString();
+                        String res = reason.getText().toString();
                         final String user = userName.getText().toString();
+                        final String replace = user.replace(" ", "");
                         // 调用添加好友的办法
-                        FriendManager.sendInvitationRequest(user, null, res, new BasicCallback() {
+                        FriendManager.sendInvitationRequest(user, null, replace, new BasicCallback() {
                             @Override
                             public void gotResult(int i, String s) {
                                 Log.d(TAG, "gotResult: " + s);
                                 if (i == 0) {
                                     MyToast.showMessage("请求发送成功");
                                 } else {
-                                    GroupManager.applyToGroup(Long.parseLong(user), res, new BasicCallback() {
+                                    GroupManager.applyToGroup(Long.parseLong(replace), res, new BasicCallback() {
                                         @Override
                                         public void gotResult(int i, String s) {
                                             Log.d(TAG, "gotResult: " + s);

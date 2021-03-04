@@ -23,7 +23,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs_chat"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:backgroundTint="#958787"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

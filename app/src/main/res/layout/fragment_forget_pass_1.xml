@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightGreen">
+        android:background="@color/lightWarmColor">
 
         <include
             android:id="@+id/sendVer"
@@ -33,7 +33,7 @@
             android:id="@+id/textView23"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/green"
+            android:background="@color/warmColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -71,6 +71,7 @@
                 android:id="@+id/et_userOrPhone"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/back_no_indicator"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="35dp"
                 android:backgroundTint="@color/white"
@@ -97,6 +98,7 @@
             <EditText
                 android:id="@+id/et_one"
                 android:layout_width="200dp"
+                android:background="@drawable/back_no_indicator"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="35dp"
@@ -126,6 +128,7 @@
             <EditText
                 android:id="@+id/et_two"
                 android:layout_width="200dp"
+                android:background="@drawable/back_no_indicator"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="35dp"

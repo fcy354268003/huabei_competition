@@ -161,11 +161,11 @@ public class ChatFragment extends Fragment implements ChatCallback {
     private void initUser() {
         String nickname = orientedUserInfo.getNickname();
         String userName = orientedUserInfo.getUserName();
-        binding.toolbar.setTitle(nickname.equals("") ? userName : nickname);
+        binding.tvTitle.setText(nickname.equals("") ? userName : nickname);
     }
 
     private void initGroup() {
-        binding.toolbar.setTitle(mGroupInfo.getGroupName());
+        binding.tvTitle.setText(mGroupInfo.getGroupName());
     }
 
     private void observeMessage() {
@@ -234,7 +234,7 @@ public class ChatFragment extends Fragment implements ChatCallback {
                         String[] split = text.split(",");
                         if (TextUtils.equals(split[0], GroupStudyPrepareFragment.INVITATION_MESSAGE)) {
                             holder.getView(R.id.content_wrapper).setVisibility(View.GONE);
-                            holder.getView(R.id.img_head).setVisibility(View.GONE);
+                            holder.getView(R.id.cv).setVisibility(View.GONE);
                             holder.getView(R.id.iv_invitation).setVisibility(View.VISIBLE);
                             String chatRoomId = split[1];
                             holder.getView(R.id.iv_invitation).setOnClickListener(new View.OnClickListener() {

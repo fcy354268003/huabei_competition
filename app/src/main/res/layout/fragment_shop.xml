@@ -19,7 +19,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:background="@color/warmColor"
             android:gravity="bottom"
             android:orientation="horizontal"
@@ -28,19 +28,19 @@
 
             <TextView
                 android:id="@+id/tv_back"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_weight="2"
+                android:drawableStart="@drawable/ic_baseline_arrow_back_ios_24_black"
                 android:onClick="@{() -> callBcak.onBackClick()}"
-                android:text="返回"
                 android:textSize="18sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="4"
                 android:text="商场"
+                android:gravity="center"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_shop"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="1dp"
                 android:backgroundTint="#958787"

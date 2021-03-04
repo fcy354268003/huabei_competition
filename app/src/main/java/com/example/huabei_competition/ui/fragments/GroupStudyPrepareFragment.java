@@ -175,6 +175,7 @@ public class GroupStudyPrepareFragment extends Fragment {
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                    Log.d(TAG, "onResponse: " + response.body().string());
                     if (response.isSuccessful()) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -189,6 +190,12 @@ public class GroupStudyPrepareFragment extends Fragment {
                     }
                 }
             });
+        else {
+            Bundle bundle = new Bundle();
+            bundle.putInt("time", time);
+            LiveDataManager.getInstance().with(GroupStudyFragment.class.getSimpleName()).postValue(userInfos);
+            ((MainActivity) (getActivity())).getController().navigate(R.id.action_groupStudyPrepareFragment_to_groupStudyFragment, bundle);
+        }
     }
 
     /**
