@@ -342,11 +342,11 @@ public class GroupStudyFragment extends Fragment {
                         TextView title = rootView.findViewById(R.id.tv_title);
                         title.setText("学习及时完成！");
                         TextView money = rootView.findViewById(R.id.tv_moneyReward);
+                        money.setVisibility(View.VISIBLE);
                         money.setText("铜钱+" + (mTime * 2));
                         Button confirm = rootView.findViewById(R.id.btn_sure);
                         confirm.setText("欢喜收下！！");
                         confirm.setOnClickListener(view -> {
-
                             dialog.dismiss();
                             ((MainActivity) getActivity()).getController().navigate(R.id.action_groupStudyFragment_to_mainFragment);
                         });

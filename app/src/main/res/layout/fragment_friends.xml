@@ -65,12 +65,43 @@
                 android:background="@color/lightWarmColor"
                 android:gravity="center_vertical"
                 android:paddingHorizontal="5dp"
-                android:paddingStart="20dp"
+                android:paddingStart="10dp"
                 android:text="@string/npcs"
                 android:textSize="@dimen/textSize_18"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_newFriend" />
+
+            <ImageView
+                android:id="@+id/iv_show_1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="60dp"
+                android:elevation="1dp"
+                android:src="@drawable/show"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_npcs"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_npcs" />
+            <ImageView
+                android:id="@+id/iv_show_2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="70dp"
+                android:src="@drawable/show"
+                android:elevation="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_friends"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_friends" />
+            <ImageView
+                android:id="@+id/iv_show_3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="60dp"
+                android:src="@drawable/show"
+                android:elevation="1dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_group"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_group" />
 
             <ImageView
                 android:id="@+id/iv_npc"
@@ -110,6 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_npcs" />
 
@@ -120,7 +152,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/lightWarmColor"
                 android:gravity="center_vertical"
-                android:paddingStart="20dp"
+                android:paddingStart="10dp"
                 android:text="@string/friends"
                 android:textSize="@dimen/textSize_18"
                 app:layout_constraintTop_toBottomOf="@+id/rv_npcs"
@@ -142,7 +174,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/lightWarmColor"
                 android:gravity="center_vertical"
-                android:paddingStart="20dp"
+                android:paddingStart="10dp"
                 android:text="@string/group"
                 android:textSize="@dimen/textSize_18"
                 app:layout_constraintStart_toStartOf="parent"

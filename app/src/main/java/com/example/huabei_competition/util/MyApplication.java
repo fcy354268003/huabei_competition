@@ -56,7 +56,6 @@ public class MyApplication extends Application {
             })
             .build();
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
         super.onCreate();

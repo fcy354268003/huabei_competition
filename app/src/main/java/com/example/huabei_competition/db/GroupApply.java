@@ -33,6 +33,26 @@ public class GroupApply extends LitePalSupport implements DiffDataCallback.Diffe
         return groupId;
     }
 
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public void setAcquirerUserName(String acquirerUserName) {
+        this.acquirerUserName = acquirerUserName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
     public int getState() {
         return state;
     }
@@ -47,6 +67,10 @@ public class GroupApply extends LitePalSupport implements DiffDataCallback.Diffe
 
     public String getReason() {
         return reason;
+    }
+
+    public String getGroupName() {
+        return groupName;
     }
 
     @Override

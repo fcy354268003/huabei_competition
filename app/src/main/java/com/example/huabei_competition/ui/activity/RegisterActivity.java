@@ -172,6 +172,7 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
     public void success() {
         RegisterOptionalUserInfo registerOptionalUserInfo = new RegisterOptionalUserInfo();
         registerOptionalUserInfo.setNickname(mViewModel.getNickName().getValue());
+        registerOptionalUserInfo.setAddress(mViewModel.getPhoneNumber().getValue());
         JMessageClient.register(mViewModel.getUserName().getValue().toString(), mViewModel.getPassword().getValue().toString(), registerOptionalUserInfo, new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {

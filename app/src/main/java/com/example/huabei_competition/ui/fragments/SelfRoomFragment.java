@@ -2,6 +2,8 @@ package com.example.huabei_competition.ui.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -9,6 +11,7 @@ import androidx.lifecycle.Observer;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,18 +63,24 @@ public class SelfRoomFragment extends Fragment {
             }
             return binding.getRoot();
         }
-        LiveDataManager.getInstance().<Label>with(GroupSelectedFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<Label>() {
-            @Override
-            public void onChanged(Label label) {
-                initLabel(1);
-            }
-        });
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_self_room, container, false);
         binding.ivAddLabel.setOnClickListener(this::onAddLabelClick);
         binding.btnGo.setOnClickListener(this::startMission);
         binding.rgType.setOnCheckedChangeListener(this::onTypeChange);
         initWheel();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        LiveDataManager.getInstance().<Label>with(GroupSelectedFragment.class.getSimpleName()).observe(getViewLifecycleOwner(), new Observer<Label>() {
+            @Override
+            public void onChanged(Label label) {
+                Log.d(TAG, "onChanged: " + label.getLabelName());
+                initLabel(1);
+            }
+        });
     }
 
     private void onTypeChange(RadioGroup group, int checkedId) {

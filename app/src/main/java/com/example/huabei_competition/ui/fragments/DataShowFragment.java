@@ -1,7 +1,6 @@
 package com.example.huabei_competition.ui.fragments;
 
-
-import android.graphics.Color;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,8 +37,12 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
+
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
+import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -66,7 +69,6 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
             @Override
             public void onChanged(String s) {
                 currentUserName = s;
-                // TODO 刷新界面
                 if (TextUtils.equals(s, UserUtil.sUserName)) {
                     initData(0);
                 } else {
@@ -83,10 +85,32 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
      *             0：self   1:others
      */
     private void initData(int type) {
+        JMessageClient.getUserInfo(currentUserName, new GetUserInfoCallback() {
+            @Override
+            public void gotResult(int i, String s, UserInfo userInfo) {
+                if (i == 0) {
+                    String nickname = userInfo.getNickname();
+                    String userName = userInfo.getUserName();
+                    if(TextUtils.isEmpty(nickname)){
+                        binding.tvUserName.setText(userName);
+                    }else {
+                        binding.tvUserName.setText(nickname);
+                    }
+                    userInfo.getAvatarBitmap(new GetAvatarBitmapCallback() {
+                        @Override
+                        public void gotResult(int i, String s, Bitmap bitmap) {
+                            if(i == 0){
+                                binding.ivMinePortrait.setImageBitmap(bitmap);
+                            }
+                        }
+                    });
+                }
+            }
+        });
         if (type == 0) {
-            binding.addFriend.setVisibility(View.GONE);
+            binding.cvAddToMyFriend.setVisibility(View.GONE);
         }
-        binding.addFriend.setOnClickListener(view -> {
+        binding.cvAddToMyFriend.setOnClickListener(view -> {
             FriendManager.sendInvitationRequest(currentUserName, null, "可以一块学习吗", new BasicCallback() {
                 @Override
                 public void gotResult(int i, String s) {

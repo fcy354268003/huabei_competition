@@ -35,10 +35,15 @@ public class WeChatFragment extends Fragment implements TabLayout.OnTabSelectedL
         titles.add("好友");
         titles.add("动态");
     }
-    public void onRefresh(){
-        FriendsFragment friendsFragment = (FriendsFragment) fragments.get(0);
-        friendsFragment.onRefresh();
+
+    public void onRefresh() {
+        if (fragments != null && fragments.size() != 0) {
+            FriendsFragment friendsFragment = (FriendsFragment) fragments.get(0);
+            friendsFragment.onRefresh();
+        }
+
     }
+
     private FragmentWeChatBinding binding;
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();

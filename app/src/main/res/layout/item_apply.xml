@@ -10,6 +10,8 @@
         android:orientation="horizontal"
         android:paddingHorizontal="10dp">
 
+
+
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
             android:layout_height="50dp"

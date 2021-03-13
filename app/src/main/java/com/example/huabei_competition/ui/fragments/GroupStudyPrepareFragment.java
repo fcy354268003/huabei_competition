@@ -134,14 +134,6 @@ public class GroupStudyPrepareFragment extends Fragment {
                 Log.d(TAG, "onChanged: livedata收到透传消息" + o.getMsg());
                 if (o.getMsg().equals(ADD_EVENT) || o.getMsg().equals(LEAVE_EVENT)) {
                     getUserList();
-                    if (type == 0) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                check();
-                            }
-                        }, 500);
-                    }
                 }
                 if (o.getMsg().equals(START_EVENT)) {
                     toNextFragment();
@@ -152,9 +144,14 @@ public class GroupStudyPrepareFragment extends Fragment {
     }
 
     private void check() {
-        if (userInfos.size() >= 2) {
-            binding.btnStart.setBackgroundColor(getResources().getColor(R.color.orange));
-        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (userInfos.size() >= 2) {
+                    binding.btnStart.setBackgroundColor(getResources().getColor(R.color.orange));
+                }
+            }
+        });
     }
 
     /**
@@ -284,6 +281,7 @@ public class GroupStudyPrepareFragment extends Fragment {
                             if (i == 0) {
                                 userInfos.add(userInfo);
                                 myRecyclerAdapter.notifyDataSetChanged();
+                                check();
                             }
                         }
                     });

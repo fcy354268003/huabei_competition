@@ -168,6 +168,8 @@ public class MineFragment extends Fragment implements MineCallback {
                 });
             }
         });
+        customerDialog.setCancelable(false);
+        customerDialog.show(getActivity().getSupportFragmentManager(),"");
         // TODO 更改昵称
         return true;
     }

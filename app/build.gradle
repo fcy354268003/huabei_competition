@@ -22,7 +22,7 @@ android {
         ndk {
             moduleName 'native-lib'
             //选择要添加的对应cpu类型的.so库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a'
             // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
         }
 
@@ -38,16 +38,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-//    externalNativeBuild {
-//        cmake {
-//            path "src/main/cpp/CMakeLists.txt"
-//            version "3.10.2"
-//        }
-//    }
-//    ndk{
-//        moudleName 'native-lib'
-//        abiFilter 'armeabi-v7a'
-//    }
     buildFeatures {
         dataBinding true
     }
@@ -81,18 +71,18 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.9.0"
     // Litepal数据库依赖
     implementation 'org.litepal.guolindev:core:3.2.2'
-    // 加载占位图依赖
+    // 加载加载动画依赖
     implementation 'com.carson_ho:Kawaii_LoadingView:1.0.0'
     // retrofit依赖
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
-
+    // 极光依赖
     implementation 'cn.jiguang.sdk:jmessage:2.9.2'  // 此处以JMessage 2.9.2 版本为例。
     implementation 'cn.jiguang.sdk:jcore:2.3.0'  // 此处以JCore 2.3.0 版本为例。
-
+    // 滑轮滚动选择
     implementation 'com.contrarywind:wheelview:4.1.0'
-
+    // 弹幕
     implementation 'com.kd.easybarrage:library:0.0.1'
 
 

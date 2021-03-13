@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_mainFragment_to_changePassFragment"
             app:destination="@id/changePassFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_addFriendFragment"
+            app:destination="@id/addFriendFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
@@ -127,4 +130,12 @@
         android:id="@+id/changePassFragment"
         android:name="com.example.huabei_competition.ui.fragments.ChangePassFragment"
         android:label="ChangePassFragment" />
+    <fragment
+        android:id="@+id/addFriendFragment"
+        android:name="com.example.huabei_competition.ui.fragments.AddFriendFragment"
+        android:label="AddFriendFragment" >
+        <action
+            android:id="@+id/action_addFriendFragment_to_dataShowFragment"
+            app:destination="@id/dataShowFragment" />
+    </fragment>
 </navigation>

@@ -1,6 +1,7 @@
 package com.example.huabei_competition;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,7 +22,13 @@ public class UserCardVM extends AndroidViewModel {
         myInfo = JMessageClient.getMyInfo();
         this.nickName = new MutableLiveData<>(myInfo.getNickname());
         this.userName = new MutableLiveData<>(myInfo.getUserName());
-        this.phoneNumber = new MutableLiveData<>();
+        String phoneNumber = myInfo.getAddress();
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            StringBuffer sb = new StringBuffer(phoneNumber);
+            sb.replace(3,9,"*");
+            phoneNumber = sb.toString();
+        }
+        this.phoneNumber = new MutableLiveData<>(phoneNumber);
     }
 
     public void updateUserInfo() {

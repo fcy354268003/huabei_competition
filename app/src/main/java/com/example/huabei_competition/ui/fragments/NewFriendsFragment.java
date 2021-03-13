@@ -121,7 +121,7 @@ public class NewFriendsFragment extends Fragment implements NewFriendsCallback {
             public void bindView(MyHolder holder, int position, GroupApply apply) {
                 ItemApplyBinding binding = (ItemApplyBinding) holder.getBinding();
                 binding.content.setText("对方留言：" + apply.getReason());
-                binding.petName.setText(apply.getUserName());
+                binding.petName.setText(apply.getUserName() + "     申请加入" +apply.getGroupName() + " 群聊");
                 ArrayList<String> userNames = new ArrayList<>();
                 userNames.add(apply.getUserName());
                 if (apply.getState() == 0) {
@@ -280,7 +280,6 @@ public class NewFriendsFragment extends Fragment implements NewFriendsCallback {
     @Override
     public void onBackClick() {
         ((MainActivity) getActivity()).getController().navigateUp();
-
     }
 
 

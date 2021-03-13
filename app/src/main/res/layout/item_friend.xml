@@ -93,5 +93,20 @@
                 android:textStyle="bold" />
         </androidx.cardview.widget.CardView>
 
+        <Button
+            android:visibility="gone"
+            android:id="@+id/btn_join"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginVertical="15dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/radius_back"
+            android:backgroundTint="@color/orange"
+            android:gravity="center"
+            android:text="详情"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_15" />
+
     </LinearLayout>
 </layout>

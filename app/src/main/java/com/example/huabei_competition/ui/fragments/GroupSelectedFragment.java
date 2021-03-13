@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,44 @@ public class GroupSelectedFragment extends Fragment {
 
     private void initGroupInfoList() {
         List<GroupInfo> groupInfoList = new ArrayList<>();
+        groupInfoMyRecyclerAdapter = new MyRecyclerAdapter<GroupInfo>(groupInfoList) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.item_friend;
+            }
+
+            @Override
+            public void bindView(MyHolder holder, int position, GroupInfo groupInfo) {
+                ItemFriendBinding binding = (ItemFriendBinding) holder.getBinding();
+                File avatarFile = groupInfo.getAvatarFile();
+                Bitmap bitmap = WidgetUtil.fileToBitmap(getActivity().getResources(), avatarFile);
+                binding.ivThumb.setImageBitmap(bitmap);
+                binding.petName.setText(groupInfo.getGroupName());
+                binding.itemAll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        long groupID = groupInfo.getGroupID();
+                        String groupName = groupInfo.getGroupName();
+                        Label label = new Label(groupName);
+                        label.setType(1);
+                        label.setGroupId(groupID);
+                        DatabaseUtil.saveOrUpdateLabel(label);
+                        Log.d(TAG, "onClick: " + label.getLabelName());
+                        LiveDataManager.getInstance().with(GroupSelectedFragment.class.getSimpleName()).setValue(label);
+                        v.setClickable(false);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                back(v);
+                            }
+                        }, 500);
+                    }
+                });
+
+            }
+        };
+        binding.myGroups.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.myGroups.setAdapter(groupInfoMyRecyclerAdapter);
         JMessageClient.getGroupIDList(new GetGroupIDListCallback() {
             @Override
             public void gotResult(int i, String s, List<Long> list) {
@@ -72,49 +111,14 @@ public class GroupSelectedFragment extends Fragment {
                         @Override
                         public void gotResult(int i, String s, GroupInfo groupInfo) {
                             groupInfoList.add(groupInfo);
+                            groupInfoMyRecyclerAdapter.notifyDataSetChanged();
                         }
                     });
                 }
-                groupInfoMyRecyclerAdapter = new MyRecyclerAdapter<GroupInfo>(groupInfoList) {
-                    @Override
-                    public int getLayoutId(int viewType) {
-                        return R.layout.item_friend;
-                    }
-
-                    @Override
-                    public void bindView(MyHolder holder, int position, GroupInfo groupInfo) {
-                        ItemFriendBinding binding = (ItemFriendBinding) holder.getBinding();
-                        File avatarFile = groupInfo.getAvatarFile();
-                        Bitmap bitmap = WidgetUtil.fileToBitmap(getActivity().getResources(), avatarFile);
-                        binding.ivThumb.setImageBitmap(bitmap);
-                        binding.petName.setText(groupInfo.getGroupName());
-                        binding.itemAll.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                long groupID = groupInfo.getGroupID();
-                                String groupName = groupInfo.getGroupName();
-                                Label label = new Label(groupName);
-                                label.setType(1);
-                                label.setGroupId(groupID);
-                                DatabaseUtil.saveOrUpdateLabel(label);
-                                LiveDataManager.getInstance().with(GroupSelectedFragment.class.getSimpleName()).setValue(label);
-                                v.setClickable(false);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        back(v);
-                                    }
-                                },300);
-                            }
-                        });
-
-                    }
-                };
-                binding.myGroups.setLayoutManager(new LinearLayoutManager(getContext()));
-                binding.myGroups.setAdapter(groupInfoMyRecyclerAdapter);
             }
         });
 
-
     }
+
+    private static final String TAG = "GroupSelectedFragment";
 }
