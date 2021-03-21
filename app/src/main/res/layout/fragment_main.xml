@@ -25,14 +25,15 @@
 
         <CheckBox
             android:id="@+id/aa"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="00dp"
+            android:layout_margin="5dp"
             android:background="@drawable/draw_add"
             android:button="@null"
             android:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/bnv_guide"
-            app:layout_constraintEnd_toEndOf="@+id/bnv_guide"
-            app:layout_constraintStart_toStartOf="@+id/bnv_guide"
+            app:layout_constraintEnd_toStartOf="@+id/guideline55"
+            app:layout_constraintStart_toStartOf="@+id/guideline54"
             app:layout_constraintTop_toBottomOf="@+id/vp_main" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -50,6 +51,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline20"
             app:menu="@menu/main_menu" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline54"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

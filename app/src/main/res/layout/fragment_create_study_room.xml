@@ -4,17 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="callback"
             type="com.example.huabei_competition.callback.CreateGroupCallback" />
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightWarmColor"
-        android:orientation="vertical">
+        android:background="@color/lightWarmColor">
 
         <LinearLayout
             android:id="@+id/frameLayout"
@@ -28,8 +25,9 @@
 
             <Button
                 android:id="@+id/btn_backCreate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/ic_baseline_arrow_back_ios_24_black"
                 android:onClick="@{ () -> callback.onBackClick()}" />
@@ -53,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.1" />
+            app:layout_constraintGuide_percent="0.05" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline36"
@@ -136,9 +134,8 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
-            android:layout_marginBottom="16dp"
             android:onClick="@{ () -> callback.onAvatarClick()}"
-            android:src="@drawable/ic_baseline_arrow_back_ios_24_black"
+            android:src="@drawable/add_un"
             app:layout_constraintBottom_toTopOf="@+id/guideline39"
             app:layout_constraintStart_toStartOf="@+id/guideline36" />
 

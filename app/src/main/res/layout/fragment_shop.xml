@@ -96,7 +96,7 @@
                 app:tabBackground="@drawable/tabitem"
                 app:tabIndicator="@drawable/tablaout_indicator"
                 app:tabIndicatorColor="@color/warmColor"
-                app:tabIndicatorHeight="60dp"
+                app:tabIndicatorHeight="39dp"
                 app:tabPaddingStart="2dp"
                 app:tabTextAppearance="@style/TabLayoutStyleActive" />
         </androidx.cardview.widget.CardView>

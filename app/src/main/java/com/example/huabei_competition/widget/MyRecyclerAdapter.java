@@ -141,6 +141,10 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
         }
     }
 
+    public boolean isOpen() {
+        return isOpen;
+    }
+
     /**
      * @param adapter 需要刷新的adapter
      * @param oldList 旧的列表内容

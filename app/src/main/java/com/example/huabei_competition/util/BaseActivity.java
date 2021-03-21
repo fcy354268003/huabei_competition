@@ -67,6 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         activities.remove(this);
+        MyHandler.removeByKey(this);
         super.onDestroy();
     }
 

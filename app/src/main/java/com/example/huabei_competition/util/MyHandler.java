@@ -72,8 +72,9 @@ public class MyHandler extends Handler {
      */
 
     public static boolean removeByKey(Context context) {
-
-        return handlerHashMap.remove(context.toString()) != null;
+        if (handlerHashMap != null)
+            return handlerHashMap.remove(context.toString()) != null;
+        return false;
     }
 
     public interface Callback {

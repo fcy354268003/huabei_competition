@@ -201,7 +201,7 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
         NPCRel.queryProduct(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Snackbar.make(binding.getRoot(), "网络出错", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(binding.getRoot(), "网络出错", Snackbar.LENGTH_SHORT).show();
             }
 
             @Override
@@ -224,7 +224,7 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
         NPCRel.getRoleList(new Callback() {
                                @Override
                                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                   Snackbar.make(binding.getRoot(), "网络出错", Snackbar.LENGTH_LONG).show();
+                                   Snackbar.make(binding.getRoot(), "网络出错", Snackbar.LENGTH_SHORT).show();
                                }
 
                                @Override

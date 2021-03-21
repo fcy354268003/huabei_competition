@@ -246,7 +246,6 @@ public class NPCRel {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
             }
 
             @Override
@@ -262,7 +261,6 @@ public class NPCRel {
                             npc.setUserName(UserUtil.sUserName);
                             DatabaseUtil.saveOrUpdateNPC(npc);
                         }
-
                         LiveDataManager.getInstance().with(FriendsFragment.class.getSimpleName() + "NPC").postValue(new Object());
                     }
                 }

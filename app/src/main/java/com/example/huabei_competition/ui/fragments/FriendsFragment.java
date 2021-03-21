@@ -1,7 +1,6 @@
 package com.example.huabei_competition.ui.fragments;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,11 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+
 import android.view.animation.RotateAnimation;
-import android.widget.EditText;
+
 import android.widget.ImageView;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,23 +42,21 @@ import com.example.huabei_competition.event.EventReceiver;
 import com.example.huabei_competition.event.FriendManager;
 import com.example.huabei_competition.event.GroupManager;
 import com.example.huabei_competition.event.LiveDataManager;
-import com.example.huabei_competition.network.api.LogIn;
+
 import com.example.huabei_competition.network.api.NPCRel;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.databinding.FragmentFriendsBinding;
-import com.example.huabei_competition.db.Item;
+
 import com.example.huabei_competition.ui.activity.TalkActivity;
 import com.example.huabei_competition.util.DatabaseUtil;
-import com.example.huabei_competition.widget.CustomerDialog;
+
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
-import com.google.gson.Gson;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,10 +69,6 @@ import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
-import cn.jpush.im.api.BasicCallback;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 /**
  * Create by FanChenYang at 2021/2/17
@@ -85,10 +78,9 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
     private SharedPreferences userData;
     private FragmentFriendsBinding binding;
     private RequestManager glideManager;
-    private boolean[] isClose = new boolean[]{true, true, true};
+
 
     private MyRecyclerAdapter<NPC> NPCadapter;
-    private int currentSum = 0;
     private RotateAnimation animation;
     private RotateAnimation animationAnti;
 
@@ -133,39 +125,30 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
                 return;
             }
             NPCadapter.changeState();
-            isClose[0] = !isClose[0];
-            if (isClose[0]) {
-                binding.ivShow1.setAnimation(animation);
-                animation.setDuration(500);
+            if (!NPCadapter.isOpen()) {
+                binding.ivShow1.setRotation(0);
             } else {
-                binding.ivShow1.setAnimation(animationAnti);
-                animationAnti.setDuration(500);
+                binding.ivShow1.setRotation(90);
             }
         });
         binding.tvFriends.setOnClickListener(view -> {
             if (friendsAdapter == null)
                 return;
             friendsAdapter.changeState();
-            isClose[1] = !isClose[1];
-            if (isClose[1]) {
-                binding.ivShow2.setAnimation(animation);
-                animation.setDuration(500);
+            if (!friendsAdapter.isOpen()) {
+                binding.ivShow2.setRotation(0);
             } else {
-                binding.ivShow2.setAnimation(animationAnti);
-                animationAnti.setDuration(500);
+                binding.ivShow2.setRotation(90);
             }
         });
         binding.tvGroup.setOnClickListener(view -> {
             if (groupInfoMyRecyclerAdapter == null)
                 return;
             groupInfoMyRecyclerAdapter.changeState();
-            isClose[2] = !isClose[2];
-            if (isClose[2]) {
-                binding.ivShow3.setAnimation(animation);
-                animation.setDuration(500);
+            if (!groupInfoMyRecyclerAdapter.isOpen()) {
+                binding.ivShow3.setRotation(0);
             } else {
-                binding.ivShow3.setAnimation(animationAnti);
-                animationAnti.setDuration(500);
+                binding.ivShow3.setRotation(90);
             }
         });
         setObserver();
@@ -178,6 +161,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getViewLifecycleOwner().getLifecycle().addObserver(this);
+        onRefresh();
     }
 
     private void setPrompt() {
@@ -192,18 +176,13 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
     }
 
     public void onRefresh() {
-        Log.d(TAG, "onRefresh: ");
         FriendManager.getFriends(new FriendsListCallback());
         GroupManager.getGroupIdList(new GroupListCallback());
         NPCRel.getNPCList();
         setPrompt();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        onRefresh();
-    }
+
 
     /**
      * 设置监听事件
@@ -257,6 +236,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
                         };
                         binding.rvNpcs.callOnClick();
                         binding.rvNpcs.setAdapter(NPCadapter);
+                        NPCadapter.changeState();
                     }
                 });
     }
@@ -345,48 +325,6 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
 
     @Override
     public void onAddFriendClick() {
-        // 添加好友
-//        final CustomerDialog customerDialog = new CustomerDialog();
-//        customerDialog.setLayoutId(R.layout.apply_fragment_dialog);
-//        customerDialog.setCallback(new CustomerDialog.InitCallback() {
-//            @Override
-//            public void initWidget(View rootView) {
-//                EditText reason = rootView.findViewById(R.id.et_reason);
-//                EditText userName = rootView.findViewById(R.id.et_userInfo);
-//                TextView tv_title = rootView.findViewById(R.id.tv_add_friend);
-//                tv_title.setText("添加好友");
-//                userName.setHint("请输入对方用户名");
-//                rootView.findViewById(R.id.et_reason);
-//                rootView.findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        final String res = reason.getText().toString();
-//                        final String user = userName.getText().toString();
-//                        String replace = user.replace(" ", "");
-//                        // 调用添加好友的办法
-//                        FriendManager.sendInvitationRequest(replace, null, res, new BasicCallback() {
-//                            @Override
-//                            public void gotResult(int i, String s) {
-//                                Log.d(TAG, "gotResult: " + s);
-//                                if (i == 0) {
-//                                    MyToast.showMessage("请求发送成功");
-//                                } else {
-//                                    MyToast.showMessage("请求发送失败");
-//                                }
-//                            }
-//                        });
-//                        customerDialog.dismiss();
-//                    }
-//                });
-//                rootView.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        customerDialog.dismiss();
-//                    }
-//                });
-//            }
-//        });
-//        customerDialog.show(getActivity().getSupportFragmentManager(), "apply");
         ((MainActivity)getActivity()).getController().navigate(R.id.action_mainFragment_to_addFriendFragment);
     }
 
@@ -450,8 +388,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
 
                 };
                 binding.rvFriends.setLayoutManager(new LinearLayoutManager(getContext()));
-                binding.rvFriends.setAdapter(friendsAdapter);
-                binding.rvFriends.callOnClick();
+
             } else {
                 friendsAdapter = new MyRecyclerAdapter<UserInfo>(list) {
                     @Override
@@ -466,6 +403,8 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
                 };
                 MyToast.showMessage("获取失败");
             }
+            binding.rvFriends.setAdapter(friendsAdapter);
+            binding.tvFriends.callOnClick();
         }
     }
 
@@ -508,8 +447,9 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
             }
         };
         binding.rvGroups.setLayoutManager(new LinearLayoutManager(getContext()));
+        Log.d(TAG, "initGroupInfoList: 新的");
         binding.rvGroups.setAdapter(groupInfoMyRecyclerAdapter);
-        binding.rvGroups.callOnClick();
+        binding.tvGroup.callOnClick();
     }
 
     private List<GroupInfo> groupInfos;
