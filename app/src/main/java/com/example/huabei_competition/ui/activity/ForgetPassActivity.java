@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui.fragments;
+package com.example.huabei_competition.ui.activity;
 
 
 import androidx.annotation.Nullable;

@@ -27,12 +27,16 @@ import java.util.List;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import cn.jpush.im.android.api.callback.GetUserInfoCallback;
+import cn.jpush.im.android.api.callback.RequestCallback;
+import cn.jpush.im.android.api.model.GroupBasicInfo;
+import cn.jpush.im.android.api.model.GroupMemberInfo;
 import cn.jpush.im.android.api.model.UserInfo;
 
 
 public class AddFriendFragment extends Fragment {
 
     private FragmentAddFriendBinding binding;
+    private boolean is;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,6 +72,12 @@ public class AddFriendFragment extends Fragment {
             });
         });
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getUsers();
     }
 
     private void toUserDetail(String userName) {
@@ -107,25 +117,48 @@ public class AddFriendFragment extends Fragment {
         });
     }
 
-    private void changeList(List<String> users) {
+    private void changeList(List<UserInfo> users) {
         MyRecyclerAdapter<UserInfo> userInfoMyRecyclerAdapter = (MyRecyclerAdapter<UserInfo>) binding.rvRecommendFriend.getAdapter();
         List<UserInfo> resources = userInfoMyRecyclerAdapter.getResources();
         resources.clear();
-        for (String user : users) {
-            JMessageClient.getUserInfo(user, new GetUserInfoCallback() {
-                @Override
-                public void gotResult(int i, String s, UserInfo userInfo) {
-                    if (i == 0) {
-                        resources.add(userInfo);
-                        userInfoMyRecyclerAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
+        for (UserInfo user : users) {
+            resources.add(user);
+            userInfoMyRecyclerAdapter.notifyDataSetChanged();
         }
     }
 
-    private void getUsers() {
+    private ArrayList<UserInfo> al;
 
+    private void getUsers() {
+        al = new ArrayList<>();
+        is = true;
+        JMessageClient.getPublicGroupListByApp(null, 0, 10, new RequestCallback<List<GroupBasicInfo>>() {
+            @Override
+            public void gotResult(int i, String s, List<GroupBasicInfo> groupBasicInfos) {
+                for (GroupBasicInfo groupBasicInfo : groupBasicInfos) {
+                    if (!is)
+                        return;
+                    long groupID = groupBasicInfo.getGroupID();
+                    JMessageClient.getGroupMembers(groupID, new RequestCallback<List<GroupMemberInfo>>() {
+                        @Override
+                        public void gotResult(int i, String s, List<GroupMemberInfo> groupMemberInfos) {
+                            if (i == 0) {
+                                for (GroupMemberInfo groupMemberInfo : groupMemberInfos) {
+                                    UserInfo userInfo = groupMemberInfo.getUserInfo();
+                                    if (!userInfo.isFriend())
+                                        al.add(userInfo);
+                                    if (al.size() == 5) {
+                                        is = !is;
+                                        changeList(al);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
 }

@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
+import java.util.Objects;
+
 public class Prop extends LitePalSupport {
     @SerializedName("id")
     private String PropId;
@@ -50,5 +52,18 @@ public class Prop extends LitePalSupport {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prop prop = (Prop) o;
+        return PropId.equals(prop.PropId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(PropId);
     }
 }

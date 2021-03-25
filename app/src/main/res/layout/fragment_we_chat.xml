@@ -12,6 +12,7 @@
         android:background="@color/white">
 
         <View
+            android:id="@+id/view4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/warmColor"
@@ -20,33 +21,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs_chat"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:background="@drawable/back_talk"
             android:backgroundTint="#958787"
+            android:elevation="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline31"
-            app:tabBackground="@drawable/tabitem"
-            app:tabIndicator="@drawable/tablaout_indicator"
-            app:tabIndicatorColor="@color/warmColor"
-            app:tabIndicatorHeight="39dp"
-            app:tabTextAppearance="@style/TabLayoutStyleActive" />
+            app:layout_constraintTop_toTopOf="@+id/guideline31">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.1" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_chat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="#958787"
+                app:tabIndicator="@drawable/tablaout_indicator"
+                app:tabIndicatorColor="@color/warmColor"
+                app:tabIndicatorHeight="39dp"
+                app:tabPaddingStart="1dp"
+                app:tabTextAppearance="@style/TabLayoutStyleActive" />
+        </androidx.cardview.widget.CardView>
 
-        <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/barrier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:barrierDirection="top"
-            app:constraint_referenced_ids="guideline30" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline31"
@@ -62,6 +59,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabs_chat" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

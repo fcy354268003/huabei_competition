@@ -20,6 +20,7 @@ import com.example.huabei_competition.db.Dialogue;
 import com.example.huabei_competition.db.FriendCircle;
 import com.example.huabei_competition.db.NPC;
 import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.NPCRel;
 import com.example.huabei_competition.ui.fragments.CommentFragment;
@@ -263,9 +264,9 @@ public class TalkActivity extends BaseActivity implements View.OnClickListener {
         int which = -1;
         switch (v.getId()) {
             case R.id.btn_personInfo:
-                //TODO 跳转到NPC详情页面
                 LiveDataManager.getInstance().with(IntroduceActivity.class.getSimpleName()).setValue(mNpc);
                 Intent intent = new Intent(this, IntroduceActivity.class);
+//                Log.d(TAG, "onClick: " + UserUtil.sUserName);
                 startActivity(intent);
                 break;
             case R.id.tv_choice_1:

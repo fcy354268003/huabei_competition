@@ -109,11 +109,7 @@ public class DatabaseUtil {
         List<Prop> all = LitePal.findAll(Prop.class);
         return all;
     }
-
-    public static List<ShopRole> getRoles() {
-        List<ShopRole> all = LitePal.where("userName = ?", UserUtil.sUserName).find(ShopRole.class);
-        return all;
-    }
+    
 
     public static void saveOrUpdateNPC(NPC npc) {
         npc.saveOrUpdate("NPCID = ?", npc.getNPCID());
@@ -141,5 +137,13 @@ public class DatabaseUtil {
 
     public static List<FriendCircle> getAllBlink() {
         return LitePal.where("userName = ?", UserUtil.sUserName).find(FriendCircle.class);
+    }
+
+    /**
+     * 返回本地缓存的shopRole列表
+     */
+    public static List<ShopRole> getMineShopRole() {
+
+        return LitePal.where("userName = ?",UserUtil.sUserName).find(ShopRole.class);
     }
 }

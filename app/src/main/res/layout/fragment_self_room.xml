@@ -70,39 +70,43 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="时长"
                     android:textColor="@color/createTextColor"
-                    android:textSize="@dimen/textSize_30" />
+                    android:textSize="@dimen/textSize_25" />
 
                 <com.contrarywind.view.WheelView
                     android:id="@+id/wv_hour"
-                    android:layout_width="60dp"
+                    android:layout_width="0dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="10dp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="小时"
                     android:textColor="@color/createTextColor"
                     android:textSize="@dimen/textSize_25" />
 
                 <com.contrarywind.view.WheelView
-                    android:scrollbarSize="@dimen/textSize_30"
                     android:id="@+id/wv_minute"
-                    android:layout_width="60dp"
-                    android:layout_height="30dp" />
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
+                    android:layout_weight="1"
                     android:text="分钟"
                     android:textSize="@dimen/textSize_25" />
             </LinearLayout>

@@ -19,7 +19,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import cn.jmessage.support.qiniu.android.http.Client;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -33,7 +35,7 @@ import okhttp3.Response;
 public class NPCRel {
     public static final Gson gson = new Gson();
     public static final String PATH_MONEY = "/queryMoney";
-    public static final OkHttpClient client = new OkHttpClient();
+    public static final OkHttpClient client = new OkHttpClient.Builder().callTimeout(3, TimeUnit.SECONDS).build();
     public static final String PATH_GET_PRO_LIST = "/story/getPropList";
     public static final String PATH_GET_ROLE = "/story/getRoleList";
     public static final String PATH_BUY_PROP = "/story/buyProps";
@@ -41,7 +43,7 @@ public class NPCRel {
     public static final String PATH_GET_MINE_NPC = "/role/getInfo";
     public static final String PATH_GET_DIALOGUE = "/role/getDialogue";
     public static final String PATH_REPLY = "/role/reply";
-
+    public static final String PATH_CREATE_CHAT_ROOM = "/createChatRoom";
     private static class MoneyGet {
         String token = LogIn.TOKEN;
     }
@@ -86,6 +88,7 @@ public class NPCRel {
                 .url(LogIn.BASIC_PATH + PATH_MONEY)
                 .post(requestBody)
                 .build();
+
         client.newCall(request).enqueue(callback);
     }
 
@@ -251,7 +254,7 @@ public class NPCRel {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String json = response.body().string();
-                Log.d(TAG, "onResponse: " + json) ;
+                Log.d(TAG, "onResponse: " + json);
                 if (response.isSuccessful()) {
                     Gson gson = new Gson();
                     NPCRel.Get_NPC_1 get_npc_1 = gson.fromJson(json, NPCRel.Get_NPC_1.class);
@@ -379,6 +382,16 @@ public class NPCRel {
         RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
         Request request = new Request.Builder()
                 .url(LogIn.BASIC_PATH + PATH_REPLY)
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void createChatRoom(Callback callback) {
+        String json = gson.toJson(new MoneyGet());
+        RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
+        Request request = new Request.Builder()
+                .url(LogIn.BASIC_PATH + PATH_CREATE_CHAT_ROOM)
                 .post(requestBody)
                 .build();
         client.newCall(request).enqueue(callback);

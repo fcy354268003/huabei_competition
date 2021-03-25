@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.callback.ShopCallback;
+import com.example.huabei_competition.callback.apicallback.QueryProductCallback;
+import com.example.huabei_competition.callback.apicallback.QueryShopRoleCallback;
 import com.example.huabei_competition.databinding.CustomerDialogBinding;
 import com.example.huabei_competition.databinding.FragmentShopBinding;
 import com.example.huabei_competition.databinding.ItemProductBinding;
@@ -27,24 +29,21 @@ import com.example.huabei_competition.databinding.ItemShopRoleBinding;
 import com.example.huabei_competition.db.Prop;
 import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.event.LiveDataManager;
-import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.NPCRel;
 import com.example.huabei_competition.ui.activity.MainActivity;
-import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.util.MyHandler;
 import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
+import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
-import org.litepal.LitePal;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -105,7 +104,6 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
     private MyRecyclerAdapter<Prop> propAdapter;
     private MyRecyclerAdapter<ShopRole> shopRoleAdapter;
     private int prePosition = 0;
-    private String shopRoleId;
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
@@ -198,55 +196,9 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
     }
 
     private void getData() {
-        NPCRel.queryProduct(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Snackbar.make(binding.getRoot(), "网络出错", Snackbar.LENGTH_SHORT).show();
-            }
+        NPCRel.queryProduct(new QueryProductCallback());
 
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    NPCRel.PropResponse propResponse = gson.fromJson(response.body().string(), NPCRel.PropResponse.class);
-                    if (propResponse.getCode().equals(LogIn.OK)) {
-                        ArrayList<Prop> info = propResponse.getData().getInfo();
-                        LiveDataManager.getInstance()
-                                .with(ShopFragment.class.getSimpleName() + "prop")
-                                .postValue(info);
-                    }
-                } else {
-                    onFailure(call, new IOException());
-                }
-                response.close();
-            }
-        });
-        NPCRel.getRoleList(new Callback() {
-                               @Override
-                               public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                   Snackbar.make(binding.getRoot(), "网络出错", Snackbar.LENGTH_SHORT).show();
-                               }
-
-                               @Override
-                               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                                   if (response.isSuccessful()) {
-                                       Gson gson = new Gson();
-                                       String json = response.body().string();
-                                       NPCRel.ShopRoleResponse shopRoleResponse = gson.fromJson(json, NPCRel.ShopRoleResponse.class);
-                                       Log.d(TAG, "onResponse: " + json);
-                                       if (shopRoleResponse.getCode().equals(LogIn.OK)) {
-                                           ArrayList<ShopRole> info = shopRoleResponse.getData().getInfo();
-                                           LiveDataManager.getInstance()
-                                                   .with(ShopFragment.class.getSimpleName() + "role")
-                                                   .postValue(info);
-                                       }
-                                   } else {
-                                       onFailure(call, new IOException());
-                                   }
-                                   response.close();
-                               }
-                           }
-        );
+        NPCRel.getRoleList(new QueryShopRoleCallback());
     }
 
     @Override

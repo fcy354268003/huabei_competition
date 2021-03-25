@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:drawableStart="@drawable/ic_baseline_arrow_back_ios_24_black"
+                android:elevation="1dp"
                 android:onClick="@{() -> callBcak.onBackClick()}"
                 android:textSize="18sp" />
 
@@ -39,17 +40,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:text="商场"
                 android:gravity="center"
+                android:text="      商场"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
+                android:elevation="1dp"
                 android:gravity="end"
-                android:paddingEnd="5dp"
+                android:paddingEnd="10dp"
                 android:text="铜钱"
                 android:textColor="#fb5f07"
                 android:textSize="20sp"
@@ -59,8 +61,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:backgroundTint="#fff"
+                android:elevation="1dp"
+                android:layout_marginBottom="5dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp">
 
@@ -93,11 +97,10 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="1dp"
                 android:backgroundTint="#958787"
-                app:tabBackground="@drawable/tabitem"
                 app:tabIndicator="@drawable/tablaout_indicator"
                 app:tabIndicatorColor="@color/warmColor"
                 app:tabIndicatorHeight="39dp"
-                app:tabPaddingStart="2dp"
+                app:tabPaddingStart="1dp"
                 app:tabTextAppearance="@style/TabLayoutStyleActive" />
         </androidx.cardview.widget.CardView>
 

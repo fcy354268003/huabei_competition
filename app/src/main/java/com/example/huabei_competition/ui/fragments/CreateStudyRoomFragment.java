@@ -24,14 +24,25 @@ import com.example.huabei_competition.callback.CreateGroupCallback;
 import com.example.huabei_competition.databinding.FragmentCreateStudyRoomBinding;
 import com.example.huabei_competition.event.GroupManager;
 import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.network.api.LogIn;
+import com.example.huabei_competition.network.api.NPCRel;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.IOException;
 import java.security.Permission;
 
 import cn.jpush.im.android.api.JMessageClient;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 
 
 public class CreateStudyRoomFragment extends Fragment implements CreateGroupCallback {
@@ -75,17 +86,56 @@ public class CreateStudyRoomFragment extends Fragment implements CreateGroupCall
 
     @Override
     public void onOKClick() {
-        // 发送注册申请
-        GroupManager.createGroup(binding.etNikeName.getText().toString(),
-                binding.etShortDes.getText().toString(), file, WidgetUtil.getImgMimeType(file), new cn.jpush.im.android.api.callback.CreateGroupCallback() {
-                    @Override
-                    public void gotResult(int i, String s, long l) {
-                        if (i == 0) {
-                            MyToast.showMessage("创建成功");
-                            ((MainActivity) getActivity()).getController().navigateUp();
-                        } else MyToast.showMessage("创建失败");
+        // TODO 先判断 是否有100铜币，然后进行再像后端发请求
+        NPCRel.createChatRoom(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MyToast.showMessage("创建失败");
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String string = response.body().string();
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        if (jsonObject.getString("code").equals(LogIn.OK)) {
+                            if (getActivity() != null) {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        GroupManager.createGroup(binding.etNikeName.getText().toString(),
+                                                binding.etShortDes.getText().toString(), file, WidgetUtil.getImgMimeType(file), new cn.jpush.im.android.api.callback.CreateGroupCallback() {
+                                                    @Override
+                                                    public void gotResult(int i, String s, long l) {
+                                                        if (i == 0) {
+                                                            MyToast.showMessage("创建成功");
+                                                            ((MainActivity) getActivity()).getController().navigateUp();
+                                                        } else MyToast.showMessage("创建失败");
+                                                    }
+                                                });
+                                    }
+                                });
+
+
+                            }
+                        } else {
+                            onFailure(call, new IOException());
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
+                }
+            }
+        });
+
     }
 
     public static final int PERMISSION_CODE = 111;

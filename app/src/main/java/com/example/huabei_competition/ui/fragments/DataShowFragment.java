@@ -91,15 +91,15 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
                 if (i == 0) {
                     String nickname = userInfo.getNickname();
                     String userName = userInfo.getUserName();
-                    if(TextUtils.isEmpty(nickname)){
+                    if (TextUtils.isEmpty(nickname)) {
                         binding.tvUserName.setText(userName);
-                    }else {
+                    } else {
                         binding.tvUserName.setText(nickname);
                     }
                     userInfo.getAvatarBitmap(new GetAvatarBitmapCallback() {
                         @Override
                         public void gotResult(int i, String s, Bitmap bitmap) {
-                            if(i == 0){
+                            if (i == 0) {
                                 binding.ivMinePortrait.setImageBitmap(bitmap);
                             }
                         }
@@ -189,6 +189,8 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
      * 记载数据失败时
      */
     private void initOnNoNetWork() {
+        if (getActivity() == null)
+            return;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -201,7 +203,6 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
 
             }
         });
-
     }
 
     @Override

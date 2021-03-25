@@ -1,6 +1,6 @@
 <litepal>
     <dbname value="detail" />
-    <version value="11" />
+    <version value="12" />
     <list>
         <mapping class="com.example.huabei_competition.db.PersonDetail" />
         <mapping class="com.example.huabei_competition.db.PlotCache" />

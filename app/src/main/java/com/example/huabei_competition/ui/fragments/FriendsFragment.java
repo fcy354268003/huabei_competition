@@ -3,7 +3,7 @@ package com.example.huabei_competition.ui.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -75,25 +75,13 @@ import cn.jpush.im.android.api.model.UserInfo;
  */
 public class FriendsFragment extends Fragment implements FriendsCallback, LifecycleEventObserver {
 
-    private SharedPreferences userData;
+
     private FragmentFriendsBinding binding;
     private RequestManager glideManager;
 
 
     private MyRecyclerAdapter<NPC> NPCadapter;
-    private RotateAnimation animation;
-    private RotateAnimation animationAnti;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        animation = new RotateAnimation(90, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setDuration(500);
-        animation.setFillAfter(true);
-        animationAnti = new RotateAnimation(0, 90, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animationAnti.setDuration(500);
-        animationAnti.setFillAfter(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,8 +93,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
                 parent.removeView(binding.getRoot());
             return binding.getRoot();
         }
-        userData = getActivity().getSharedPreferences("userData"
-                , Context.MODE_PRIVATE);
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false);
         glideManager = Glide.with(binding.getRoot());
         binding.setLifecycleOwner(getActivity());

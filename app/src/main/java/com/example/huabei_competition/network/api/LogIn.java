@@ -30,7 +30,7 @@ public class LogIn {
     public static String TOKEN;
     private static final String TAG = "LogIn";
     private static final Gson gson = new Gson();
-    public static final String BASIC_PATH = "http://155.94.144.151:50064";
+    public static final String BASIC_PATH = "http://192.168.115.38:8000";
 
     public static void login(@NonNull final String name, @NonNull final String pass, @NonNull LogCallback callback) {
         UserLogIn post = new UserLogIn(name, pass);
@@ -51,7 +51,9 @@ public class LogIn {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    LogResponse logResponse = gson.fromJson(response.body().string(), LogResponse.class);
+                    String string = response.body().string();
+                    Log.d(TAG, "onResponse: " + string);
+                    LogResponse logResponse = gson.fromJson(string, LogResponse.class);
                     if (TextUtils.equals(logResponse.code, OK)) {
                         TOKEN = logResponse.data.token;
                         callback.success(name, pass);

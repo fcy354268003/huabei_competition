@@ -20,7 +20,6 @@ import androidx.lifecycle.LifecycleOwner;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.network.api.LogIn;
 
-import com.example.huabei_competition.ui.fragments.ForgetPassActivity;
 import com.example.huabei_competition.util.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
 
