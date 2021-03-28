@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/iv_question"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="33dp"
+                android:layout_height="28dp"
                 android:layout_margin="10dp"
                 android:onClick="@{() -> mContext.onQuestionClick()}"
                 android:src="@drawable/question"
@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -59,7 +60,7 @@
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="80dp"
                     android:gravity="center"
                     android:text="@string/register"
                     android:textColor="#FBF2EE"
@@ -82,8 +83,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="32dp"
+                            android:layout_height="38dp"
                             android:layout_gravity="center"
                             android:paddingLeft="15dp"
                             android:src="@drawable/nickname" />
@@ -92,9 +93,9 @@
                             android:id="@+id/et_nickName"
                             android:layout_width="150dp"
                             android:layout_height="50dp"
-                            android:background="@drawable/back_no_indicator"
                             android:layout_gravity="center"
                             android:autofillHints=""
+                            android:background="@drawable/back_no_indicator"
                             android:drawablePadding="5dp"
                             android:hint="@string/nickName"
                             android:inputType="text"
@@ -123,8 +124,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="32dp"
+                            android:layout_height="35dp"
                             android:layout_gravity="center"
                             android:paddingLeft="15dp"
                             android:src="@drawable/user2" />
@@ -163,8 +164,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="33dp"
+                            android:layout_height="33dp"
                             android:layout_gravity="center"
                             android:paddingStart="15dp"
                             android:src="@drawable/password" />
@@ -176,9 +177,9 @@
                             android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:autofillHints=""
+                            android:background="@drawable/back_no_indicator"
                             android:drawablePadding="5dp"
                             android:hint="@string/password"
-                            android:background="@drawable/back_no_indicator"
 
                             android:inputType="textPassword"
                             android:text="@={registerVM.password}"
@@ -205,7 +206,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="40dp"
+                            android:layout_width="33dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:paddingStart="15dp"
@@ -246,8 +247,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="34dp"
+                            android:layout_height="18dp"
                             android:layout_gravity="center"
                             android:paddingStart="15dp"
                             android:src="@drawable/phone" />
@@ -257,10 +258,10 @@
                             android:layout_width="150dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
+                            android:background="@drawable/back_no_indicator"
                             android:drawablePadding="5dp"
                             android:hint="@string/bindPhone"
                             android:inputType="phone"
-                            android:background="@drawable/back_no_indicator"
 
                             android:text="@={registerVM.phoneNumber}"
                             android:textColor="#867676"
@@ -289,7 +290,8 @@
                             android:gravity="center"
                             android:hint="@string/verification"
                             android:inputType="number"
-                            android:text="@={registerVM.verification}" />
+                            android:text="@={registerVM.verification}"
+                            android:textSize="15sp" />
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -319,7 +321,7 @@
                     <Button
                         android:id="@+id/btn_cancel"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="36dp"
                         android:layout_marginEnd="20dp"
                         android:background="@drawable/shape"
                         android:onClick="@{() -> mContext.onCancel()}"
@@ -329,7 +331,7 @@
                     <Button
                         android:id="@+id/btn_confirm"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginStart="20dp"
                         android:background="@drawable/shape"
                         android:onClick="@{() -> mContext.onConfirm()}"

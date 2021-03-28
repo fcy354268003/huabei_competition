@@ -19,7 +19,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@color/warmColor"
             android:gravity="bottom"
             android:orientation="horizontal"
@@ -31,17 +31,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_baseline_arrow_back_ios_24_black"
                 android:elevation="1dp"
                 android:onClick="@{() -> callBcak.onBackClick()}"
                 android:textSize="18sp" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="13dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
                 android:gravity="center"
-                android:text="      商场"
+                android:text="            商城"
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
@@ -61,10 +62,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="1.2"
                 android:backgroundTint="#fff"
                 android:elevation="1dp"
-                android:layout_marginBottom="5dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp">
 
@@ -93,13 +94,13 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_shop"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="1dp"
                 android:backgroundTint="#958787"
                 app:tabIndicator="@drawable/tablaout_indicator"
                 app:tabIndicatorColor="@color/warmColor"
-                app:tabIndicatorHeight="39dp"
+                app:tabIndicatorHeight="35dp"
+                android:layout_margin="2dp"
                 app:tabPaddingStart="1dp"
                 app:tabTextAppearance="@style/TabLayoutStyleActive" />
         </androidx.cardview.widget.CardView>
@@ -108,6 +109,7 @@
             android:id="@+id/content"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

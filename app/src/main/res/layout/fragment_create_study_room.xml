@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="callback"
             type="com.example.huabei_competition.callback.CreateGroupCallback" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +18,7 @@
         <LinearLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@color/warmColor"
             android:paddingVertical="5dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,9 +27,9 @@
 
             <Button
                 android:id="@+id/btn_backCreate"
-                android:layout_width="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/ic_baseline_arrow_back_ios_24_black"
                 android:onClick="@{ () -> callback.onBackClick()}" />
@@ -41,7 +43,7 @@
             android:gravity="center"
             android:text="创建自习室"
             android:textColor="@color/createTextColor"
-            android:textSize="35sp"
+            android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/frameLayout" />

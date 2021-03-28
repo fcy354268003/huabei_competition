@@ -8,13 +8,14 @@
     android:background="@drawable/check"
     android:orientation="vertical">
 
+
     <include
         android:id="@+id/loading"
         layout="@layout/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:elevation="2dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -62,9 +63,9 @@
                 android:id="@+id/et_userName"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:background="@drawable/back_no_indicator"
                 android:layout_gravity="center"
                 android:autofillHints=""
+                android:background="@drawable/back_no_indicator"
                 android:drawablePadding="5dp"
                 android:hint="@string/userName"
                 android:inputType="text"

@@ -34,7 +34,6 @@
             android:text="沙雕"
             android:textColor="@color/tabSelected_group"
             android:textSize="@dimen/textSize_20"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +65,7 @@
         <LinearLayout
             android:id="@+id/linearLayout9"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@color/warmColor"
             android:gravity="center"
             android:orientation="horizontal"
@@ -96,6 +95,8 @@
                 android:elevation="20dp"
                 android:background="@drawable/radius_back"
                 android:backgroundTint="@color/orange"
+                android:textSize="18sp"
+                android:textColor="#FBF9F9"
                 android:onClick="@{() ->callBack.onSendClick()}"
                 android:text="发送" />
         </LinearLayout>

@@ -129,6 +129,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
             }
         });
         binding.tvGroup.setOnClickListener(view -> {
+            Log.d(TAG, "onCreateView: " + groupInfoMyRecyclerAdapter);
             if (groupInfoMyRecyclerAdapter == null)
                 return;
             groupInfoMyRecyclerAdapter.changeState();
@@ -168,7 +169,6 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
         NPCRel.getNPCList();
         setPrompt();
     }
-
 
 
     /**
@@ -312,7 +312,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
 
     @Override
     public void onAddFriendClick() {
-        ((MainActivity)getActivity()).getController().navigate(R.id.action_mainFragment_to_addFriendFragment);
+        ((MainActivity) getActivity()).getController().navigate(R.id.action_mainFragment_to_addFriendFragment);
     }
 
     @Override
@@ -457,6 +457,7 @@ public class FriendsFragment extends Fragment implements FriendsCallback, Lifecy
                     });
                 }
             }
+            initGroupInfoList();
         }
     }
 

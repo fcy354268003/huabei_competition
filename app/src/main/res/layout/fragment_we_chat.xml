@@ -24,7 +24,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/back_talk"
             android:backgroundTint="#958787"
             android:elevation="10dp"
@@ -35,11 +35,12 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_chat"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
+                android:layout_margin="2dp"
                 android:backgroundTint="#958787"
                 app:tabIndicator="@drawable/tablaout_indicator"
                 app:tabIndicatorColor="@color/warmColor"
-                app:tabIndicatorHeight="39dp"
+                app:tabIndicatorHeight="35dp"
                 app:tabPaddingStart="1dp"
                 app:tabTextAppearance="@style/TabLayoutStyleActive" />
         </androidx.cardview.widget.CardView>

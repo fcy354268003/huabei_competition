@@ -5,9 +5,9 @@
     <string name="go_to_study">开始学习</string>
     <string name="sum">统计</string>
     <string name="recall">回忆</string>
-    <string name="userName">请输入用户名</string>
+    <string name="userName">请输入账号</string>
     <string name="nickName">请输入昵称</string>
-    <string name="password">设置密码</string>
+    <string name="password">输入密码</string>
     <string name="bindPhone">绑定手机号</string>
     <string name="verificationCode">发送验证码</string>
     <string name="verification">请输入验证码</string>

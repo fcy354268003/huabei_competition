@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="callback"
             type="com.example.huabei_competition.callback.FriendsCallback" />
