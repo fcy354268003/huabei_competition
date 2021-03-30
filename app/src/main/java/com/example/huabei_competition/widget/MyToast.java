@@ -13,7 +13,7 @@ import com.example.huabei_competition.util.MyApplication;
  * Create by FanChenYang
  */
 public class MyToast {
-    private static Toast toast;
+    private static Toast toast ;
     private static final Handler handler = new Handler(Looper.getMainLooper());
 
     public static void showMessage(String message) {
@@ -21,7 +21,7 @@ public class MyToast {
             @Override
             public void run() {
                 Log.d(TAG, "run: " + Thread.currentThread());
-                if (toast == null) {
+                 if (toast == null) {
                     toast = Toast.makeText(MyApplication.getApplicationByReflect(), message, Toast.LENGTH_LONG);
                 } else {
                     toast.setText(message);
@@ -30,6 +30,7 @@ public class MyToast {
             }
         });
     }
+
 
     private static final String TAG = "MyToast";
 }

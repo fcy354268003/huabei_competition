@@ -54,6 +54,7 @@
                 <ImageView
                     android:id="@+id/iv_back"
                     android:layout_width="30dp"
+                    android:layout_marginTop="10dp"
                     android:layout_height="30dp"
                     android:contentDescription="@string/back_btn"
                     android:onClick="@{() -> callBack.onBackClick()}"

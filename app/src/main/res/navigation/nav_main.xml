@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/mainFragment"
-    android:id="@+id/chat">
+    android:id="@+id/chat"
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/newFriendFragment"
@@ -13,54 +13,68 @@
         android:id="@+id/chatFragment"
         android:name="com.example.huabei_competition.ui.fragments.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" >
+        tools:layout="@layout/fragment_chat">
         <action
             android:id="@+id/action_chatFragment_to_groupStudyPrepareFragment"
-            app:destination="@id/groupStudyPrepareFragment" />
+            app:destination="@id/groupStudyPrepareFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_chatFragment_to_groupInfoFragment"
-            app:destination="@id/groupInfoFragment" />
+            app:destination="@id/groupInfoFragment"
+            app:enterAnim="@animator/enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.huabei_competition.ui.fragments.MainFragment"
-        android:label="MainFragment" >
+        android:label="MainFragment">
         <action
             android:id="@+id/action_mainFragment_to_newFriendFragment"
-            app:destination="@id/newFriendFragment" />
+            app:destination="@id/newFriendFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            app:destination="@id/chatFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_shopFragment"
-            app:destination="@id/shopFragment" />
+            app:destination="@id/shopFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_dataShowFragment"
-            app:destination="@id/dataShowFragment" />
+            app:destination="@id/dataShowFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_createStudyRoomFragment"
-            app:destination="@id/createStudyRoomFragment" />
+            app:destination="@id/createStudyRoomFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_searchFragment"
-            app:destination="@id/searchFragment" />
+            app:destination="@id/searchFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_selfStudyFragment"
-            app:destination="@id/selfStudyFragment" />
+            app:destination="@id/selfStudyFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_groupStudyFragment"
-            app:destination="@id/groupStudyPrepareFragment" />
+            app:destination="@id/groupStudyPrepareFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_groupSelectedFragment"
-            app:destination="@id/groupSelectedFragment" />
+            app:destination="@id/groupSelectedFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_groupInfoFragment"
-            app:destination="@id/groupInfoFragment" />
+            app:destination="@id/groupInfoFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_changePassFragment"
-            app:destination="@id/changePassFragment" />
+            app:destination="@id/changePassFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_mainFragment_to_addFriendFragment"
-            app:destination="@id/addFriendFragment" />
+            app:destination="@id/addFriendFragment"
+            app:enterAnim="@animator/enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
@@ -79,24 +93,28 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.huabei_competition.ui.fragments.SearchFragment"
-        android:label="SearchFragment" >
+        android:label="SearchFragment">
         <action
             android:id="@+id/action_searchFragment_to_groupInfoFragment"
-            app:destination="@id/groupInfoFragment" />
+            app:destination="@id/groupInfoFragment"
+            app:enterAnim="@animator/enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/groupInfoFragment"
         android:name="com.example.huabei_competition.ui.fragments.GroupInfoFragment"
-        android:label="GroupInfoFragment" >
+        android:label="GroupInfoFragment">
         <action
             android:id="@+id/action_groupInfoFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_groupInfoFragment_to_managerGroupMemberFragment"
-            app:destination="@id/managerGroupMemberFragment" />
+            app:destination="@id/managerGroupMemberFragment"
+            app:enterAnim="@animator/enter_anim" />
         <action
             android:id="@+id/action_groupInfoFragment_to_dataShowFragment"
-            app:destination="@id/dataShowFragment" />
+            app:destination="@id/dataShowFragment"
+            app:enterAnim="@animator/enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/selfStudyFragment"
@@ -105,10 +123,11 @@
     <fragment
         android:id="@+id/groupStudyPrepareFragment"
         android:name="com.example.huabei_competition.ui.fragments.GroupStudyPrepareFragment"
-        android:label="GroupStudyFragment" >
+        android:label="GroupStudyFragment">
         <action
             android:id="@+id/action_groupStudyPrepareFragment_to_groupStudyFragment"
-            app:destination="@id/groupStudyFragment" />
+            app:destination="@id/groupStudyFragment"
+            app:enterAnim="@animator/enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/groupSelectedFragment"
@@ -117,10 +136,11 @@
     <fragment
         android:id="@+id/groupStudyFragment"
         android:name="com.example.huabei_competition.ui.fragments.GroupStudyFragment"
-        android:label="GroupStudyFragment" >
+        android:label="GroupStudyFragment">
         <action
             android:id="@+id/action_groupStudyFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@animator/enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/managerGroupMemberFragment"
@@ -133,9 +153,10 @@
     <fragment
         android:id="@+id/addFriendFragment"
         android:name="com.example.huabei_competition.ui.fragments.AddFriendFragment"
-        android:label="AddFriendFragment" >
+        android:label="AddFriendFragment">
         <action
             android:id="@+id/action_addFriendFragment_to_dataShowFragment"
-            app:destination="@id/dataShowFragment" />
+            app:destination="@id/dataShowFragment"
+            app:enterAnim="@animator/enter_anim" />
     </fragment>
 </navigation>
