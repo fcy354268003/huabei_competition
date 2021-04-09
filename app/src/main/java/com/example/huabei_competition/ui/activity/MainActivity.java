@@ -16,7 +16,7 @@ import com.example.huabei_competition.UserCardVM;
 import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.ui.fragments.CreateStudyRoomFragment;
 import com.example.huabei_competition.ui.fragments.MineFragment;
-import com.example.huabei_competition.util.BaseActivity;
+import com.example.huabei_competition.base.BaseActivity;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 

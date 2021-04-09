@@ -8,7 +8,7 @@ import android.os.Message;
 import androidx.annotation.NonNull;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.util.BaseActivity;
+import com.example.huabei_competition.base.BaseActivity;
 
 import java.lang.ref.WeakReference;
 

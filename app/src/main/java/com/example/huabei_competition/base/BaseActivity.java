@@ -1,4 +1,4 @@
-package com.example.huabei_competition.util;
+package com.example.huabei_competition.base;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.ui.activity.CheckInActivity;
+import com.example.huabei_competition.util.MyHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,19 +34,7 @@ import scut.carson_ho.kawaii_loadingview.Kawaii_LoadingView;
  */
 public abstract class BaseActivity extends AppCompatActivity {
     private final List<Activity> activities = new ArrayList<>();
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus) {
-//            View decorView = getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//            );
-//        }
-//        getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        getWindow().setNavigationBarColor(Color.TRANSPARENT);
-//
-//    }
+
 
     private void initFontScale() {
         Configuration configuration = getResources().getConfiguration();

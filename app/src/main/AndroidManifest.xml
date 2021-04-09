@@ -17,8 +17,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".ui.activity.NewRegisterActivity"></activity>
         <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.IntroduceActivity"/>
+        <activity android:name=".ui.activity.IntroduceActivity" />
         <activity android:name=".ui.activity.CheckInActivity" />
         <activity android:name=".ui.activity.ForgetPassActivity" />
         <activity android:name=".ui.activity.GuideActivity" />
@@ -33,11 +34,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-        <!-- Since JCore2.0.0 Required SDK核心功能-->
+            android:screenOrientation="portrait" /> <!-- Since JCore2.0.0 Required SDK核心功能 -->
         <!-- 这个Service要继承JCommonService -->
         <service
             android:name=".service.JGCommonService"

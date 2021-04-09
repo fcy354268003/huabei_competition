@@ -1,16 +1,13 @@
 package com.example.huabei_competition.event;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
 
 import com.example.huabei_competition.network.Network;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.ui.activity.CheckInActivity;
-import com.example.huabei_competition.ui.activity.MainActivity;
-import com.example.huabei_competition.util.BaseActivity;
+import com.example.huabei_competition.base.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.widget.MyToast;
 
@@ -18,7 +15,6 @@ import com.example.huabei_competition.widget.MyToast;
 import java.util.List;
 
 import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
 import cn.jpush.im.api.BasicCallback;
 import okhttp3.Callback;
 import okhttp3.FormBody;

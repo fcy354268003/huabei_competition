@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.Transformation;
 
 
@@ -147,31 +148,29 @@ public class CakeShapeView extends View {
     }
 
     /**
-     * @param contents 显示的数据
+     * @param content 显示的数据
      */
-    public void setData(List<Content> contents, int radius) {
+    public void setData(List<Content> content, int radius) {
         this.radius = radius;
-        this.contents = contents;
+        this.contents = content;
 
-        float[] ultimate = new float[contents.size()];
-        for (int i = 0; i < contents.size(); i++) {
-            ultimate[i] = contents.get(i).getSize() * 3.6f;
-        }
-
-//        ValueAnimator valueAnimator = ValueAnimator.ofObject(new MyEvaluator(), new float[contents.size()], ultimate);
-//        valueAnimator.setDuration(2000);
-//        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                if (mSweep == null)
-//                    mSweep = new float[contents.size()];
-//                mSweep = (float[]) animation.getAnimatedValue();
-//                invalidate();
-//            }
-//        });
-//        valueAnimator.start();
-        customerAnimation.setDuration(2000);
-        setAnimation(customerAnimation);
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+        valueAnimator.setDuration(2000);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Float aFloat = (Float) animation.getAnimatedValue();
+                Log.d(TAG, "onAnimationUpdate: " + aFloat);
+                mSweep = new float[contents.size()];
+                for (int i = 0; i < contents.size(); i++) {
+                    Content ct = contents.get(i);
+                    mSweep[i] = ct.getSize() * aFloat * 3.6f;
+                }
+                invalidate();
+            }
+        });
+        valueAnimator.setTarget(this);
+        valueAnimator.start();
     }
 
 

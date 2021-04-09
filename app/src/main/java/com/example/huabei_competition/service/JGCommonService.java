@@ -10,4 +10,5 @@ import cn.jpush.android.service.JCommonService;
  * </p>
  */
 public class JGCommonService extends JCommonService {
+
 }

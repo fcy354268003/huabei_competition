@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.db.NPC;
 import com.example.huabei_competition.event.LiveDataManager;
-import com.example.huabei_competition.util.BaseActivity;
+import com.example.huabei_competition.base.BaseActivity;
 
 public class IntroduceActivity extends BaseActivity {
 

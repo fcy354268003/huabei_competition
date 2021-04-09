@@ -57,10 +57,6 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
     private FragmentStatisticsBinding binding;
     private String currentUserName;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -185,12 +181,18 @@ public class DataShowFragment extends Fragment implements DataShowCallback, Call
         return binding.getRoot();
     }
 
+    boolean onNoNetWorkState = false;
+
     /**
      * 记载数据失败时
      */
     private void initOnNoNetWork() {
+        Log.d(TAG, "initOnNoNetWork: ");
         if (getActivity() == null)
             return;
+        if (onNoNetWorkState)
+            return;
+        onNoNetWorkState = !onNoNetWorkState;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

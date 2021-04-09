@@ -18,7 +18,7 @@ import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.FragmentForgetPass1Binding;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.PasswordRel;
-import com.example.huabei_competition.util.BaseActivity;
+import com.example.huabei_competition.base.BaseActivity;
 import com.example.huabei_competition.util.MyHandler;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
