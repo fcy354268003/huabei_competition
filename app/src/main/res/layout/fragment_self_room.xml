@@ -52,6 +52,18 @@
                     android:button="@null"
                     android:paddingHorizontal="8dp"
                     android:text="小组"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/createTextColor"
+                    android:textSize="20sp" />
+
+                <RadioButton
+                    android:id="@+id/rb_match"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/radioitem"
+                    android:button="@null"
+                    android:paddingHorizontal="8dp"
+                    android:text="匹配"
                     android:textColor="@color/createTextColor"
                     android:textSize="20sp" />
             </RadioGroup>
@@ -100,7 +112,7 @@
                     android:id="@+id/wv_minute"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -148,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:orientation="horizontal"></RadioGroup>
+                android:orientation="horizontal" />
 
             <Button
                 android:id="@+id/btn_go"

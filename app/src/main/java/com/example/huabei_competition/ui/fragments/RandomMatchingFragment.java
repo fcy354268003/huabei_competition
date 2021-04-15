@@ -1,23 +1,29 @@
 package com.example.huabei_competition.ui.fragments;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+
+
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
+
+import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.TimerVM;
+import com.example.huabei_competition.base.BaseFragment;
 import com.example.huabei_competition.databinding.FragmentRandomMatchingBinding;
 import com.example.huabei_competition.network.api.EncryptionTransmission;
 import com.example.huabei_competition.network.api.LogIn;
@@ -31,13 +37,15 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class RandomMatchingFragment extends Fragment {
-
+public class RandomMatchingFragment extends BaseFragment<FragmentRandomMatchingBinding> {
+    private TextView[] targets;
     private FragmentRandomMatchingBinding binding;
     private MyCountDownTimer myCountDownTimer;
     private TimerVM timerVM;
@@ -45,27 +53,75 @@ public class RandomMatchingFragment extends Fragment {
     private MediaPlayer mediaPlayer;
     private boolean isMusicOn = false;
     private boolean screenOn = false;
+    private ValueAnimator valueAnimator;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        if (binding != null) {
-            //缓存的rootView需要判断是否已经被加过parent， 如果有parent则从parent删除，防止发生这个rootview已经有parent的错误。
-            ViewGroup mViewGroup = (ViewGroup) binding.getRoot().getParent();
-            if (mViewGroup != null) {
-                mViewGroup.removeView(binding.getRoot());
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initTimer();
+
+        targets = new TextView[]{binding.tv11, binding.tv12, binding.tv13, binding.tv14};
+        startLoading();
+        JMessageClient.getMyInfo().getAvatarBitmap(new GetAvatarBitmapCallback() {
+            @Override
+            public void gotResult(int i, String s, Bitmap bitmap) {
+                if (i == 0) {
+                    binding.ivMine.setImageBitmap(bitmap);
+                }
             }
-            return binding.getRoot();
-        }
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_random_matching, container, false);
-        binding.setLifecycleOwner(getViewLifecycleOwner());
+        });
+    }
+
+    private void startLoading() {
+        valueAnimator = ObjectAnimator.ofFloat(targets[0], "translationY", 0, 15f);
+        valueAnimator.setInterpolator(new AnticipateOvershootInterpolator());
+        valueAnimator.setDuration(250);
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+            int k = 0;
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                k = (k + 1) % 4;
+                valueAnimator.setTarget(targets[k]);
+                valueAnimator.start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        valueAnimator.start();
+    }
+
+    private void stopLoading() {
+        valueAnimator.pause();
+    }
+
+    @Override
+    protected void setListener() {
+        binding = getBinding();
         binding.include.findViewById(R.id.iv_sun).setOnClickListener(this::onSunClick);
         binding.include.findViewById(R.id.iv_music).setOnClickListener(this::onMusicClick);
         binding.include.findViewById(R.id.iv_breakOff).setOnClickListener(this::onBreakOffClick);
         binding.imageView4.setOnClickListener(this::onBreakOffClick);
-        return binding.getRoot();
     }
+
+    @Override
+    protected int setLayoutID() {
+        return R.layout.fragment_random_matching;
+    }
+
 
     @Override
     public void onStop() {
@@ -200,9 +256,14 @@ public class RandomMatchingFragment extends Fragment {
         binding.setVm(timerVM);
     }
 
+    /**
+     * 匹配到以后直接调用startMission
+     * 开始倒计时
+     */
     private void startMission() {
-        binding.textView32.setVisibility(View.GONE);
+        binding.llAaa.setVisibility(View.GONE);
         myCountDownTimer.start();
+        stopLoading();
     }
 
     private static final String TAG = "RandomMatchingFragment";

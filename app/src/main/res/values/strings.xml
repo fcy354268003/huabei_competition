@@ -6,6 +6,7 @@
     <string name="sum">统计</string>
     <string name="recall">回忆</string>
     <string name="userName">请输入账号</string>
+    <string name="age">年龄</string>
     <string name="nickName">请输入昵称</string>
     <string name="password">输入密码</string>
     <string name="bindPhone">绑定手机号</string>

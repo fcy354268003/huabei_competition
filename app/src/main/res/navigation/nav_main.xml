@@ -75,6 +75,12 @@
             android:id="@+id/action_mainFragment_to_addFriendFragment"
             app:destination="@id/addFriendFragment"
             app:enterAnim="@animator/enter_anim" />
+        <action
+            android:id="@+id/action_mainFragment_to_randomMatchingFragment"
+            app:destination="@id/randomMatchingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_infoPerfectionFragment"
+            app:destination="@id/infoPerfectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
@@ -159,4 +165,12 @@
             app:destination="@id/dataShowFragment"
             app:enterAnim="@animator/enter_anim" />
     </fragment>
+    <fragment
+        android:id="@+id/randomMatchingFragment"
+        android:name="com.example.huabei_competition.ui.fragments.RandomMatchingFragment"
+        android:label="RandomMatchingFragment" />
+    <fragment
+        android:id="@+id/infoPerfectionFragment"
+        android:name="com.example.huabei_competition.ui.fragments.InfoPerfectionFragment"
+        android:label="InfoPerfectionFragment" />
 </navigation>

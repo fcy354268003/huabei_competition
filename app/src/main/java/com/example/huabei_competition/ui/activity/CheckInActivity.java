@@ -23,9 +23,14 @@ import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.base.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
 
+import com.example.huabei_competition.task.HttpCallback;
+import com.example.huabei_competition.task.Request;
+import com.example.huabei_competition.task.RequestExecutor;
+import com.example.huabei_competition.task.Response;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
+
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 
@@ -44,8 +49,23 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback, 
         setContentView(R.layout.activity_check_in_);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         animation();
-
+        test();
         getLifecycle().addObserver(this);
+    }
+
+    private void test() {
+        Request request = new Request("http://www.baidu.com");
+        RequestExecutor.INSTANCE.execute(request, new HttpCallback() {
+            @Override
+            public void onSuccess(Response response) {
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
     }
 
     private static final String TAG = "CheckInActivity";

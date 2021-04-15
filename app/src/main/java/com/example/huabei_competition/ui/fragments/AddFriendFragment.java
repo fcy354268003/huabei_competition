@@ -1,6 +1,8 @@
 package com.example.huabei_competition.ui.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.inputmethodservice.InputMethodService;
 import android.os.Bundle;
 
 
@@ -44,7 +46,7 @@ import cn.jpush.im.android.api.model.GroupMemberInfo;
 import cn.jpush.im.android.api.model.UserInfo;
 
 
-public class AddFriendFragment extends BaseFragment {
+public class AddFriendFragment extends BaseFragment<FragmentAddFriendBinding> {
 
     private FragmentAddFriendBinding binding;
     private final ListRefresher refresher = new ListRefresher();
@@ -54,7 +56,7 @@ public class AddFriendFragment extends BaseFragment {
      */
     @Override
     protected void setListener() {
-        binding = getBinding(FragmentAddFriendBinding.class);
+        binding = getBinding();
         binding.ivRefresh.setOnClickListener(v -> refresher.getUsers());
         binding.ivBack.setOnClickListener(v -> {
             ((MainActivity) getActivity()).getController().navigateUp();

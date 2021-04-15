@@ -1,10 +1,10 @@
 package com.example.huabei_competition;
 
 
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.huabei_competition.util.MyCountDownTimer;
 
 public class TimerVM extends ViewModel {
     private MutableLiveData<Long> minute;
@@ -30,4 +30,5 @@ public class TimerVM extends ViewModel {
     public void setSecond(MutableLiveData<Long> second) {
         this.second = second;
     }
+
 }

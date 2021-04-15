@@ -2,7 +2,7 @@ package com.example.huabei_competition.util;
 
 import com.google.gson.Gson;
 
-class GsonUtil {
+public class GsonUtil {
     private static final Gson gson = new Gson();
 
     public static String toGson(Object o) {

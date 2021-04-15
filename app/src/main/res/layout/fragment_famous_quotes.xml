@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="@drawable/radius_back_15"
     tools:context=".ui.fragments.FamousQuotesFragment">
 
     <androidx.cardview.widget.CardView
@@ -48,10 +49,10 @@
             android:id="@+id/tv_quote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
+            android:layout_marginTop="150dp"
             android:gravity="center"
             android:lineSpacingExtra="6dp"
-            android:paddingHorizontal="50dp"
+            android:paddingHorizontal="20dp"
             android:text="像诗一样"
             android:textColor="#fff"
             android:textSize="28sp" />

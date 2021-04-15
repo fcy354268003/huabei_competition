@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.FragmentMainBinding;
+import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.widget.MyFragmentAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -43,7 +44,25 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
 
     private List<Fragment> fragments;
     private static final String TAG = "MainFragment";
+    private boolean isJump = true;
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (judgeJumpToInfoPerfection()) {
+            isJump = false;
+            ((MainActivity) getActivity()).getController().navigate(R.id.action_mainFragment_to_infoPerfectionFragment);
+        }
+    }
+
+    /**
+     * 判断是否跳转到InfoPerfection界面
+     *
+     * @return true: 要跳转 false:不要跳转
+     */
+    private boolean judgeJumpToInfoPerfection() {
+        return isJump;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,7 +85,7 @@ public class MainFragment extends Fragment implements ViewPager.OnPageChangeList
                 , FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, fragments));
         binding.vpMain.setOffscreenPageLimit(0);
         binding.vpMain.addOnPageChangeListener(this);
-        binding.aa.setOnClickListener(view ->{
+        binding.aa.setOnClickListener(view -> {
             binding.vpMain.setCurrentItem(2, true);
         });
         binding.bnvGuide.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

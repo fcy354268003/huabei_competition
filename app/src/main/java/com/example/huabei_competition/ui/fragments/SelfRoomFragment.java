@@ -95,6 +95,10 @@ public class SelfRoomFragment extends Fragment {
                 binding.btnGo.setText("邀请");
                 binding.tvPrompt.setText("自习室");
                 break;
+            case R.id.rb_match:
+                // TODO 跳转到匹配界面
+                ((MainActivity)getActivity()).getController().navigate(R.id.action_mainFragment_to_randomMatchingFragment);
+                break;
         }
     }
 

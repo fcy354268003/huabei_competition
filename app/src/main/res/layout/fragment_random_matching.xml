@@ -36,17 +36,54 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView31" />
 
-        <TextView
-            android:id="@+id/textView32"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="匹配ing"
-            android:textColor="@color/createTextColor"
-            android:textSize="@dimen/textSize_25"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+        <!--        <TextView-->
+        <!--            android:id="@+id/textView32"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:text="匹配ing..."-->
+        <!--            android:textColor="@color/createTextColor"-->
+        <!--            android:textSize="@dimen/textSize_25"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/textView31" />-->
+
+        <LinearLayout
+            android:id="@+id/ll_aaa"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout10"
+            app:layout_constraintTop_toBottomOf="@+id/textView31">
+
+            <TextView
+                android:id="@+id/tv_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="匹"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tv_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="配"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tv_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="中"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tv_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ing"
+                android:textSize="25sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout10"
@@ -69,6 +106,7 @@
                 app:cardCornerRadius="20dp">
 
                 <ImageView
+                    android:id="@+id/iv_mine"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </androidx.cardview.widget.CardView>
@@ -79,6 +117,7 @@
                 app:cardCornerRadius="20dp">
 
                 <ImageView
+                    android:id="@+id/iv_another"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </androidx.cardview.widget.CardView>
@@ -94,19 +133,26 @@
             android:text="匹配计时"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/include"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <include
-            layout="@layout/timer"
+        <androidx.cardview.widget.CardView
             android:layout_width="160dp"
             android:layout_height="160dp"
+            app:cardCornerRadius="80dp"
             app:layout_constraintBottom_toTopOf="@+id/button4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
-            bind:vm="@{vm}" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+
+            <include
+                layout="@layout/timer"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                bind:vm="@{vm}" />
+        </androidx.cardview.widget.CardView>
 
         <include
             android:id="@+id/include"

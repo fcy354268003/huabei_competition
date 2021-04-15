@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
 
-public abstract class BaseFragment extends Fragment {
-    private ViewDataBinding binding;
+public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
+    private T binding;
 
     @Nullable
     @Override
@@ -35,17 +35,10 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 设置点击事件
      */
-    protected void setListener() {
-    }
+    protected abstract void setListener();
 
-    public <T extends ViewDataBinding> T getBinding(@NotNull Class<T> clazz) {
-        if (binding.getClass().getCanonicalName().equals(clazz.getCanonicalName()))
-            return (T) binding;
-        else {
-            Exception exception = new Exception();
-            exception.printStackTrace();
-        }
-        return (T) binding;
+    public T getBinding() {
+        return binding;
 
     }
 

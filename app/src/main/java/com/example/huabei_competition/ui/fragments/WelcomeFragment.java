@@ -71,7 +71,7 @@ public class WelcomeFragment extends Fragment implements WelcomeCallback {
         CustomerDialog customerDialog = new CustomerDialog();
         customerDialog.setLayoutId(R.layout.fragment_famous_quotes);
         customerDialog.setCancelable(false);
-        customerDialog.setmHeight(1000);
+        customerDialog.setmHeight(1200);
         customerDialog.setCallback(view -> {
             view.findViewById(R.id.btn_close).setOnClickListener(v -> {
                 customerDialog.dismiss();
