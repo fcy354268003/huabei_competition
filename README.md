@@ -11,8 +11,8 @@
 <img src="https://gitee.com/fcy111/my-data/raw/master/image-20210524193636238.png" alt="image" style="zoom:70%;" />![image-20210524193503924](https://gitee.com/fcy111/my-data/raw/master/image-20210524193503924.png)
 
 ### 技术实现
-### IM通信部分接入了极光SDK，利用liveData进行数据在应用内的分发.
-### 部分fragment使用了ViewModel进行数据双向绑定.
+- IM通信部分接入了极光SDK，利用liveData进行数据在应用内的分发.
+- 部分fragment使用了ViewModel进行数据双向绑定.
 
 
 
