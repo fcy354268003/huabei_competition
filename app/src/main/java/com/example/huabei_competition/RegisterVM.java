@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Create by FanChenYang at 2021/1/25
@@ -84,8 +86,30 @@ public class RegisterVM extends AndroidViewModel {
         list.add(passSec.getValue());
         list.add(phoneNumber.getValue());
         list.add(verification.getValue());
-
         return list;
     }
+
+    /**
+     * getUserName().getValue().toString()
+     * , mViewModel.getPassword().getValue().toString()
+     * , mViewModel.getPhoneNumber().getValue().toString()
+     * , mViewModel.getVerification().getValue().toString()
+     * <p>
+     * "username" : "username",
+     * "password" : "password",
+     * "phone" : "phone",
+     * "verification" : "verification"
+     *
+     * @return
+     */
+    public Map<String, String> toParams() {
+        Map<String, String> map = new HashMap<>();
+        map.put("username", userName.getValue());
+        map.put("password", password.getValue());
+        map.put("phone", phoneNumber.getValue());
+        map.put("verification", verification.getValue());
+        return map;
+    }
+
 
 }

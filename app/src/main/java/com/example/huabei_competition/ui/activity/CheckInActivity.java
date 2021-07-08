@@ -12,24 +12,25 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleEventObserver;
 
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.huabei_competition.R;
+import com.example.huabei_competition.network.api.EncryptionTransmission;
 import com.example.huabei_competition.network.api.LogIn;
 
 import com.example.huabei_competition.base.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
 
-import com.example.huabei_competition.task.HttpCallback;
-import com.example.huabei_competition.task.Request;
-import com.example.huabei_competition.task.RequestExecutor;
-import com.example.huabei_competition.task.Response;
+
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Objects;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
@@ -49,24 +50,9 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback, 
         setContentView(R.layout.activity_check_in_);
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         animation();
-        test();
         getLifecycle().addObserver(this);
     }
 
-    private void test() {
-        Request request = new Request("http://www.baidu.com");
-        RequestExecutor.INSTANCE.execute(request, new HttpCallback() {
-            @Override
-            public void onSuccess(Response response) {
-
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-
-            }
-        });
-    }
 
     private static final String TAG = "CheckInActivity";
 
@@ -75,11 +61,11 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback, 
         super.onContentChanged();
         mPassword = findViewById(R.id.et_password);
         mUserName = findViewById(R.id.et_userName);
-        Drawable drawable1 = getResources().getDrawable(R.drawable.user2);
-        drawable1.setBounds(0, 0, 30, 0);
+        Drawable drawable1 = ContextCompat.getDrawable(this, R.drawable.user2);
+        Objects.requireNonNull(drawable1).setBounds(0, 0, 30, 0);
         mPassword.setCompoundDrawables(drawable1, null, null, null);
-        Drawable drawable2 = getResources().getDrawable(R.drawable.password);
-        drawable2.setBounds(0, 0, 30, 0);
+        Drawable drawable2 = ContextCompat.getDrawable(this, R.drawable.password);
+        Objects.requireNonNull(drawable2).setBounds(0, 0, 30, 0);
         mUserName.setCompoundDrawables(drawable2, null, null, null);
     }
 
@@ -120,15 +106,10 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback, 
             public void gotResult(int i, String s) {
                 if (i == 0) {
                     UserUtil.sUserName = name;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(CheckInActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-                            MyToast.showMessage("登陆成功");
-                        }
-                    });
+                    Intent intent = new Intent(CheckInActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                    MyToast.showMessage("登陆成功");
                 } else {
                     failure();
                 }

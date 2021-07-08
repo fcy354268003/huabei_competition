@@ -8,11 +8,15 @@ import androidx.annotation.NonNull;
 
 import com.example.huabei_competition.event.ChatRoomUtil;
 
+import com.example.huabei_competition.network.base.NetRequest;
+import com.example.huabei_competition.network.base.NetRequestCallback;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,36 +36,27 @@ public class LogIn {
     private static final Gson gson = new Gson();
     public static final String BASIC_PATH = "http://192.168.115.65:8000";
 
-    public static void login(@NonNull final String name, @NonNull final String pass, @NonNull LogCallback callback) {
-        UserLogIn post = new UserLogIn(name, pass);
-        String json = gson.toJson(post);
-        OkHttpClient client = new OkHttpClient();
-        RequestBody requestBody = RequestBody.create(ChatRoomUtil.JSON, json);
-        Request request = new Request.Builder()
-                .post(requestBody)
-                .url(BASIC_PATH + PATH_LOGIN)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
+    public static void login(@NonNull LogCallback callback, @NonNull final String name, @NonNull final String pass) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("username", name);
+        map.put("password", pass);
+        NetRequest.postFromRequest(Register.toIntactUrl(PATH_LOGIN), map, new NetRequestCallback() {
             @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.d(TAG, "onFailure: ");
-                callback.failure();
+            public void success(@Nullable String result) {
+                LogResponse logResponse = gson.fromJson(result, LogResponse.class);
+                if (TextUtils.equals(logResponse.code, OK)) {
+                    TOKEN = logResponse.data.token;
+                    NetRequest.DefaultInterceptor.token = TOKEN;
+                    callback.success(name, pass);
+                } else {
+                    callback.failure();
+                }
+                callback.success(name, pass);
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String string = response.body().string();
-                    Log.d(TAG, "onResponse: " + string);
-                    LogResponse logResponse = gson.fromJson(string, LogResponse.class);
-                    if (TextUtils.equals(logResponse.code, OK)) {
-                        TOKEN = logResponse.data.token;
-                        callback.success(name, pass);
-                    } else {
-                        callback.failure();
-                    }
-                }
-                response.close();
+            public void failure(@NotNull Request request, @NotNull Exception exception) {
+                callback.failure();
             }
         });
     }
@@ -74,15 +69,6 @@ public class LogIn {
 
     public static final String OK = "0000";
 
-    private static class UserLogIn {
-        String username;
-        String password;
-
-        public UserLogIn(String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
-    }
 
     public static class LogResponse {
         String code;

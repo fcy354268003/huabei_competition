@@ -3,10 +3,9 @@ package com.example.huabei_competition.ui.fragments;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,8 +76,9 @@ public class InfoPerfectionFragment extends BaseFragment<FragmentInfoPerfectionB
         layoutParams.leftMargin = 15;
         layoutParams.bottomMargin = 10;
         FragmentInfoPerfectionBinding binding = getBinding();
-        for (int i = 0; i < 20; i++) {
-            binding.fvLabels.addView(createLabel("haha" + i + i), layoutParams);
+        String[] split = getResources().getString(R.string.hobbies).split("、");
+        for (String s : split) {
+            binding.fvLabels.addView(createLabel(s), layoutParams);
         }
     }
 

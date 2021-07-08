@@ -34,17 +34,18 @@ import okhttp3.Request;
 public class UserUtil {
     private static final String URL = MyApplication.URL + "/app/login";
     public static String sUserName;
-    public static void logIn(BaseActivity activity, String userName, String password,LogIn.LogCallback callback) {
+
+    public static void logIn(BaseActivity activity, String userName, String password, LogIn.LogCallback callback) {
         if (!Network.checkNetWorkState(activity)) {
             MyToast.showMessage("网络不可用");
             return;
         }
-        if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
             MyToast.showMessage("请将用户名和密码填写完整");
             return;
         }
         activity.startLoading();
-        LogIn.login(userName,password,callback);
+        LogIn.login(callback, userName, password);
     }
 
     /**
@@ -67,6 +68,7 @@ public class UserUtil {
 //        return false;
 //    }
 //
+
     /**
      * @param strings  注册页面填写内容
      * @param callback 回到接口

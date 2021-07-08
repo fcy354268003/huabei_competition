@@ -31,7 +31,8 @@ import com.example.huabei_competition.databinding.FragmentGroupStudyBinding;
 import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.StudyDataGet;
-import com.example.huabei_competition.network.api.XhhEnc;
+
+import com.example.huabei_competition.network.cipher.XhhEncNew;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.MyCountDownTimer;
 import com.example.huabei_competition.widget.CustomerDialog;
@@ -312,7 +313,7 @@ public class GroupStudyFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        StudyDataGet.submitTimeTeam(new StudyDataGet.SubmitTime(String.valueOf(mTime), XhhEnc.enc(LogIn.TOKEN + mTime), "小组学习"), new Callback() {
+                        StudyDataGet.submitTimeTeam(new StudyDataGet.SubmitTime(String.valueOf(mTime), XhhEncNew.enc(LogIn.TOKEN + mTime), "小组学习"), new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
 

@@ -67,7 +67,7 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         if (binding != null) {

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.UserCardVM;
+import com.example.huabei_competition.base.BaseFragment;
 import com.example.huabei_competition.callback.MineCallback;
 import com.example.huabei_competition.databinding.FragmentMineBinding;
 import com.example.huabei_competition.event.LiveDataManager;
@@ -44,27 +45,12 @@ import cn.jpush.im.api.BasicCallback;
 /**
  * Create by FanChenYang at 2021/2/7
  */
-public class MineFragment extends Fragment implements MineCallback {
+public class MineFragment extends BaseFragment<FragmentMineBinding> implements MineCallback {
     public static final int REQUEST_CODE = 2000;
     public static final int PERMISSION_CODE = 20001;
 
     private FragmentMineBinding binding;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        if (binding != null) {
-            ViewGroup parent = (ViewGroup) binding.getRoot().getParent();
-            if (parent != null) {
-                parent.removeView(binding.getRoot());
-                return binding.getRoot();
-            }
-        }
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_mine, container, false);
-        binding.setLifecycleOwner(this);
-        return binding.getRoot();
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -112,11 +98,17 @@ public class MineFragment extends Fragment implements MineCallback {
     /**
      * 给各个控件设置点击事件
      */
-    private void setListener() {
+    @Override
+    protected void setListener() {
         binding.ivPortrait.setOnLongClickListener(this::onPortraitLongPress);
         binding.tvNickName.setOnLongClickListener(this::onNickNameLongPress);
         binding.btnModifyAccount.setOnClickListener(this::onModifyAccountPress);
         binding.ivSecurity.setOnClickListener(this::onSecuritySettingPress);
+    }
+
+    @Override
+    protected int setLayoutID() {
+        return R.layout.fragment_mine;
     }
 
 
@@ -169,22 +161,19 @@ public class MineFragment extends Fragment implements MineCallback {
             }
         });
         customerDialog.setCancelable(false);
-        customerDialog.show(getActivity().getSupportFragmentManager(),"");
-        // TODO 更改昵称
+        customerDialog.show(getActivity().getSupportFragmentManager(), "");
         return true;
     }
 
     @Override
     public void onSecuritySettingPress(View a) {
-        ((MainActivity)getActivity()).getController().navigate(R.id.action_mainFragment_to_changePassFragment);
-        //TODO 更改密码
+        ((MainActivity) getActivity()).getController().navigate(R.id.action_mainFragment_to_changePassFragment);
     }
 
     @Override
     public void onModifyAccountPress(View a) {
         Intent intent = new Intent(getContext(), CheckInActivity.class);
         startActivity(intent);
-        // TODO 切换用户
         UserUtil.logOut((MainActivity) getActivity());
         getActivity().finish();
     }

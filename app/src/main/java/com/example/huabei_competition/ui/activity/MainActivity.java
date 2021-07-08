@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.UserCardVM;
 import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.network.api.EncryptionTransmission;
 import com.example.huabei_competition.ui.fragments.CreateStudyRoomFragment;
 import com.example.huabei_competition.ui.fragments.MineFragment;
 import com.example.huabei_competition.base.BaseActivity;

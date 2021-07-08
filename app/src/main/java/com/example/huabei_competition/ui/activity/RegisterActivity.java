@@ -16,21 +16,29 @@ import com.example.huabei_competition.RegisterVM;
 import com.example.huabei_competition.databinding.ActivityRegist1Binding;
 import com.example.huabei_competition.network.api.Register;
 import com.example.huabei_competition.base.BaseActivity;
+import com.example.huabei_competition.network.base.NetRequestCallback;
+import com.example.huabei_competition.util.DataFormat;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.util.MyHandler;
 import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyToast;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
 import cn.jpush.im.api.BasicCallback;
+import okhttp3.Request;
 
 /**
  * Create by FanChenYang
  */
-public class RegisterActivity extends BaseActivity implements Register.VerificationCallback {
+public class RegisterActivity extends BaseActivity implements Register.VerificationCallback, NetRequestCallback {
     private ActivityRegist1Binding mBinding;
     private final MyHandler myHandler = MyHandler.obtain(this, null);
     private RegisterVM mViewModel;
@@ -51,50 +59,16 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
     }
 
     public void onConfirm() {
-        // TODO 检查是否规范 开启动画 提交表单
         // 检查是否符合规范
-        if (isStandard()) {
+        if (DataFormat.isStandard(mViewModel.getList())) {
             startAni();
-            Register.register(mViewModel.getUserName().getValue().toString()
-                    , mViewModel.getPassword().getValue().toString()
-                    , mViewModel.getPhoneNumber().getValue().toString()
-                    , mViewModel.getVerification().getValue().toString()
-                    , mBinding.getRoot()
-                    , this);
+            Register.register(mViewModel.toParams(), this);
         }
     }
 
     private void startAni() {
         mBinding.first.setVisibility(View.GONE);
         startLoading();
-    }
-
-    private boolean isStandard() {
-        List<String> list = mViewModel.getList();
-        for (String s : list) {
-            if (TextUtils.isEmpty(s)) {
-                MyToast.showMessage("请将表单填写完整");
-                return false;
-            }
-        }
-        if (!TextUtils.equals(list.get(2), list.get(3))) {
-            MyToast.showMessage("两次填写密码不一致");
-            return false;
-        }
-        if (list.get(1).length() < 8 || list.get(1).length() > 16) {
-            MyToast.showMessage("账号填写不符合规则");
-            return false;
-        }
-        if (list.get(2).length() < 8 || list.get(2).length() > 16) {
-            MyToast.showMessage("密码填写不符合规则");
-            return false;
-        }
-
-        if (list.get(0).length() >= 12) {
-            MyToast.showMessage("昵称填写不符合规则");
-            return false;
-        }
-        return true;
     }
 
 
@@ -125,7 +99,18 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
                 view.setBackgroundColor(getResources().getColor(R.color.orange));
             }
         }, 1000 * 60);
-        Register.sendVerification(value, view);
+        Register.sendVerification(value, new NetRequestCallback() {
+
+            @Override
+            public void failure(@NotNull Request request, @NotNull Exception exception) {
+
+            }
+
+            @Override
+            public void success(@Nullable String result) {
+
+            }
+        });
     }
 
     public void onQuestionClick() {
@@ -153,18 +138,13 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
         // 强制用户通过指示按钮返回
     }
 
+
     @Override
     public void failure() {
-        myHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "run: ");
-//                Snackbar.make(mBinding.getRoot(), "注册异常", Snackbar.LENGTH_LONG).show();
-                MyToast.showMessage("注册异常");
-                stopLoading();
-                finish();
-            }
-        });
+        Log.d(TAG, "run: ");
+        MyToast.showMessage("注册异常");
+        stopLoading();
+        finish();
     }
 
     @Override
@@ -190,5 +170,15 @@ public class RegisterActivity extends BaseActivity implements Register.Verificat
                 });
             }
         });
+    }
+
+    @Override
+    public void success(@Nullable String result) {
+        success();
+    }
+
+    @Override
+    public void failure(@NotNull Request request, @NotNull Exception exception) {
+        failure();
     }
 }

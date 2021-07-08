@@ -14,10 +14,11 @@
 
         <ImageView
             android:id="@+id/iv_next"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="end"
             android:layout_margin="10dp"
+            android:elevation="5dp"
             android:src="@mipmap/nextstep" />
 
         <TextView
@@ -114,13 +115,17 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <com.example.huabei_competition.widget.FlowView
-            android:id="@+id/fv_labels"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
 
+            <com.example.huabei_competition.widget.FlowView
+                android:id="@+id/fv_labels"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        </com.example.huabei_competition.widget.FlowView>
+        </ScrollView>
     </LinearLayout>
 </layout>

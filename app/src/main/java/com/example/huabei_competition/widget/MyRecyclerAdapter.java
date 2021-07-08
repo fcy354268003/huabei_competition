@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huabei_competition.databinding.ItemProductBinding;
@@ -97,6 +98,7 @@ public abstract class MyRecyclerAdapter<T> extends RecyclerView.Adapter<MyRecycl
         protected SparseArray<View> views;
         protected View mView;
         private ViewDataBinding binding;
+        
 
         public MyHolder(@NonNull ViewDataBinding binding) {
             super(binding.getRoot());

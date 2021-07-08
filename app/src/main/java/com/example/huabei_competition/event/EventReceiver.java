@@ -88,8 +88,6 @@ public class EventReceiver {
      * 主线程处理
      */
     public void onEventMainThread(GetEventNotificationTaskMng.EventEntity eventEntity) {
-
-
     }
 
     //用户在线期间，如果群组中发生了成员变化事件，sdk也会通过上抛MessageEvent的方式来通知上层

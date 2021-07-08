@@ -7,12 +7,16 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.example.huabei_competition.event.ChatRoomUtil;
+import com.example.huabei_competition.network.base.NetRequest;
+import com.example.huabei_competition.network.base.NetRequestCallback;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,6 +33,7 @@ public class Register {
     private static final Gson gson = new Gson();
     public static final String PATH_REGISTER = "/register/user";
 
+    @Deprecated
     public static void sendVerification(@NonNull String phone, @NonNull View v) {
         Phone pho = new Phone(phone);
         String json = gson.toJson(pho);
@@ -53,8 +58,15 @@ public class Register {
         });
     }
 
+    public static void sendVerification(@NonNull String phone, NetRequestCallback callback) {
+        Map<String, String> map = new HashMap<>();
+        map.put("phone", phone);
+        NetRequest.postFromRequest(toIntactUrl(PATH_SEND_VERIFICATION), map, callback);
+    }
+
     private static final String TAG = "Register";
 
+    @Deprecated
     public static void register(@NonNull String userName, @NonNull String password, @NonNull String phone, @NonNull String ver, @NonNull View v, @NonNull VerificationCallback callback) {
         Reg reg = new Reg(userName, password, phone, ver);
         String json = gson.toJson(reg);
@@ -92,7 +104,20 @@ public class Register {
         });
     }
 
-    private static class Reg {
+    public static String toIntactUrl(String path) {
+        return LogIn.BASIC_PATH + path;
+    }
+
+    /**
+     * @param params   参数
+     * @param callback 直接在主线程回调
+     */
+    public static void register(Map<String, String> params, NetRequestCallback callback) {
+        NetRequest.postFromRequest(toIntactUrl(PATH_REGISTER), params, callback);
+    }
+
+    @Deprecated
+    public static class Reg {
         /**
          * username : username
          * password : password
