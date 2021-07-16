@@ -88,6 +88,7 @@
                     <ImageView
                         android:id="@+id/iv_mine_portrait"
                         android:layout_width="60dp"
+                        android:scaleType="centerCrop"
                         android:layout_height="60dp" />
                 </androidx.cardview.widget.CardView>
 

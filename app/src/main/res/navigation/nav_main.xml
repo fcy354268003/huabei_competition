@@ -84,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.example.huabei_competition.ui.fragments.ShopFragment"
+        android:name="com.example.huabei_competition.ui.shop.ShopFragment"
         android:label="fragment_shop"
         tools:layout="@layout/fragment_shop" />
     <fragment

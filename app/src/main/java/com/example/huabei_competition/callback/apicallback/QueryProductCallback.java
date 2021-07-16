@@ -4,7 +4,7 @@ import com.example.huabei_competition.db.Prop;
 import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.NPCRel;
-import com.example.huabei_competition.ui.fragments.ShopFragment;
+import com.example.huabei_competition.ui.shop.ShopFragment;
 import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.widget.MyToast;
 import com.google.gson.Gson;
@@ -40,7 +40,7 @@ public class QueryProductCallback implements Callback {
                     @Override
                     public void run() {
                         for (Prop prop : info) {
-                            DatabaseUtil.save(prop);
+                            prop.saveOrUpdate("PropId = ?",prop.getPropId());
                         }
                     }
                 }).start();

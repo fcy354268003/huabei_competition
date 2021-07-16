@@ -32,7 +32,7 @@ import com.example.huabei_competition.event.LiveDataManager;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.StudyDataGet;
 
-import com.example.huabei_competition.network.cipher.XhhEncNew;
+import com.example.huabei_competition.network.copper.XhhEncNew;
 import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.MyCountDownTimer;
 import com.example.huabei_competition.widget.CustomerDialog;

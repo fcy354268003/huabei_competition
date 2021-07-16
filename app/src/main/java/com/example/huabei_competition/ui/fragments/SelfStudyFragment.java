@@ -20,8 +20,7 @@ import android.widget.TextView;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.TimerVM;
 import com.example.huabei_competition.databinding.FragmentSelfStudyBinding;
-import com.example.huabei_competition.event.GroupManager;
-import com.example.huabei_competition.network.api.EncryptionTransmission;
+import com.example.huabei_competition.network.copper.EncryptionTransmission;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.StudyDataGet;
 import com.example.huabei_competition.ui.activity.MainActivity;
@@ -35,11 +34,7 @@ import com.example.huabei_competition.widget.WidgetUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.List;
 
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.callback.GetGroupIDListCallback;
-import cn.jpush.im.android.api.model.UserInfo;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -129,7 +124,7 @@ public class SelfStudyFragment extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        StudyDataGet.SubmitTime submitTime = new StudyDataGet.SubmitTime(String.valueOf(mTime), EncryptionTransmission.test(LogIn.TOKEN + mTime), mLabelText);
+                        StudyDataGet.SubmitTime submitTime = new StudyDataGet.SubmitTime(String.valueOf(mTime), EncryptionTransmission.encode(LogIn.TOKEN + mTime), mLabelText);
                         StudyDataGet.submitTimePerson(submitTime, new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -202,7 +197,6 @@ public class SelfStudyFragment extends Fragment {
 
 
     private void onMusicClick(View view) {
-        //TODO 播放音乐 等操作
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.background_music);
         }

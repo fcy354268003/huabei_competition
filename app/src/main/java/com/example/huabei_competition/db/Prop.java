@@ -2,6 +2,7 @@ package com.example.huabei_competition.db;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 import java.util.Objects;
@@ -65,5 +66,16 @@ public class Prop extends LitePalSupport {
     @Override
     public int hashCode() {
         return Objects.hash(PropId);
+    }
+
+    @Override
+    public String toString() {
+        return "Prop{" +
+                "PropId='" + PropId + '\'' +
+                ", name='" + name + '\'' +
+                ", picture='" + picture + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                '}';
     }
 }

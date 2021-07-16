@@ -7,6 +7,8 @@ import cn.jpush.im.api.BasicCallback
 import com.example.huabei_competition.db.Prop
 import com.example.huabei_competition.db.ShopRole
 import com.example.huabei_competition.event.UserUtil
+import com.example.huabei_competition.network.shop.PropRep
+import com.example.huabei_competition.network.shop.RoleRep
 import com.example.huabei_competition.util.MyApplication
 import com.example.huabei_competition.util.toast
 import com.google.gson.Gson
@@ -20,9 +22,9 @@ import com.google.gson.Gson
  * 3.学习数据展示界面的数据
  * 4.排行榜相关信息，不缓存头像
  * 5.用户重复登陆相关
- * // 所有不缓存头像的只缓存头像的URL
+ * 所有不缓存头像的只缓存头像的URL
  */
-object LocalRepository {
+object LocalDao {
     private val defString = ""
     private val mGson by lazy { Gson() }
     private val KEY_LOG = "login"
@@ -48,33 +50,33 @@ object LocalRepository {
      * 拿到商店角色缓存 不将图片缓存到本地
      * @return List<ShopRole>
      */
-    fun getShopRoleCache(userName: String = UserUtil.sUserName): List<ShopRole> {
+    fun getShopRoleCache(userName: String = UserUtil.sUserName): RoleRep? {
         val content = getSP(SP_CACHE).getString(KEY_SHOP_ROLE, defString)
         if (content == defString) {
-            return emptyList()
+            return null
         }
-        return mGson.fromJson(content, List::class.java) as List<ShopRole>
+        return mGson.fromJson(content, List::class.java) as RoleRep
     }
 
     /**
      *
      */
-    fun getShopPropCache(): List<Prop> {
+    fun getShopPropCache(): PropRep? {
         val content = getSP(SP_CACHE).getString(KEY_SHOP_PROP, defString)
         if (content == defString) {
-            return emptyList()
+            return null
         }
-        return mGson.fromJson(content, List::class.java) as List<Prop>
+        return mGson.fromJson(content, List::class.java) as PropRep
     }
 
 
-    fun setShopPropCache(content: List<Prop>) {
+    fun setShopPropCache(content: PropRep) {
         val edit = getSP(SP_CACHE).edit()
         edit.putString(KEY_SHOP_PROP, mGson.toJson(content))
         edit.apply()
     }
 
-    fun setShopRoleCache(content: List<ShopRole>) {
+    fun setShopRoleCache(content: RoleRep) {
         val edit = getSP(SP_CACHE).edit()
         edit.putString(KEY_SHOP_ROLE, mGson.toJson(content))
         edit.apply()
@@ -112,6 +114,4 @@ object LocalRepository {
             }
         }
     }
-
-
 }

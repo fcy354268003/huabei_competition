@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui.activity;
+package com.example.huabei_competition.ui.findpass;
 
 
 import androidx.annotation.Nullable;

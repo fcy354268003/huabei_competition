@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.base.BaseActivity;
+import com.example.huabei_competition.ui.login.CheckInActivity;
 
 import java.lang.ref.WeakReference;
 

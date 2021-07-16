@@ -81,5 +81,8 @@ dependencies {
     implementation(Libs.jcore)
     implementation(Libs.wheelview)// 滑轮滚动选择
     implementation(Libs.barrage)// 弹幕
+    implementation(Libs.coroutinue)
+    implementation(Libs.coroutineCore)
+    implementation(Libs.viewModleKtx)
 
 }

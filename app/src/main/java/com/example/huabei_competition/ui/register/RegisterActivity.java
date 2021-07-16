@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui.activity;
+package com.example.huabei_competition.ui.register;
 
 import android.os.Bundle;
 
@@ -26,9 +26,7 @@ import com.example.huabei_competition.widget.MyToast;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;

@@ -3,9 +3,10 @@ package com.example.huabei_competition.callback.apicallback;
 
 import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.event.LiveDataManager;
+import com.example.huabei_competition.event.UserUtil;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.NPCRel;
-import com.example.huabei_competition.ui.fragments.ShopFragment;
+import com.example.huabei_competition.ui.shop.ShopFragment;
 import com.example.huabei_competition.util.DatabaseUtil;
 import com.example.huabei_competition.widget.MyToast;
 import com.google.gson.Gson;
@@ -42,7 +43,8 @@ public class QueryShopRoleCallback implements Callback {
                     @Override
                     public void run() {
                         for (ShopRole shopRole : info) {
-                            DatabaseUtil.save(shopRole);
+                            shopRole.setUserName(UserUtil.sUserName);
+                            shopRole.saveOrUpdate("ShopRoleId = ? and userName = ?", shopRole.getShopRoleId(), UserUtil.sUserName);
                         }
                     }
                 }).start();

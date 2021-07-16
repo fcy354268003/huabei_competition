@@ -11,7 +11,7 @@
 
         <variable
             name="mContext"
-            type="com.example.huabei_competition.ui.activity.RegisterActivity" />
+            type="com.example.huabei_competition.ui.register.RegisterActivity" />
     </data>
 
     <androidx.core.widget.NestedScrollView

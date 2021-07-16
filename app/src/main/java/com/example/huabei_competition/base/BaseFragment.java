@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
-    private T binding;
+    protected T binding;
 
     @Nullable
     @Override

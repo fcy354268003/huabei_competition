@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.base.BaseActivity;
+import com.example.huabei_competition.ui.login.CheckInActivity;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui.fragments;
+package com.example.huabei_competition.ui.shop;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -35,7 +35,6 @@ import com.example.huabei_competition.ui.activity.MainActivity;
 import com.example.huabei_competition.util.MyHandler;
 import com.example.huabei_competition.widget.CustomerDialog;
 import com.example.huabei_competition.widget.MyRecyclerAdapter;
-import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -175,7 +174,6 @@ public class ShopFragment extends Fragment implements TabLayout.OnTabSelectedLis
                         Log.d(TAG, "bindView: ----------" + shopRole.getIsHaving());
                         Log.d(TAG, "bindView: " + shopRole.getPrice());
                         glideManager.load(shopRole.getPicture()).override(140, 140).into(binding.ivPicture);
-//                        Glide.with(binding.ivPicture).load(shopRole.getPicture()).into(binding.ivPicture);
                         if (TextUtils.equals(shopRole.getIsHaving(), "true")) {
                             binding.tvShopProp.setVisibility(View.VISIBLE);
                             binding.ivPicture.setAlpha(0.5f);

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.example.huabei_competition.R;
 import com.example.huabei_competition.databinding.FragmentMainBinding;
 import com.example.huabei_competition.ui.activity.MainActivity;
+import com.example.huabei_competition.ui.mine.MineFragment;
 import com.example.huabei_competition.widget.MyFragmentAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

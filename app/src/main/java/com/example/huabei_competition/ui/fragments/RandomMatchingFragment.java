@@ -25,7 +25,7 @@ import com.example.huabei_competition.R;
 import com.example.huabei_competition.TimerVM;
 import com.example.huabei_competition.base.BaseFragment;
 import com.example.huabei_competition.databinding.FragmentRandomMatchingBinding;
-import com.example.huabei_competition.network.api.EncryptionTransmission;
+import com.example.huabei_competition.network.copper.EncryptionTransmission;
 import com.example.huabei_competition.network.api.LogIn;
 import com.example.huabei_competition.network.api.StudyDataGet;
 import com.example.huabei_competition.ui.activity.MainActivity;
@@ -211,7 +211,7 @@ public class RandomMatchingFragment extends BaseFragment<FragmentRandomMatchingB
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        StudyDataGet.SubmitTime submitTime = new StudyDataGet.SubmitTime(String.valueOf(25), EncryptionTransmission.test(LogIn.TOKEN + 25), "随机匹配学习");
+                        StudyDataGet.SubmitTime submitTime = new StudyDataGet.SubmitTime(String.valueOf(25), EncryptionTransmission.encode(LogIn.TOKEN + 25), "随机匹配学习");
                         StudyDataGet.submitTimePerson(submitTime, new Callback() {
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e) {

@@ -24,4 +24,5 @@ object Versions {
     const val legacy = "1.0.0"
     const val okhttp = "4.9.0"
     const val litepal = "3.2.2"
+    const val lifecycle_version = "2.2.0"
 }

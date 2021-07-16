@@ -29,4 +29,5 @@ object Libs {
     const val legacy = "androidx.legacy:legacy-support-v4:${Versions.legacy}"
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val litePal = "org.litepal.guolindev:core:${Versions.litepal}"
+    const val viewModleKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
 }

@@ -6,7 +6,7 @@ import android.text.TextUtils;
 
 import com.example.huabei_competition.network.Network;
 import com.example.huabei_competition.network.api.LogIn;
-import com.example.huabei_competition.ui.activity.CheckInActivity;
+import com.example.huabei_competition.ui.login.CheckInActivity;
 import com.example.huabei_competition.base.BaseActivity;
 import com.example.huabei_competition.util.MyApplication;
 import com.example.huabei_competition.widget.MyToast;

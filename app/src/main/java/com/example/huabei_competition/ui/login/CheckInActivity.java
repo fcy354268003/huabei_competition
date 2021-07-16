@@ -1,4 +1,4 @@
-package com.example.huabei_competition.ui.activity;
+package com.example.huabei_competition.ui.login;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -19,17 +19,24 @@ import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.huabei_competition.R;
-import com.example.huabei_competition.network.api.EncryptionTransmission;
+import com.example.huabei_competition.db.Prop;
+import com.example.huabei_competition.db.ShopRole;
 import com.example.huabei_competition.network.api.LogIn;
 
 import com.example.huabei_competition.base.BaseActivity;
 import com.example.huabei_competition.event.UserUtil;
 
 
+import com.example.huabei_competition.ui.findpass.ForgetPassActivity;
+import com.example.huabei_competition.ui.activity.MainActivity;
+import com.example.huabei_competition.ui.register.RegisterActivity;
 import com.example.huabei_competition.widget.MyToast;
 import com.example.huabei_competition.widget.WidgetUtil;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.litepal.LitePal;
+
+import java.util.List;
 import java.util.Objects;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -51,6 +58,19 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback, 
         WidgetUtil.setCustomerText(findViewById(R.id.tv_title), WidgetUtil.CUSTOMER_HUAKANGSHAONV);
         animation();
         getLifecycle().addObserver(this);
+//        showData();
+    }
+
+    private void showData() {
+        List<Prop> all = LitePal.findAll(Prop.class);
+        for (Prop prop : all) {
+            System.out.println(prop);
+        }
+
+        List<ShopRole> pro = LitePal.findAll(ShopRole.class);
+        for (ShopRole product : pro) {
+            System.out.println(product);
+        }
     }
 
 
@@ -134,8 +154,9 @@ public class CheckInActivity extends BaseActivity implements LogIn.LogCallback, 
     public void log(View view) {
 //                UserUtil.logIn(this, "87654321", "12345678", this);
 
-//        UserUtil.logIn(this, mUserName.getText().toString(), mPassword.getText().toString(), this);
-        success("87654321", "12345678");
+        UserUtil.logIn(this, mUserName.getText().toString(), mPassword.getText().toString(), this);
+        Log.d(TAG, "log: " + mUserName.getText().toString() + mPassword.getText().toString());
+//        success("87654321", "12345678");
     }
 
     /**

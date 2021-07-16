@@ -27,6 +27,7 @@ import okhttp3.Response;
 
 /**
  * Create by FanChenYang at 2021/2/27
+ * 49.232.223.89:10001
  */
 
 public class LogIn {
@@ -34,7 +35,7 @@ public class LogIn {
     public static String TOKEN;
     private static final String TAG = "LogIn";
     private static final Gson gson = new Gson();
-    public static final String BASIC_PATH = "http://192.168.115.65:8000";
+    public static final String BASIC_PATH = "http://49.232.223.89:10001";
 
     public static void login(@NonNull LogCallback callback, @NonNull final String name, @NonNull final String pass) {
         HashMap<String, String> map = new HashMap<>();
@@ -43,6 +44,7 @@ public class LogIn {
         NetRequest.postFromRequest(Register.toIntactUrl(PATH_LOGIN), map, new NetRequestCallback() {
             @Override
             public void success(@Nullable String result) {
+                Log.d(TAG, "success: " + result);
                 LogResponse logResponse = gson.fromJson(result, LogResponse.class);
                 if (TextUtils.equals(logResponse.code, OK)) {
                     TOKEN = logResponse.data.token;

@@ -17,11 +17,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.activity.NewRegisterActivity"></activity>
-        <activity android:name=".ui.activity.RegisterActivity" />
+        <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.activity.IntroduceActivity" />
-        <activity android:name=".ui.activity.CheckInActivity" />
-        <activity android:name=".ui.activity.ForgetPassActivity" />
+        <activity android:name=".ui.login.CheckInActivity" />
+        <activity android:name=".ui.findpass.ForgetPassActivity" />
         <activity android:name=".ui.activity.GuideActivity" />
         <activity android:name=".ui.activity.StartActivity">
             <intent-filter>
